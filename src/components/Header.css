@@ -94,6 +94,10 @@
     gap: 8px;
   }
   
+  .mobile-clock {
+    margin-right: 35px;
+  }
+  
   .desktop-actions, .mobile-actions {
     padding: 0 6px;
     gap: 4px;

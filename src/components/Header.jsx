@@ -83,8 +83,8 @@ const Header = () => {
           </div>
           
           <div className="desktop-actions glass-panel">
-            <button className="icon-btn hide-mobile"><Settings size={18} /></button>
-            <button className="icon-btn hide-mobile"><Globe2 size={18} /></button>
+            <button className="icon-btn"><Settings size={18} /></button>
+            <button className="icon-btn"><Globe2 size={18} /></button>
             <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
             <button className="icon-btn"><Coffee size={18} /></button>
           </div>

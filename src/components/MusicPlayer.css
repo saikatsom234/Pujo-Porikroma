@@ -34,15 +34,30 @@
 .album-art {
   width: 64px;
   height: 64px;
-  border-radius: 12px;
+  border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+@keyframes spin-disk {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .album-art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  animation: spin-disk 10s linear infinite;
+  animation-play-state: paused;
+}
+
+.album-art.playing img {
+  animation-play-state: running;
 }
 
 .track-details {
@@ -96,6 +111,22 @@
   margin-left: 3px; /* visual center for play icon */
 }
 
+.progress-container {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 0; /* Removed extra margin to reduce gap */
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #daa520; /* Yellow ochre */
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
 .show-mobile-flex {
   display: none;
 }
@@ -103,6 +134,13 @@
 @media (max-width: 768px) {
   .music-player-container {
     padding-bottom: 24px;
+  }
+
+  /* Uplift the entire player block by 40px on taller phones (> 5.5 inch) */
+  @media (min-height: 700px) {
+    .music-player-container {
+      padding-bottom: 64px; /* 24px + 40px uplift */
+    }
   }
 
   .music-player {
@@ -128,14 +166,28 @@
   .mobile-category-selector {
     width: 100%;
     justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 16px; /* Default for smaller screens */
+  }
+  
+  /* Adjust button position on taller phones (> 5.5 inch class, ~700px+ height) */
+  @media (min-height: 700px) {
+    .mobile-category-selector {
+      margin-bottom: 6px; /* 66px - 60px slide down */
+    }
+  }
+
+  /* Extra uplift for very tall phones (iPhone 14/15/16 Pro Max, ~850px+ height) */
+  @media (min-height: 850px) {
+    .mobile-category-selector {
+      margin-bottom: 21px; /* 81px - 60px slide down */
+    }
   }
   
   .category-btn {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 7px 17px; /* Reduced padding by another 1px */
     border-radius: var(--radius-full);
     font-size: 14px;
     font-weight: 500;
@@ -147,7 +199,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 16px;
   }
 
@@ -155,6 +206,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    flex: 1;
     gap: 8px;
     font-size: 13px;
     color: var(--text-secondary);

@@ -1,19 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Music, ChevronDown } from 'lucide-react';
 import './MusicPlayer.css';
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef(null);
 
-  const togglePlay = () => setIsPlaying(!isPlaying);
+  const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const formatTime = (time) => {
+    if (isNaN(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    
+    const handleEnded = () => setIsPlaying(false);
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleLoadedMetadata = () => setDuration(audio.duration);
+    
+    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    
+    if (audio.readyState >= 1) {
+      setDuration(audio.duration);
+    }
+    
+    return () => {
+      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, []);
+
+  const progress = duration ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="music-player-container">
+      <audio ref={audioRef} src="/songs/dugga-elo.mp3" preload="metadata" />
       {/* Mobile only selector */}
       <div className="mobile-category-selector show-mobile-flex">
-        <button className="category-btn glass-panel">
+        <button className="category-btn glass-panel bengali-text">
           <Music size={16} />
-          DURGA PUJA
+          পূজো সংগ্রহ
           <ChevronDown size={16} />
         </button>
       </div>
@@ -21,13 +64,13 @@ const MusicPlayer = () => {
       <div className="music-player glass-panel">
         <div className="player-top">
           <div className="track-info">
-            <div className="album-art">
-              <img src="https://i.scdn.co/image/ab67616d0000b27329f98ec8198f82522ad7167a" alt="Dugga Elo" />
+            <div className={`album-art ${isPlaying ? 'playing' : ''}`}>
+              <img src="/dugga-elo-cover.jpg" alt="Dugga Elo" />
             </div>
             <div className="track-details">
               <div className="track-title">Dugga Elo</div>
               <div className="track-artist">Monali Thakur</div>
-              <div className="track-time">0:00 / 0:00</div>
+              <div className="track-time">{formatTime(currentTime)} / {formatTime(duration)}</div>
             </div>
           </div>
           
@@ -40,21 +83,25 @@ const MusicPlayer = () => {
           </div>
         </div>
         
+        <div className="progress-container">
+          <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+        </div>
+        
         {/* Mobile bottom controls */}
         <div className="player-bottom show-mobile-flex">
-          <button className="action-btn">
+          <button className="action-btn bengali-text">
             <Shuffle size={16} />
-            Shuffle
+            <span style={{ position: 'relative', top: '2px' }}>এলোমেলো</span>
           </button>
           <div className="divider"></div>
-          <button className="action-btn">
+          <button className="action-btn bengali-text">
             <Repeat size={16} />
-            Repeat
+            <span style={{ position: 'relative', top: '2px' }}>পুনরাবৃত্তি</span>
           </button>
           <div className="divider"></div>
-          <button className="action-btn">
+          <button className="action-btn bengali-text">
             <Music size={16} />
-            Dhak
+            <span style={{ position: 'relative', top: '2px' }}>ঢাক</span>
           </button>
         </div>
       </div>

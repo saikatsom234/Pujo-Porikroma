@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink } from 'lucide-react';
+
 import './CreatorCard.css';
 
 const CreatorCard = ({ onClose }) => {
