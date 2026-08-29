@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Settings, User, Coffee, Play, Search, Disc, Globe2 } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { toBengaliNumber, getPujoText } from '../utils/dateUtils';
+import CreatorCard from './CreatorCard';
 import './Header.css';
 
 const Header = () => {
   const [onlineCount, setOnlineCount] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [showCreatorCard, setShowCreatorCard] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -62,31 +64,36 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="header">
-      <div className="header-left">
-        <div className="online-badge glass-panel">
-          <span className="dot pulse"></span>
-          <span className="bengali-text">{toBengaliNumber(onlineCount)} জন সক্রিয়</span>
-        </div>
-        <div className="countdown hide-mobile fancy-bengali">
-          {getPujoText()}
-        </div>
-      </div>
-      
-      <div className="header-right">
-        {/* Clock visible on all devices */}
-        <div className="mobile-actions glass-panel mobile-clock">
-          <span className="bengali-text">{formatBengaliTime(currentTime)}</span>
+    <>
+      <header className="header">
+        <div className="header-left">
+          <div className="online-badge glass-panel">
+            <span className="dot"></span>
+            <span className="bengali-text">{toBengaliNumber(onlineCount)} জন সক্রিয়</span>
+          </div>
+          <div className="countdown hide-mobile fancy-bengali">
+            {getPujoText()}
+          </div>
         </div>
         
-        <div className="desktop-actions glass-panel">
-          <button className="icon-btn hide-mobile"><Settings size={18} /></button>
-          <button className="icon-btn hide-mobile"><Globe2 size={18} /></button>
-          <button className="icon-btn"><User size={18} /></button>
-          <button className="icon-btn"><Coffee size={18} /></button>
+        <div className="header-right">
+          {/* Clock visible on all devices */}
+          <div className="mobile-actions glass-panel mobile-clock">
+            <span className="bengali-text">{formatBengaliTime(currentTime)}</span>
+          </div>
+          
+          <div className="desktop-actions glass-panel">
+            <button className="icon-btn hide-mobile"><Settings size={18} /></button>
+            <button className="icon-btn hide-mobile"><Globe2 size={18} /></button>
+            <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
+            <button className="icon-btn"><Coffee size={18} /></button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Render CreatorCard over everything when state is true */}
+      {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
+    </>
   );
 };
 
