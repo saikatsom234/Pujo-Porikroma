@@ -69,7 +69,7 @@ const Header = () => {
         <div className="header-left">
           <div className="online-badge glass-panel">
             <span className="dot"></span>
-            <span className="bengali-text">{toBengaliNumber(onlineCount)} জন সক্রিয়</span>
+            <span className="bengali-text">{toBengaliNumber(onlineCount)} সক্রিয়</span>
           </div>
           <div className="countdown hide-mobile fancy-bengali">
             {getPujoText()}
