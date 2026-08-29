@@ -95,7 +95,7 @@
   }
   
   .mobile-clock {
-    margin-right: 20px; /* Slid right by 15px from previous 35px */
+    margin-right: 10px; /* Slid right by another 10px from 20px */
   }
   
   .desktop-actions, .mobile-actions {
