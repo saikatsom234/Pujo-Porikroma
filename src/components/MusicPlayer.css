@@ -10,9 +10,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 600px;
-  border-radius: var(--radius-lg);
-  padding: 16px 24px;
+  max-width: 440px;
+  border-radius: 24px;
+  padding: 16px;
   background: rgba(40, 30, 30, 0.6); /* Slightly reddish dark tint to match reference */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -156,88 +156,69 @@
   transition: width 0.1s linear;
 }
 
-.show-mobile-flex {
-  display: none;
+.player-top {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-@media (max-width: 768px) {
+.mobile-category-selector {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 8px; /* Keeps the button tightly anchored to the player */
+  display: flex;
+}
+
+.category-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 17px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  background: rgba(50, 40, 40, 0.8);
+}
+
+.player-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 8px 4px;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.action-btn:hover {
+  color: var(--text-primary);
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.show-mobile-flex {
+  display: flex !important;
+}
+
+@media (min-height: 700px) {
   .music-player-container {
-    padding-bottom: 24px;
-  }
-
-  /* Uplift the entire player block by 40px on taller phones (> 5.5 inch) */
-  @media (min-height: 700px) {
-    .music-player-container {
-      padding-bottom: 64px; /* 24px + 40px uplift */
-    }
-  }
-
-  .music-player {
-    max-width: 100%;
-    padding: 16px;
-    border-radius: 24px;
-    background: rgba(50, 40, 40, 0.8);
-  }
-  
-  .player-top {
-    margin-bottom: 16px;
-  }
-
-  .album-art {
-    width: 56px;
-    height: 56px;
-  }
-  
-  .show-mobile-flex {
-    display: flex;
-  }
-  
-  .mobile-category-selector {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 8px; /* Keeps the button tightly anchored to the player */
-  }
-  
-  .category-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 17px; /* Reduced padding by another 1px */
-    border-radius: var(--radius-full);
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    background: rgba(50, 40, 40, 0.8);
-  }
-
-  .player-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 16px;
-  }
-
-  .action-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    gap: 6px; /* slightly smaller gap to ensure fit */
-    font-size: 13px;
-    color: var(--text-secondary);
-    padding: 8px 4px; /* slightly smaller horizontal padding */
-    white-space: nowrap;
-    min-width: 0; /* allow flex item shrinking if absolutely needed */
-  }
-  
-  .action-btn:hover {
-    color: var(--text-primary);
-  }
-
-  .divider {
-    width: 1px;
-    height: 24px;
-    background-color: rgba(255, 255, 255, 0.1);
+    padding-bottom: 64px;
   }
 }
