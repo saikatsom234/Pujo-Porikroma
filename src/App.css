@@ -36,6 +36,9 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  max-width: 440px; /* Lock to phone width globally */
+  margin: 0 auto; /* Center on desktop and landscape */
   padding: 24px;
 }
 
@@ -50,19 +53,24 @@
   }
 }
 
-/* Fix for landscape mobile rotation: force portrait-like height and enable scrolling so elements don't crash */
+/* Force vertical view when screen is rotated horizontally (landscape) */
 @media (orientation: landscape) and (max-height: 600px) {
-  body {
-    overflow-y: auto !important;
-  }
-  
   .app-container {
-    height: auto !important;
-    min-height: 850px !important;
+    overflow: hidden;
   }
   
-  .background-image, .background-overlay {
-    position: fixed !important;
-    height: 100vh !important;
+  .main-content {
+    /* Force 400x800 base layout for calculations */
+    width: 400px !important;
+    height: 800px !important;
+    max-width: none !important;
+    max-height: none !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    /* Scale the 800px tall layout down to fit the short landscape height perfectly */
+    transform: translate(-50%, -50%) scale(calc(100vh / 800)) !important;
+    transform-origin: center center !important;
+    padding: 16px !important;
   }
 }
