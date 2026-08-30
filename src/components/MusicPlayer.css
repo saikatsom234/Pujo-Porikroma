@@ -10,9 +10,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 600px;
-  border-radius: var(--radius-lg);
-  padding: 16px 24px;
+  max-width: 680px; /* little bigger */
+  border-radius: 32px; /* softer rounded corners for desktop */
+  padding: 32px 40px; /* spaceful padding */
   background: rgba(40, 30, 30, 0.6); /* Slightly reddish dark tint to match reference */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -23,6 +23,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 32px; /* much more spacing between track info and progress bar */
 }
 
 .track-info {
@@ -34,8 +35,8 @@
 }
 
 .album-art {
-  width: 64px;
-  height: 64px;
+  width: 80px; /* larger cover for desktop */
+  height: 80px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
