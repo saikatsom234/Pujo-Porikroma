@@ -63,7 +63,7 @@
   .show-mobile-only {
     display: block;
     position: absolute;
-    top: calc(38vh - 65px); /* Adjusted 5px up from previous position */
+    top: calc(38vh - 85px); /* Uplifted by 20px */
     left: 0;
     width: 100%;
     text-align: center;
@@ -75,7 +75,7 @@
   img.mobile-logo {
     display: block;
     position: absolute;
-    top: calc(10vh - 55px); /* Lifted 55px up (20px more) to avoid background face */
+    top: calc(10vh - 55px); /* Uplifted by 20px */
     left: 50%;
     transform: translateX(-50%);
     width: 65%; /* Approximate original scale */
@@ -115,26 +115,26 @@
 /* Specific styling for small screens */
 @media (max-width: 390px), (max-height: 700px) and (max-width: 768px) {
   .hero-section .show-mobile-only {
-    /* Move text ABOVE the logo */
-    top: 12vh;
+    /* Move text ABOVE the logo and uplift by 20px */
+    top: calc(12vh - 20px);
   }
   
   .hero-section img.mobile-logo {
-    /* Move logo BELOW the text, but lifted 105px up */
-    top: calc(22vh - 105px);
+    /* Move logo BELOW the text, but lifted 125px up (uplifted 20px) */
+    top: calc(22vh - 125px);
   }
 }
 
 /* Specific styling for 8.3 inch+ tablets (like iPad Mini in portrait) */
 @media (min-width: 700px) and (min-height: 1000px) and (max-width: 768px) {
   .hero-section .show-mobile-only {
-    /* Move text ABOVE the logo and lift by 50px */
-    top: calc(12vh - 50px);
+    /* Move text ABOVE the logo and lift by 70px (uplifted 20px) */
+    top: calc(12vh - 70px);
   }
   
   .hero-section img.mobile-logo {
-    /* Move logo BELOW the text, but lift by 275px (moved 25px down from 300px) */
-    top: calc(22vh - 275px);
+    /* Move logo BELOW the text, but lift by 295px (uplifted 20px) */
+    top: calc(22vh - 295px);
     /* Reduce size by 50px from its standard 65% width */
     width: calc(65% - 50px);
   }
