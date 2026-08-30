@@ -61,6 +61,8 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
             >
               মহালয়া ও গান
             </button>
+          </div>
+
         </div>
 
         {/* Scrollable Song Stack */}

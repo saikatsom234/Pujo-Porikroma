@@ -101,7 +101,13 @@
   color: #fff;
 }
 
-
+.song-list-subtitle {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
 
 .song-stack {
   flex: 1;
