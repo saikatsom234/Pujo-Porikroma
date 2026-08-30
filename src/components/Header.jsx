@@ -3,12 +3,14 @@ import { Settings, User, Coffee, Play, Search, Disc, Globe2 } from 'lucide-react
 import { io } from 'socket.io-client';
 import { toBengaliNumber, getPujoText } from '../utils/dateUtils';
 import CreatorCard from './CreatorCard';
+import ChaiPopup from './ChaiPopup';
 import './Header.css';
 
 const Header = () => {
   const [onlineCount, setOnlineCount] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCreatorCard, setShowCreatorCard] = useState(false);
+  const [showChaiPopup, setShowChaiPopup] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -86,13 +88,15 @@ const Header = () => {
             <button className="icon-btn"><Settings size={18} /></button>
             <button className="icon-btn"><Globe2 size={18} /></button>
             <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
-            <button className="icon-btn"><Coffee size={18} /></button>
+            <button className="icon-btn" onClick={() => setShowChaiPopup(true)}><Coffee size={18} /></button>
           </div>
         </div>
       </header>
 
       {/* Render CreatorCard over everything when state is true */}
       {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
+      {/* Render ChaiPopup over everything when state is true */}
+      {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
     </>
   );
 };
