@@ -1,10 +1,9 @@
 .song-list-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -17,8 +16,7 @@
 .song-list-popup {
   width: calc(100% - 32px);
   max-width: 600px;
-  height: 80vh;
-  height: 80dvh;
+  height: 80%;
   background: linear-gradient(to bottom, #2a2a2a, #111111);
   border-radius: 32px; /* All 4 corners curved */
   padding: 32px 24px;
@@ -201,8 +199,7 @@
   .song-list-popup {
     width: calc(100% - 32px); /* Maintain floating side margins */
     border-radius: 32px; /* All 4 corners curved */
-    height: 85vh; /* Slightly reduced height to fit bottom margin */
-    height: 85dvh;
+    height: 85%; /* Sized relative to rigid container instead of shrinking viewport */
     padding: 24px 16px;
     margin-bottom: 16px; /* Float off the bottom edge */
   }
