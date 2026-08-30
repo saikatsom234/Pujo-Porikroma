@@ -22,7 +22,7 @@ const ChaiPopup = ({ onClose }) => {
         <h2 className="chai-title">BUY ME A COFFEE</h2>
         
         <p className="chai-desc">
-          If Devi Paksha made your Pujo a little nicer, you know what to do. One cup of chai, and we're back to the adda.
+          IF U LIKE MY PAGE, SUPPORT MY WORK WITH A SMALL CONTRIBUTION! IT MEANS A LOT & HELPS ME TO CREATE MORE IN THE FUTURE.
         </p>
         
         <div className="chai-qr-container">
