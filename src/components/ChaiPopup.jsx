@@ -22,7 +22,7 @@ const ChaiPopup = ({ onClose }) => {
         <h2 className="chai-title">BUY ME A COFFEE</h2>
         
         <p className="chai-desc">
-          IF U LIKE MY PAGE, SUPPORT MY WORK WITH A SMALL CONTRIBUTION! IT MEANS A LOT & HELPS ME TO CREATE MORE IN THE FUTURE.
+          If u like my Page, Support my work with a small contribution! It means a lot & helps me to create more in the future.
         </p>
         
         <div className="chai-qr-container">
