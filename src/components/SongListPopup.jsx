@@ -14,7 +14,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 4, title: 'Dhaker Taley', artist: 'Poran Jai Jolia Re', duration: '4:35', cover: '/dhaker-taley-cover.jpg', src: '/songs/dhaker-taley.mp3' },
     { id: 5, title: 'Ebar Jeno Onno Rokom Pujo', artist: 'Yoddha', duration: '3:55', cover: '/ebar-jeno-cover.jpg', src: '/songs/ebar-jeno.mp3' },
     { id: 6, title: 'Dugga Ma', artist: 'Arijit Singh | Bolo Dugga Maiki', duration: '2:52', cover: '/dugga-ma-cover.jpg', src: '/songs/dugga-ma.mp3' },
-    { id: 7, title: 'Durga Puja Theme', artist: 'Jeet Gannguli', duration: '3:50', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 7, title: 'Aamaar Dugga', artist: 'Monali Thakur', duration: '3:16', cover: '/aamaar-dugga-cover.jpg', src: '/songs/aamaar-dugga.mp3' },
     { id: 8, title: 'Bolo Durga Mai Ki', artist: 'Shaan', duration: '4:15', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 9, title: 'Dhaker Taale', artist: 'Abhijeet Bhattacharya', duration: '3:30', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 10, title: 'Maa Go Tumi', artist: 'Asha Bhosle', duration: '4:40', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
