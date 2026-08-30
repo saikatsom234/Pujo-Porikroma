@@ -219,6 +219,6 @@
 
 @media (min-height: 700px) {
   .music-player-container {
-    padding-bottom: 64px;
+    padding-bottom: 14px; /* Slid down by exactly 50px (was 64px) */
   }
 }
