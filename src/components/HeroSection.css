@@ -75,7 +75,7 @@
   img.mobile-logo {
     display: block;
     position: absolute;
-    top: calc(10vh - 70px); /* Uplifted by an additional 15px */
+    top: calc(10vh - 60px); /* Uplifted by 25px total (20 + 5) */
     left: 50%;
     transform: translateX(-50%);
     width: 65%; /* Approximate original scale */
@@ -120,8 +120,8 @@
   }
   
   .hero-section img.mobile-logo {
-    /* Move logo BELOW the text, but lifted 140px up (uplifted additional 15px) */
-    top: calc(22vh - 140px);
+    /* Move logo BELOW the text, but lifted 130px up (125px + 5px) */
+    top: calc(22vh - 130px);
   }
 }
 
@@ -133,8 +133,8 @@
   }
   
   .hero-section img.mobile-logo {
-    /* Move logo BELOW the text, but lift by 310px (uplifted additional 15px) */
-    top: calc(22vh - 310px);
+    /* Move logo BELOW the text, but lift by 300px (295px + 5px) */
+    top: calc(22vh - 300px);
     /* Reduce size by 50px from its standard 65% width */
     width: calc(65% - 50px);
   }
