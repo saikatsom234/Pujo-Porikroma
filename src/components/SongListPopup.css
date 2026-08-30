@@ -43,9 +43,10 @@
 
 .song-list-header-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .song-list-title-text {
@@ -55,6 +56,7 @@
   color: #fff;
   text-transform: uppercase;
   margin: 0;
+  text-align: center;
 }
 
 .close-btn {
@@ -66,6 +68,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  right: 0;
 }
 
 .song-list-tabs {
