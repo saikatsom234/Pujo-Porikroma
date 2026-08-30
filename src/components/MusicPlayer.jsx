@@ -17,6 +17,7 @@ const MusicPlayer = () => {
   });
   
   const audioRef = useRef(null);
+  const isDraggingRef = useRef(false);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -42,17 +43,7 @@ const MusicPlayer = () => {
     }
   }, [isPlaying, currentSong.src]);
 
-  const handleProgressClick = (e) => {
-    if (!audioRef.current || !duration) return;
-    const container = e.currentTarget;
-    const rect = container.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const percentage = clickX / rect.width;
-    const newTime = percentage * duration;
-    
-    audioRef.current.currentTime = newTime;
-    setCurrentTime(newTime);
-  };
+
 
   const formatTime = (time) => {
     if (isNaN(time)) return "0:00";
@@ -66,7 +57,11 @@ const MusicPlayer = () => {
     if (!audio) return;
     
     const handleEnded = () => setIsPlaying(false);
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleTimeUpdate = () => {
+      if (!isDraggingRef.current) {
+        setCurrentTime(audio.currentTime);
+      }
+    };
     const handleLoadedMetadata = () => setDuration(audio.duration);
     
     audio.addEventListener('ended', handleEnded);
@@ -120,8 +115,30 @@ const MusicPlayer = () => {
           </div>
         </div>
         
-        <div className="progress-container" onClick={handleProgressClick}>
+        <div className="progress-container">
           <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+          <input 
+            type="range"
+            min="0"
+            max={duration || 100}
+            step="0.01"
+            value={currentTime}
+            className="progress-input"
+            onMouseDown={() => { isDraggingRef.current = true; }}
+            onTouchStart={() => { isDraggingRef.current = true; }}
+            onChange={(e) => {
+              const newTime = parseFloat(e.target.value);
+              setCurrentTime(newTime);
+            }}
+            onMouseUp={(e) => {
+              isDraggingRef.current = false;
+              if (audioRef.current) audioRef.current.currentTime = parseFloat(e.target.value);
+            }}
+            onTouchEnd={(e) => {
+              isDraggingRef.current = false;
+              if (audioRef.current) audioRef.current.currentTime = parseFloat(e.target.value);
+            }}
+          />
         </div>
         
         {/* Mobile bottom controls */}

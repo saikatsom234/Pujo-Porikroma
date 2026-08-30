@@ -117,8 +117,23 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
   margin: 0; /* Removed extra margin to reduce gap */
-  overflow: hidden;
+  overflow: visible; /* Allow invisible thumb to overflow */
   cursor: pointer;
+  position: relative; /* Anchor for absolute input */
+}
+
+/* Invisible native slider for seamless drag/scrubbing */
+.progress-input {
+  position: absolute;
+  top: -10px; /* Expanded hit area for fat fingers */
+  left: 0;
+  width: 100%;
+  height: 24px;
+  opacity: 0; /* Completely invisible, keeps native design intact */
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
 }
 
 .progress-bar {
