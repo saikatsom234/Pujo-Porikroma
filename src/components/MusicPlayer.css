@@ -163,61 +163,29 @@
 @media (max-width: 768px) {
   .music-player-container {
     padding-bottom: 24px;
-    padding-left: 16px; /* Shrinks the player width so it doesn't touch screen edges */
-    padding-right: 16px;
   }
 
   /* Uplift the entire player block by 40px on taller phones (> 5.5 inch) */
   @media (min-height: 700px) {
     .music-player-container {
-      padding-bottom: 64px;
+      padding-bottom: 64px; /* 24px + 40px uplift */
     }
   }
 
   .music-player {
     max-width: 100%;
-    padding: 12px 16px; /* Compressed padding */
-    border-radius: 20px; /* Tighter radius */
+    padding: 16px;
+    border-radius: 24px;
     background: rgba(50, 40, 40, 0.8);
   }
   
   .player-top {
-    margin-bottom: 10px; /* Compressed margin */
-  }
-
-  .track-info {
-    gap: 10px; /* Compressed gap */
+    margin-bottom: 16px;
   }
 
   .album-art {
-    width: 44px; /* Smaller image */
-    height: 44px;
-    border-radius: 8px; /* Square with rounded corners like reference */
-  }
-
-  .album-art img {
-    animation: none; /* Stop spinning since it's a square now */
-  }
-
-  .track-title {
-    font-size: 14px; /* Smaller title */
-  }
-
-  .track-artist {
-    font-size: 11px; /* Smaller artist */
-  }
-
-  .track-time {
-    font-size: 10px; /* Smaller time */
-  }
-
-  .player-controls {
-    gap: 10px; /* Compressed gap */
-  }
-
-  .play-btn {
-    width: 36px; /* Smaller play button */
-    height: 36px;
+    width: 56px;
+    height: 56px;
   }
   
   .show-mobile-flex {
@@ -227,30 +195,16 @@
   .mobile-category-selector {
     width: 100%;
     justify-content: center;
-    margin-bottom: 12px; /* Compressed */
-  }
-  
-  /* Adjust button position on taller phones */
-  @media (min-height: 700px) {
-    .mobile-category-selector {
-      margin-bottom: 4px; /* Compressed */
-    }
-  }
-
-  /* Extra uplift for very tall phones */
-  @media (min-height: 850px) {
-    .mobile-category-selector {
-      margin-bottom: 16px; /* Compressed */
-    }
+    margin-bottom: 8px; /* Keeps the button tightly anchored to the player */
   }
   
   .category-btn {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 16px; /* Compressed */
+    padding: 7px 17px; /* Reduced padding by another 1px */
     border-radius: var(--radius-full);
-    font-size: 13px; /* Smaller font */
+    font-size: 14px;
     font-weight: bold;
     letter-spacing: 0.5px;
     background: rgba(50, 40, 40, 0.8);
@@ -260,7 +214,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 12px; /* Compressed */
+    padding-top: 16px;
   }
 
   .action-btn {
@@ -269,12 +223,12 @@
     align-items: center;
     justify-content: center;
     flex: 1;
-    gap: 4px; /* Compressed gap */
-    font-size: 11px; /* Compressed font */
+    gap: 6px; /* slightly smaller gap to ensure fit */
+    font-size: 13px;
     color: var(--text-secondary);
-    padding: 6px 2px; /* Compressed padding */
+    padding: 8px 4px; /* slightly smaller horizontal padding */
     white-space: nowrap;
-    min-width: 0;
+    min-width: 0; /* allow flex item shrinking if absolutely needed */
   }
   
   .action-btn:hover {
@@ -283,7 +237,7 @@
 
   .divider {
     width: 1px;
-    height: 20px; /* Compressed divider */
+    height: 24px;
     background-color: rgba(255, 255, 255, 0.1);
   }
 }
