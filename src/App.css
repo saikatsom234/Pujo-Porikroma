@@ -50,33 +50,42 @@
   }
 }
 
-/* Mobile Landscape Warning Overlay */
 .landscape-overlay {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  background-image: url('/blur.png');
-  background-size: cover;
-  background-position: center;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 24px;
 }
 
-.landscape-message {
-  font-size: 24px;
-  font-weight: bold;
-  color: #DAA520; /* Yellow Ochre */
-  text-shadow: 0 4px 12px rgba(0,0,0,0.8);
-}
-
-@media (max-width: 950px) and (orientation: landscape) {
+/* Target mobile/tablet devices in landscape rotation */
+@media screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+  .main-content, .background-overlay {
+    display: none !important;
+  }
+  
+  .background-image {
+    background-image: url('/blur.png') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    z-index: 1;
+  }
+  
   .landscape-overlay {
     display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .landscape-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: #DAA520; /* Yellow Ochre */
+    padding: 24px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+    letter-spacing: 1px;
   }
 }
