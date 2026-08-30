@@ -61,10 +61,6 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
             >
               মহালয়া ও গান
             </button>
-          </div>
-          <div className="song-list-subtitle bengali-text">
-            The main curated Durga Puja playlist.
-          </div>
         </div>
 
         {/* Scrollable Song Stack */}
