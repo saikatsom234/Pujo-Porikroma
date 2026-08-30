@@ -46,6 +46,23 @@
   
   .background-image {
     background-image: url('/mobile-bg-clean.jpg');
-    background-position: center; /* Center to show the idol properly */
+    background-position: center;
+  }
+}
+
+/* Fix for landscape mobile rotation: force portrait-like height and enable scrolling so elements don't crash */
+@media (orientation: landscape) and (max-height: 600px) {
+  body {
+    overflow-y: auto !important;
+  }
+  
+  .app-container {
+    height: auto !important;
+    min-height: 850px !important;
+  }
+  
+  .background-image, .background-overlay {
+    position: fixed !important;
+    height: 100vh !important;
   }
 }

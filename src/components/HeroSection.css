@@ -139,3 +139,15 @@
     width: calc(65% - 50px);
   }
 }
+
+/* Fix for landscape orientation on phones: use fixed absolute positioning to avoid vh-based overlapping */
+@media (orientation: landscape) and (max-height: 600px) {
+  .hero-section .show-mobile-only {
+    top: 250px !important;
+  }
+  
+  .hero-section img.mobile-logo {
+    top: 60px !important;
+    width: 250px !important;
+  }
+}
