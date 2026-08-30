@@ -19,6 +19,11 @@ function App() {
         <HeroSection />
         <MusicPlayer />
       </main>
+
+      {/* Mobile Landscape Overlay */}
+      <div className="landscape-overlay">
+        <div className="landscape-message">Horizontal view is under construction</div>
+      </div>
     </div>
   );
 }
