@@ -84,6 +84,16 @@ const MusicPlayer = () => {
   return (
     <div className="music-player-container">
       <audio ref={audioRef} src={currentSong.src} preload="metadata" />
+      {/* Desktop only top actions */}
+      <div className="desktop-top-actions show-desktop-flex">
+        <button className="category-btn glass-panel bengali-text" onClick={() => setShowSongList(true)}>
+          <Music size={16} /> পুজো সংগ্রহ <ChevronDown size={16} />
+        </button>
+        <button className={`category-btn glass-panel bengali-text ${isDhakPlaying ? 'active' : ''}`} onClick={toggleDhak}>
+          <Music size={16} /> ঢাক
+        </button>
+      </div>
+
       {/* Mobile only selector */}
       <div className="mobile-category-selector show-mobile-flex">
         <button className="category-btn glass-panel bengali-text" onClick={() => setShowSongList(true)}>
@@ -107,11 +117,21 @@ const MusicPlayer = () => {
           </div>
           
           <div className="player-controls">
-            <button className="control-btn"><SkipBack size={20} fill="currentColor" /></button>
-            <button className="play-btn" onClick={togglePlay}>
-              {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="play-icon-offset" />}
+            <button className="control-btn show-desktop-flex" onClick={toggleShuffle}>
+              <Shuffle size={18} color={isShuffle ? 'var(--primary)' : 'currentColor'} />
             </button>
-            <button className="control-btn"><SkipForward size={20} fill="currentColor" /></button>
+            <button className="control-btn" onClick={playPrevious}>
+              <SkipBack size={24} fill="currentColor" />
+            </button>
+            <button className="play-btn" onClick={togglePlay}>
+              {isPlaying ? <Pause size={28} fill="currentColor" /> : <Play size={28} fill="currentColor" className="play-icon-offset" />}
+            </button>
+            <button className="control-btn" onClick={playNext}>
+              <SkipForward size={24} fill="currentColor" />
+            </button>
+            <button className="control-btn show-desktop-flex" onClick={toggleRepeat}>
+              <Repeat size={18} color={isRepeat ? 'var(--primary)' : 'currentColor'} />
+            </button>
           </div>
         </div>
         
