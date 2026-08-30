@@ -17,7 +17,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 7, title: 'Aamaar Dugga', artist: 'Monali Thakur', duration: '3:16', cover: '/aamaar-dugga-cover.jpg', src: '/songs/aamaar-dugga.mp3' },
     { id: 8, title: 'Kamariya', artist: 'Darshan Raval', duration: '3:07', cover: '/kamariya-cover.jpg', src: '/songs/kamariya.mp3' },
     { id: 9, title: 'Shundori Komola', artist: 'Villain', duration: '3:25', cover: '/shundori-komola-cover.jpg', src: '/songs/shundori-komola.mp3' },
-    { id: 10, title: 'Maa Go Tumi', artist: 'Asha Bhosle', duration: '4:40', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 10, title: 'Chogada', artist: 'Loveyatri', duration: '4:16', cover: '/chogada-cover.jpg', src: '/songs/chogada.mp3' },
   ];
 
   // Placeholder replica array for Mahalaya & Songs
