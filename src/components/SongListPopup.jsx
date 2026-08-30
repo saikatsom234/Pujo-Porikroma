@@ -24,7 +24,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 104, title: 'Shubhaarambh', artist: 'Kai Po Che', duration: '3:10', cover: '/shubhaarambh-cover.jpg', src: '/songs/shubhaarambh.mp3' },
     { id: 105, title: 'Durge Durge Durgatinashini', artist: 'Asha Bhosle', duration: '5:27', cover: '/durge-durge-cover.jpg', src: '/songs/durge-durge.mp3' },
     { id: 106, title: 'Nagada Sang Dhol', artist: 'Ram-Leela', duration: '4:30', cover: '/nagada-sang-dhol-cover.jpg', src: '/songs/nagada-sang-dhol.mp3' },
-    { id: 107, title: 'Demo Song 18', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 107, title: 'Saawariya', artist: 'Aastha Gill | Kumar Sanu', duration: '3:23', cover: '/saawariya-cover.jpg', src: '/songs/saawariya.mp3' },
     { id: 108, title: 'Demo Song 19', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 109, title: 'Demo Song 20', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 110, title: 'Demo Song 21', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
