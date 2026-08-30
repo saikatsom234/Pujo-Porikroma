@@ -9,8 +9,7 @@ export default defineConfig({
     watch: {
       ignored: [
         path.resolve(__dirname, 'image') + '/**',
-        path.resolve(__dirname, 'songs') + '/**',
-        path.resolve(__dirname, 'public') + '/**'
+        path.resolve(__dirname, 'songs') + '/**'
       ]
     }
   }
