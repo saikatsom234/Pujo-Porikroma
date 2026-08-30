@@ -3,6 +3,7 @@ import './MobileLoader.css';
 
 const MobileLoader = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isHidden, setIsHidden] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -14,8 +15,7 @@ const MobileLoader = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // Fallback: forcefully dismiss the loader after 6 seconds
-    // in case the video gets stuck or is too long.
+    // Fallback: forcefully trigger fade out after 6 seconds
     const timeout = setTimeout(() => {
       setIsLoading(false);
     }, 6000);
@@ -26,15 +26,25 @@ const MobileLoader = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) {
+      // Once loading finishes, wait for the 1-second CSS blur/fade animation to complete before completely unmounting
+      const hideTimeout = setTimeout(() => {
+        setIsHidden(true);
+      }, 1000);
+      return () => clearTimeout(hideTimeout);
+    }
+  }, [isLoading]);
+
   const handleVideoEnd = () => {
     setIsLoading(false);
   };
 
-  // Only show the loader on mobile screens and while it's loading
-  if (!isMobile || !isLoading) return null;
+  // Only render on mobile. If it's hidden (after animation), return null.
+  if (!isMobile || isHidden) return null;
 
   return (
-    <div className="mobile-loader-overlay">
+    <div className={`mobile-loader-overlay ${!isLoading ? 'fade-out' : ''}`}>
       <video
         className="mobile-loader-video"
         autoPlay
