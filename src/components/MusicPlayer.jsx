@@ -10,10 +10,10 @@ const MusicPlayer = () => {
   const [showSongList, setShowSongList] = useState(false);
   
   const [currentSong, setCurrentSong] = useState({
-    title: 'Dugga Ma',
-    artist: 'Arijit Singh | Bolo Dugga Maiki',
-    cover: '/dugga-ma-cover.jpg',
-    src: '/songs/dugga-ma.mp3'
+    title: 'Dugga Elo',
+    artist: 'Monali Thakur',
+    cover: '/dugga-elo-cover.jpg',
+    src: '/songs/dugga-elo.mp3'
   });
   
   const audioRef = useRef(null);
