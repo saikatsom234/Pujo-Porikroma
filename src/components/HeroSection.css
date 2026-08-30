@@ -63,7 +63,7 @@
   .show-mobile-only {
     display: block;
     position: absolute;
-    top: calc(38vh - 100px); /* Pulled up 15px to reduce gap */
+    top: calc(38vh - 103px); /* Pulled up 15px to reduce gap, plus 3px uplift */
     left: 0;
     width: 100%;
     text-align: center;
@@ -75,7 +75,7 @@
   img.mobile-logo {
     display: block;
     position: absolute;
-    top: calc(10vh - 59px); /* Uplifted by additional 4px */
+    top: calc(10vh - 58px); /* Uplifted by 20px + 3px */
     left: 50%;
     transform: translateX(-50%);
     width: 65%; /* Approximate original scale */
@@ -115,26 +115,26 @@
 /* Specific styling for small screens */
 @media (max-width: 430px), (max-height: 700px) and (max-width: 768px) {
   .hero-section .show-mobile-only {
-    /* Move text ABOVE the logo and pushed down by 15px to reduce gap */
-    top: calc(12vh - 5px);
+    /* Move text ABOVE the logo and pushed down by 15px to reduce gap, plus 3px uplift */
+    top: calc(12vh - 8px);
   }
   
   .hero-section img.mobile-logo {
-    /* Move logo BELOW the text, uplifted additional 4px */
-    top: calc(22vh - 129px);
+    /* Move logo BELOW the text, but lifted 125px up (uplifted 20px + 3px) */
+    top: calc(22vh - 128px);
   }
 }
 
 /* Specific styling for 8.3 inch+ tablets (like iPad Mini in portrait) */
 @media (min-width: 700px) and (min-height: 1000px) and (max-width: 768px) {
   .hero-section .show-mobile-only {
-    /* Move text ABOVE the logo and push down by 15px to reduce gap */
-    top: calc(12vh - 55px);
+    /* Move text ABOVE the logo and push down by 15px to reduce gap, plus 3px uplift */
+    top: calc(12vh - 58px);
   }
   
   .hero-section img.mobile-logo {
-    /* Move logo BELOW the text, uplifted additional 4px */
-    top: calc(22vh - 299px);
+    /* Move logo BELOW the text, but lift by 295px (uplifted 20px + 3px) */
+    top: calc(22vh - 298px);
     /* Reduce size by 50px from its standard 65% width */
     width: calc(65% - 50px);
   }
