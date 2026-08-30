@@ -6,8 +6,24 @@ const MobileLoader = () => {
   const [isHidden, setIsHidden] = useState(false);
   // Initialize synchronously to prevent 1-frame flash of main app
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+  const [displayedText, setDisplayedText] = useState('');
+  
+  const loadingText = "লোড হচ্ছে, অপেক্ষা করুন।....";
 
   useEffect(() => {
+    // Typing animation logic
+    let index = 0;
+    const typingInterval = setInterval(() => {
+      setDisplayedText((prev) => {
+        const nextStr = loadingText.slice(0, index + 1);
+        if (nextStr === loadingText) {
+          clearInterval(typingInterval);
+        }
+        return nextStr;
+      });
+      index++;
+    }, 100);
+
     // Check if device is mobile width (phone)
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -24,6 +40,7 @@ const MobileLoader = () => {
     return () => {
       window.removeEventListener('resize', checkMobile);
       clearTimeout(timeout);
+      clearInterval(typingInterval);
     };
   }, []);
 
@@ -57,6 +74,9 @@ const MobileLoader = () => {
         <source src="/loader.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+      <div className="loader-text-container">
+        <span className="loader-typing-text bengali-text">{displayedText}</span>
+      </div>
     </div>
   );
 };
