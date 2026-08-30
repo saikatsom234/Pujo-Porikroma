@@ -75,7 +75,7 @@
   img.mobile-logo {
     display: block;
     position: absolute;
-    top: calc(10vh - 35px); /* Lifted exactly 35px up */
+    top: calc(10vh - 55px); /* Lifted 55px up (20px more) to avoid background face */
     left: 50%;
     transform: translateX(-50%);
     width: 65%; /* Approximate original scale */
