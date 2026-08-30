@@ -38,9 +38,9 @@
 }
 
 .loader-typing-text {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 2px;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
