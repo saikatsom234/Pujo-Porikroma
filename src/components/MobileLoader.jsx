@@ -4,7 +4,8 @@ import './MobileLoader.css';
 const MobileLoader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHidden, setIsHidden] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // Initialize synchronously to prevent 1-frame flash of main app
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
 
   useEffect(() => {
     // Check if device is mobile width (phone)
