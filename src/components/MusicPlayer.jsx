@@ -89,7 +89,7 @@ const MusicPlayer = () => {
         <button className="category-btn glass-panel bengali-text" onClick={() => setShowSongList(true)}>
           <Music size={16} /> পুজো সংগ্রহ <ChevronDown size={16} />
         </button>
-        <button className={`category-btn glass-panel bengali-text ${isDhakPlaying ? 'active' : ''}`} onClick={toggleDhak}>
+        <button className="category-btn glass-panel bengali-text">
           <Music size={16} /> ঢাক
         </button>
       </div>
