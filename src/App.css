@@ -1,9 +1,8 @@
 .app-container {
   position: relative;
   width: 100vw;
-  min-height: 100vh;
-  min-height: 100dvh;
-  height: max(100dvh, 800px); /* Ensures the exact portrait layout scales without squishing when horizontal */
+  height: 100vh; /* Fallback for older browsers */
+  height: 100dvh; /* Dynamic viewport height to fix mobile browser URL bar clipping */
   display: flex;
   flex-direction: column;
 }

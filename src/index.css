@@ -24,8 +24,7 @@ body {
   background-color: var(--bg-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  overflow-y: auto; /* Allow scrolling on landscape mode */
+  overflow: hidden; /* prevent scrolling for a full screen app feel */
   -webkit-user-select: none; /* Prevent accidental text selection caret on mobile */
   user-select: none;
 }
