@@ -19,7 +19,7 @@ const ChaiPopup = ({ onClose }) => {
           <X size={20} />
         </button>
         
-        <h2 className="chai-title">BUY US A CHAI</h2>
+        <h2 className="chai-title">BUY ME A COFFEE</h2>
         
         <p className="chai-desc">
           If Devi Paksha made your Pujo a little nicer, you know what to do. One cup of chai, and we're back to the adda.
