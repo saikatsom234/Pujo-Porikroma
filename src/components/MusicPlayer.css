@@ -118,6 +118,7 @@
   border-radius: 2px;
   margin: 0; /* Removed extra margin to reduce gap */
   overflow: hidden;
+  cursor: pointer;
 }
 
 .progress-bar {
@@ -190,7 +191,7 @@
     padding: 7px 17px; /* Reduced padding by another 1px */
     border-radius: var(--radius-full);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
     letter-spacing: 0.5px;
     background: rgba(50, 40, 40, 0.8);
   }

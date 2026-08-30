@@ -1,0 +1,175 @@
+.song-list-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Align to bottom for slide up */
+}
+
+.song-list-popup {
+  width: calc(100% - 40px);
+  max-width: 600px;
+  height: 70vh; /* Takes up 70% of screen height */
+  background: rgba(40, 30, 30, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px 24px 0 0;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.song-list-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.song-list-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0 auto;
+  padding-bottom: 8px; /* Slightly increased padding so it looks better stretched */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Low white opacity */
+  display: block;
+  width: 85%; /* Centered in the middle of the card without touching edges */
+}
+
+.song-list-tabs {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 15px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.tab-divider {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.song-stack {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px; /* Space for scrollbar */
+}
+
+/* Custom scrollbar for song stack */
+.song-stack::-webkit-scrollbar {
+  width: 4px;
+}
+.song-stack::-webkit-scrollbar-track {
+  background: transparent;
+}
+.song-stack::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.song-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(50, 40, 40, 0.4);
+  border-radius: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+}
+
+.song-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.song-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.song-card-cover {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.song-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.song-card-title {
+  font-weight: bold;
+  font-size: 18px; /* Increased font size */
+}
+
+.song-card-artist {
+  font-size: 14px; /* Increased font size slightly */
+  color: var(--text-secondary);
+}
+
+.song-card-duration {
+  font-size: 11px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.song-card-play-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--text-primary);
+  color: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s;
+}
+
+.song-card-play-btn:active {
+  transform: scale(0.95);
+}

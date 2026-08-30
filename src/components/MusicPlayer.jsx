@@ -1,20 +1,57 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Music, ChevronDown } from 'lucide-react';
+import SongListPopup from './SongListPopup';
 import './MusicPlayer.css';
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [showSongList, setShowSongList] = useState(false);
+  
+  const [currentSong, setCurrentSong] = useState({
+    title: 'Dugga Elo',
+    artist: 'Monali Thakur',
+    cover: '/dugga-elo-cover.jpg',
+    src: '/songs/dugga-elo.mp3'
+  });
+  
   const audioRef = useRef(null);
 
   const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
     setIsPlaying(!isPlaying);
+  };
+
+  const handleSelectSong = (song) => {
+    setCurrentSong(song);
+    setShowSongList(false);
+    setIsPlaying(true);
+  };
+
+  // Handle audio playback whenever the song changes or play state toggles
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(e => {
+          console.log("Playback interrupted or prevented:", e);
+          setIsPlaying(false);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, currentSong.src]);
+
+  const handleProgressClick = (e) => {
+    if (!audioRef.current || !duration) return;
+    const container = e.currentTarget;
+    const rect = container.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = clickX / rect.width;
+    const newTime = percentage * duration;
+    
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
   };
 
   const formatTime = (time) => {
@@ -51,10 +88,10 @@ const MusicPlayer = () => {
 
   return (
     <div className="music-player-container">
-      <audio ref={audioRef} src="/songs/dugga-elo.mp3" preload="metadata" />
+      <audio ref={audioRef} src={currentSong.src} preload="metadata" />
       {/* Mobile only selector */}
       <div className="mobile-category-selector show-mobile-flex">
-        <button className="category-btn glass-panel bengali-text">
+        <button className="category-btn glass-panel bengali-text" onClick={() => setShowSongList(true)}>
           <Music size={16} />
           পূজো সংগ্রহ
           <ChevronDown size={16} />
@@ -65,11 +102,11 @@ const MusicPlayer = () => {
         <div className="player-top">
           <div className="track-info">
             <div className={`album-art ${isPlaying ? 'playing' : ''}`}>
-              <img src="/dugga-elo-cover.jpg" alt="Dugga Elo" />
+              <img src={currentSong.cover} alt={currentSong.title} />
             </div>
             <div className="track-details">
-              <div className="track-title">Dugga Elo</div>
-              <div className="track-artist">Monali Thakur</div>
+              <div className="track-title">{currentSong.title}</div>
+              <div className="track-artist">{currentSong.artist}</div>
               <div className="track-time">{formatTime(currentTime)} / {formatTime(duration)}</div>
             </div>
           </div>
@@ -83,7 +120,7 @@ const MusicPlayer = () => {
           </div>
         </div>
         
-        <div className="progress-container">
+        <div className="progress-container" onClick={handleProgressClick}>
           <div className="progress-bar" style={{ width: `${progress}%` }}></div>
         </div>
         
@@ -105,6 +142,8 @@ const MusicPlayer = () => {
           </button>
         </div>
       </div>
+      
+      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} />}
     </div>
   );
 };
