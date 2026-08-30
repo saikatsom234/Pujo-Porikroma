@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Check } from 'lucide-react';
+import { X, Music } from 'lucide-react';
 import './SongListPopup.css';
 
 const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
@@ -42,48 +42,53 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
         
         {/* Header Section */}
         <div className="song-list-header">
-          <h2 className="song-list-title bengali-text">পুজো স্পেশাল</h2>
+          <div className="song-list-header-top">
+            <h2 className="song-list-title-text bengali-text">পুজো স্পেশাল</h2>
+            <button className="close-btn" onClick={onClose}>
+              <X size={24} />
+            </button>
+          </div>
           <div className="song-list-tabs bengali-text">
             <button 
-              className={`tab-btn ${activeTab === 'pandal' ? 'active' : ''}`}
+              className={`tab-btn-modern ${activeTab === 'pandal' ? 'active' : ''}`}
               onClick={() => setActiveTab('pandal')}
             >
               প্যান্ডেল কালেকশন
             </button>
-            <span className="tab-divider">|</span>
             <button 
-              className={`tab-btn ${activeTab === 'mahalaya' ? 'active' : ''}`}
+              className={`tab-btn-modern ${activeTab === 'mahalaya' ? 'active' : ''}`}
               onClick={() => setActiveTab('mahalaya')}
             >
               মহালয়া ও গান
             </button>
           </div>
+          <div className="song-list-subtitle bengali-text">
+            The main curated Durga Puja playlist.
+          </div>
         </div>
 
         {/* Scrollable Song Stack */}
         <div className="song-stack">
-          {currentSongs.map((song) => (
-            <div key={song.id} className="song-card">
-              <div className="song-card-left">
-                <img src={song.cover} alt={song.title} className="song-card-cover" />
-                <div className="song-card-info">
-                  <div className="song-card-title" style={song.title === currentSong?.title ? { color: '#4ade80' } : {}}>{song.title}</div>
-                  <div className="song-card-artist">{song.artist}</div>
-                  <div className="song-card-duration">0:00 / {song.duration}</div>
+          {currentSongs.map((song, index) => {
+            const isActive = song.title === currentSong?.title;
+            return (
+              <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
+                <div className="song-card-left-modern">
+                  <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
+                    {isActive ? <Music size={14} /> : (index + 1).toString().padStart(2, '0')}
+                  </div>
+                  <img src={song.cover} alt={song.title} className="song-card-cover-modern" />
+                  <div className="song-card-info-modern">
+                    <div className="song-card-title-modern" style={{ color: isActive ? '#daa520' : '#fff' }}>{song.title}</div>
+                    <div className="song-card-artist-modern">{song.artist}</div>
+                  </div>
+                </div>
+                <div className="song-card-duration-modern">
+                  {song.duration}
                 </div>
               </div>
-              
-              {song.title === currentSong?.title ? (
-                <div className="song-card-active-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px' }}>
-                  <Check size={24} color="#4ade80" />
-                </div>
-              ) : (
-                <button className="song-card-play-btn" onClick={() => onSelectSong(song)}>
-                  <Play size={20} fill="currentColor" className="play-icon-offset" />
-                </button>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
         
       </div>
