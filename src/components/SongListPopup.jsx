@@ -19,7 +19,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 9, title: 'Shundori Komola', artist: 'Villain', duration: '3:25', cover: '/shundori-komola-cover.jpg', src: '/songs/shundori-komola.mp3' },
     { id: 10, title: 'Chogada', artist: 'Loveyatri', duration: '4:16', cover: '/chogada-cover.jpg', src: '/songs/chogada.mp3' },
     { id: 11, title: 'Gouri Elo', artist: 'Raktabeej', duration: '3:12', cover: '/gouri-elo-cover.jpg', src: '/songs/gouri-elo.mp3' },
-    { id: 102, title: 'Demo Song 13', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 102, title: 'Rupang Dehi', artist: 'Snita Pramanik Ghosh', duration: '4:40', cover: '/rupang-dehi-cover.jpg', src: '/songs/rupang-dehi.mp3' },
     { id: 103, title: 'Demo Song 14', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 104, title: 'Demo Song 15', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 105, title: 'Demo Song 16', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
