@@ -1,0 +1,1 @@
+    { id: 151, title: 'Shubho Shubho', artist: 'Altamash Faridi', duration: '3:16', cover: '/shubho-shubho-cover.jpg', src: '/songs/shubho-shubho.mp3' },
