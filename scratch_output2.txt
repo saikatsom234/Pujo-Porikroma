@@ -1,0 +1,6 @@
+    { id: 133, title: 'Dugga Mayer Joy', artist: 'Keshab Dey', duration: '3:01', cover: '/dugga-mayer-joy-cover.jpg', src: '/songs/dugga-mayer-joy.mp3' },
+    { id: 134, title: 'Dugga Eseche Ghore', artist: 'Keshab Dey', duration: '3:43', cover: '/dugga-eseche-ghore-cover.jpg', src: '/songs/dugga-eseche-ghore.mp3' },
+    { id: 135, title: 'Yoddhar Sathe Ebar Pujo Katan', artist: 'Yoddha', duration: '3:28', cover: '/yoddhar-sathe-cover.jpg', src: '/songs/yoddhar-sathe.mp3' },
+    { id: 136, title: 'Pujor Dhaak Theme', artist: 'SUROBAIBHAB', duration: '1:30', cover: '/pujor-dhaak-theme-cover.jpg', src: '/songs/pujor-dhaak-theme.mp3' },
+    { id: 137, title: 'Bolo Dugga Maiki (বল দুগ্গা মাঈকি)', artist: 'Jeet Gannguli', duration: '3:51', cover: '/bolo-dugga-maiki-cover.jpg', src: '/songs/bolo-dugga-maiki.mp3' },
+    { id: 138, title: 'Pujo Pujo Gondho', artist: 'Anupam Roy', duration: '2:47', cover: '/pujo-pujo-gondho-cover.jpg', src: '/songs/pujo-pujo-gondho.mp3' },
