@@ -36,7 +36,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 116, title: 'Ailo Uma Barite', artist: 'Monami Ghosh', duration: '4:20', cover: '/ailo-uma-barite-cover.jpg', src: '/songs/ailo-uma-barite.mp3' },
     { id: 117, title: 'Uma Ashe Notun Saje', artist: 'Ankita Bhattacharyya', duration: '3:27', cover: '/uma-ashe-notun-saje-cover.jpg', src: '/songs/uma-ashe-notun-saje.mp3' },
     { id: 118, title: 'Chirodini Tumi Je Aamar', artist: 'Kishore Kumar', duration: '7:02', cover: '/chirodini-cover.jpg', src: '/songs/chirodini.mp3' },
-    { id: 119, title: 'Demo Song 30', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 119, title: 'Aar Koto Raat Eka Thakbo', artist: 'Asha Bhosle', duration: '5:53', cover: '/aar-koto-raat-cover.jpg', src: '/songs/aar-koto-raat.mp3' },
     { id: 120, title: 'Demo Song 31', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 121, title: 'Demo Song 32', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 122, title: 'Demo Song 33', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
