@@ -33,7 +33,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 113, title: 'O Menoka O Menoka', artist: 'Akriti Kakkar', duration: '3:36', cover: '/o-menoka-cover.jpg', src: '/songs/o-menoka.mp3' },
     { id: 114, title: 'ABAR ELO MAA', artist: 'Rahul Dutta', duration: '3:11', cover: '/abar-elo-maa-cover.jpg', src: '/songs/abar-elo-maa.mp3' },
     { id: 115, title: 'Sharatadin', artist: 'Yoddha', duration: '5:10', cover: '/sharatadin-cover.jpg', src: '/songs/sharatadin.mp3' },
-    { id: 116, title: 'Demo Song 27', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 116, title: 'Ailo Uma Barite', artist: 'Monami Ghosh', duration: '4:20', cover: '/ailo-uma-barite-cover.jpg', src: '/songs/ailo-uma-barite.mp3' },
     { id: 117, title: 'Demo Song 28', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 118, title: 'Demo Song 29', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 119, title: 'Demo Song 30', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
