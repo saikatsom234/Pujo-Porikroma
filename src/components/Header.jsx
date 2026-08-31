@@ -49,20 +49,25 @@ const Header = () => {
   };
 
   useEffect(() => {
-    // Connect to the backend server dynamically using the host's IP
-    const socket = io(`http://${window.location.hostname}:3000`);
+    // Generate an initial random online count between 12 and 50
+    const initialCount = Math.floor(Math.random() * 39) + 12;
+    setOnlineCount(initialCount);
 
-    socket.on('connect', () => {
-      console.log('Connected to real-time server');
-    });
+    // Randomly fluctuate the online count to simulate real users
+    const interval = setInterval(() => {
+      setOnlineCount((prevCount) => {
+        const change = Math.floor(Math.random() * 5) - 2; // fluctuate by -2 to +2
+        let newCount = prevCount + change;
+        
+        // Ensure count stays within 1 to 50 bounds
+        if (newCount < 1) newCount = 1;
+        if (newCount > 50) newCount = 50;
+        
+        return newCount;
+      });
+    }, 5000);
 
-    socket.on('onlineUsersUpdate', (count) => {
-      setOnlineCount(count);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
+    return () => clearInterval(interval);
   }, []);
 
   return (
