@@ -67,7 +67,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 147, title: 'O Thakur', artist: 'Upal Sengupta', duration: '2:53', cover: '/o-thakur-cover.jpg', src: '/songs/o-thakur.mp3' },
     { id: 148, title: 'Dhol Bajaa', artist: 'DarshanRaval', duration: '3:32', cover: '/dhol-bajaa-cover.jpg', src: '/songs/dhol-bajaa.mp3' },
     { id: 149, title: 'Tomake Chai', artist: 'Gangster | Arijit Singh', duration: '4:34', cover: '/tomake-chai-cover.jpg', src: '/songs/tomake-chai.mp3' },
-    { id: 150, title: 'Demo Song 61', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 150, title: 'Mehndi', artist: 'Dhvani Bhanushali', duration: '4:48', cover: '/mehndi-cover.png', src: '/songs/mehndi.mp3' },
     { id: 151, title: 'Demo Song 62', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 152, title: 'Demo Song 63', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 153, title: 'Demo Song 64', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
