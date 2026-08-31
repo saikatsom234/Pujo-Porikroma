@@ -69,7 +69,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 149, title: 'Tomake Chai', artist: 'Gangster | Arijit Singh', duration: '4:34', cover: '/tomake-chai-cover.jpg', src: '/songs/tomake-chai.mp3' },
     { id: 150, title: 'Mehndi', artist: 'Dhvani Bhanushali', duration: '4:48', cover: '/mehndi-cover.png', src: '/songs/mehndi.mp3' },
     { id: 151, title: 'Shubho Shubho', artist: 'Altamash Faridi', duration: '3:16', cover: '/shubho-shubho-cover.jpg', src: '/songs/shubho-shubho.mp3' },
-    { id: 152, title: 'Demo Song 63', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 152, title: 'Debi Sajer Gaan', artist: 'Rupak Tiary', duration: '3:00', cover: '/debi-sajer-gaan-cover.jpg', src: '/songs/debi-sajer-gaan.mp3' },
     { id: 153, title: 'Demo Song 64', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 154, title: 'Demo Song 65', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 155, title: 'Demo Song 66', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
