@@ -59,7 +59,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 139, title: 'Dashabhuja', artist: 'Monali Thakur', duration: '4:05', cover: '/dashabhuja-cover.jpg', src: '/songs/dashabhuja.mp3' },
     { id: 140, title: 'Joy Dugga Thakur(জয় দুগ্গা ঠাকুর)', artist: 'AnkushH NussratJ', duration: '4:53', cover: '/joy-dugga-thakur-cover.jpg', src: '/songs/joy-dugga-thakur.mp3' },
     { id: 141, title: 'Eseche Maa Durga Maa', artist: 'Keshab Dey', duration: '3:16', cover: '/eseche-maa-durga-maa-cover.png', src: '/songs/eseche-maa-durga-maa.mp3' },
-    { id: 142, title: 'Pujor Gaan', artist: 'Poushali Bhattacharya', duration: '3:31', cover: '/pujor-gaan-cover.jpg', src: '/songs/pujor-gaan.mp3' },
+    { id: 142, title: 'Pujor Gaan', artist: 'Poushali Bhattacharya', duration: '4:44', cover: '/pujor-gaan-cover.jpg', src: '/songs/pujor-gaan.mp3' },
     { id: 143, title: 'Demo Song 54', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 144, title: 'Demo Song 55', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 145, title: 'Demo Song 56', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
