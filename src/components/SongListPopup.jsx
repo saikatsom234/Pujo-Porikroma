@@ -30,7 +30,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 110, title: 'Radhe Radhe', artist: 'Dream Girl', duration: '3:17', cover: '/radhe-radhe-cover.jpg', src: '/songs/radhe-radhe.mp3' },
     { id: 111, title: 'Dugga Elo', artist: 'Akriti Kakar', duration: '4:25', cover: '/dugga-elo-akriti-cover.jpg', src: '/songs/dugga-elo-akriti.mp3' },
     { id: 112, title: 'Ekta Bindaas Para', artist: 'Ley Chakka', duration: '4:33', cover: '/ekta-bindaas-para-cover.jpg', src: '/songs/ekta-bindaas-para.mp3' },
-    { id: 113, title: 'Demo Song 24', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 113, title: 'O Menoka O Menoka', artist: 'Akriti Kakkar', duration: '3:36', cover: '/o-menoka-cover.jpg', src: '/songs/o-menoka.mp3' },
     { id: 114, title: 'Demo Song 25', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 115, title: 'Demo Song 26', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 116, title: 'Demo Song 27', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
