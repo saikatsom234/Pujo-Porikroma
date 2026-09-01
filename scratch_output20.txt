@@ -1,0 +1,6 @@
+    { id: 202, title: 'Baundule Ghuri', artist: 'Anupam Roy', duration: '5:43', cover: '/baundule-ghuri-cover.jpg', src: '/songs/baundule-ghuri.mp3' },
+    { id: 203, title: 'Panga', artist: 'Herogiri', duration: '3:03', cover: '/panga-herogiri-cover.jpg', src: '/songs/panga-herogiri.mp3' },
+    { id: 204, title: 'Tumi Jantei Paro Naa', artist: 'Mahtim Shakib', duration: '3:59', cover: '/tumi-jantei-paro-naa-cover.jpg', src: '/songs/tumi-jantei-paro-naa.mp3' },
+    { id: 205, title: 'Takey Olpo Kache Dakchi', artist: 'Mahtim Shakib', duration: '3:18', cover: '/takey-olpo-kachhe-dakchhi-cover.jpg', src: '/songs/takey-olpo-kachhe-dakchhi.mp3' },
+    { id: 206, title: 'Kanamachi', artist: 'Katukutu Buro', duration: '2:30', cover: '/kanamachi-katukutu-buro-cover.jpg', src: '/songs/kanamachi-katukutu-buro.mp3' },
+    { id: 207, title: 'Sohena Jatona X Mc MugzKon Se Para', artist: 'MjProduction', duration: '3:09', cover: '/sohena-jatona-remix-cover.jpg', src: '/songs/sohena-jatona-remix.mp3' },
