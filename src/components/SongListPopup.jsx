@@ -173,10 +173,15 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
 
   const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
   
-  const filteredSongs = currentSongs.filter(song => 
-    song.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    song.artist.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredSongs = currentSongs.filter((song, index) => {
+    const serialNumber = (index + 1).toString();
+    const query = searchQuery.toLowerCase();
+    return (
+      serialNumber === query ||
+      song.title.toLowerCase().includes(query) || 
+      song.artist.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <div className="song-list-overlay" onClick={onClose}>
@@ -234,13 +239,14 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
         {/* Scrollable Song Stack */}
         <div className="song-stack">
           {filteredSongs.length > 0 ? (
-            filteredSongs.map((song, index) => {
+            filteredSongs.map((song) => {
               const isActive = song.src === currentSong?.src;
+              const originalIndex = currentSongs.indexOf(song);
               return (
                 <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
                   <div className="song-card-left-modern">
                     <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
-                      {isActive ? <Music size={14} /> : (index + 1).toString().padStart(2, '0')}
+                      {isActive ? <Music size={14} /> : (originalIndex + 1).toString().padStart(2, '0')}
                     </div>
                     <img src={song.cover} alt={song.title} className="song-card-cover-modern" />
                     <div className="song-card-info-modern">
