@@ -105,7 +105,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 185, title: 'Gouri Elo', artist: 'Aritra Dasgupta', duration: '5:34', cover: '/gouri-elo-aritra-dasgupta-cover.jpg', src: '/songs/gouri-elo-aritra-dasgupta.mp3' },
     { id: 186, title: 'Pujar Gaan', artist: 'Hooligaanism', duration: '6:43', cover: '/pujar-gaan-cover.jpg', src: '/songs/pujar-gaan.mp3' },
     { id: 187, title: 'Asatoma Sadgamaya', artist: 'Arijit Singh', duration: '2:56', cover: '/asatoma-sadgamaya-cover.jpg', src: '/songs/asatoma-sadgamaya.mp3' },
-    { id: 188, title: 'Demo Song 99', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 188, title: 'Dakatiya Banshi', artist: 'Bohurupi', duration: '4:03', cover: '/dakatiya-banshi-cover.jpg', src: '/songs/dakatiya-banshi.mp3' },
     { id: 189, title: 'Demo Song 100', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 190, title: 'Demo Song 101', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 191, title: 'Demo Song 102', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
