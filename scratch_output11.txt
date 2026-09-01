@@ -1,0 +1,7 @@
+    { id: 154, title: 'He Maa Durga Maa', artist: 'Aseema Panda', duration: '3:16', cover: '/he-maa-durga-maa-cover.jpg', src: '/songs/he-maa-durga-maa.mp3' },
+    { id: 155, title: 'Durga Maa Eseche', artist: 'Akassh', duration: '3:07', cover: '/durga-maa-eseche-cover.jpg', src: '/songs/durga-maa-eseche.mp3' },
+    { id: 156, title: 'Hote Paare Na', artist: 'Bolo Dugga Maiki', duration: '4:03', cover: '/hote-paare-na-cover.jpg', src: '/songs/hote-paare-na.mp3' },
+    { id: 157, title: 'Dugga Ma asche', artist: 'Infra', duration: '3:34', cover: '/dugga-ma-asche-cover.jpg', src: '/songs/dugga-ma-asche.mp3' },
+    { id: 158, title: 'KOLKI', artist: 'Monami Ghosh', duration: '4:30', cover: '/kolki-cover.jpg', src: '/songs/kolki.mp3' },
+    { id: 159, title: 'Mon Boleche Amar', artist: 'Love Express', duration: '4:01', cover: '/mon-boleche-amar-cover.jpg', src: '/songs/mon-boleche-amar.mp3' },
+    { id: 160, title: 'Maa Eseche - Remix', artist: 'Dj Suman Raj', duration: '3:04', cover: '/maa-eseche-remix-cover.jpg', src: '/songs/maa-eseche-remix.mp3' },
