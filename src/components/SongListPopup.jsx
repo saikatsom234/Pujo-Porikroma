@@ -95,7 +95,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 175, title: 'Barondala Saaja', artist: 'Madhuraa Bhattacharya', duration: '4:09', cover: '/barondala-saaja-cover.jpg', src: '/songs/barondala-saaja.mp3' },
     { id: 176, title: 'Ogo Amar Agamani Alo', artist: 'Sipra Bose', duration: '3:41', cover: '/ogo-amar-agamani-alo-cover.jpg', src: '/songs/ogo-amar-agamani-alo.mp3' },
     { id: 177, title: 'Phagun Haoyay Haoyay', artist: 'Jayati Chakraborty', duration: '2:41', cover: '/phagun-haoyay-haoyay-cover.jpg', src: '/songs/phagun-haoyay-haoyay.mp3' },
-    { id: 178, title: 'Demo Song 89', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 178, title: 'Saajan Rock the Dotara', artist: 'Timir Biswas Studio', duration: '4:27', cover: '/saajan-rock-the-dotara-cover.jpg', src: '/songs/saajan-rock-the-dotara.mp3' },
     { id: 179, title: 'Demo Song 90', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 180, title: 'Demo Song 91', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 181, title: 'Demo Song 92', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
