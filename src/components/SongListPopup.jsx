@@ -118,7 +118,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 198, title: 'MICHRIR DANA', artist: 'BIBAHO OBHIJAN', duration: '3:30', cover: '/michrir-dana-cover.jpg', src: '/songs/michrir-dana.mp3' },
     { id: 199, title: 'Koka Kola', artist: 'Samidh', duration: '5:14', cover: '/koka-kola-cover.jpg', src: '/songs/koka-kola.mp3' },
     { id: 200, title: 'Desi Chhori', artist: 'Yoddha', duration: '4:01', cover: '/desi-chhori-cover.jpg', src: '/songs/desi-chhori.mp3' },
-    { id: 201, title: 'Demo Song 112', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 201, title: 'Party Shoes', artist: 'Bindaas', duration: '3:55', cover: '/party-shoes-cover.jpg', src: '/songs/party-shoes.mp3' },
     { id: 202, title: 'Demo Song 113', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 203, title: 'Demo Song 114', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 204, title: 'Demo Song 115', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
