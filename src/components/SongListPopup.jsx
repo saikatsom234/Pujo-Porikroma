@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { X, Music } from 'lucide-react';
+import { X, Music, Search } from 'lucide-react';
 import './SongListPopup.css';
 
 const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
   const [activeTab, setActiveTab] = useState('pandal');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Placeholder array for Pandal Collection
   const pandalSongs = [
@@ -170,6 +172,11 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
   ];
 
   const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
+  
+  const filteredSongs = currentSongs.filter(song => 
+    song.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    song.artist.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="song-list-overlay" onClick={onClose}>
@@ -183,45 +190,75 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
               <X size={24} />
             </button>
           </div>
-          <div className="song-list-tabs bengali-text">
-            <button 
-              className={`tab-btn-modern ${activeTab === 'pandal' ? 'active' : ''}`}
-              onClick={() => setActiveTab('pandal')}
-            >
-              প্যান্ডেল কালেকশন
-            </button>
-            <button 
-              className={`tab-btn-modern ${activeTab === 'mahalaya' ? 'active' : ''}`}
-              onClick={() => setActiveTab('mahalaya')}
-            >
-              মহালয়া ও গান
-            </button>
+          <div className="song-list-tabs-container">
+            {!isSearchOpen ? (
+              <div className="song-list-tabs bengali-text animation-pop-in">
+                <button 
+                  className={`tab-btn-modern ${activeTab === 'pandal' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('pandal')}
+                >
+                  প্যান্ডেল কালেকশন
+                </button>
+                <button 
+                  className={`tab-btn-modern ${activeTab === 'mahalaya' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('mahalaya')}
+                >
+                  মহালয়া ও গান
+                </button>
+              </div>
+            ) : (
+              <div className="search-input-container animation-pop-in">
+                <input
+                  type="text"
+                  className="search-input bengali-text"
+                  placeholder="গান খুঁজুন..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+                <button className="search-close-btn" onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}>
+                  <X size={16} />
+                </button>
+              </div>
+            )}
+            
+            {!isSearchOpen && (
+              <button className="search-icon-btn animation-pop-in" onClick={() => setIsSearchOpen(true)}>
+                <Search size={18} />
+              </button>
+            )}
           </div>
 
         </div>
 
         {/* Scrollable Song Stack */}
         <div className="song-stack">
-          {currentSongs.map((song, index) => {
-            const isActive = song.src === currentSong?.src;
-            return (
-              <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
-                <div className="song-card-left-modern">
-                  <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
-                    {isActive ? <Music size={14} /> : (index + 1).toString().padStart(2, '0')}
+          {filteredSongs.length > 0 ? (
+            filteredSongs.map((song, index) => {
+              const isActive = song.src === currentSong?.src;
+              return (
+                <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
+                  <div className="song-card-left-modern">
+                    <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
+                      {isActive ? <Music size={14} /> : (index + 1).toString().padStart(2, '0')}
+                    </div>
+                    <img src={song.cover} alt={song.title} className="song-card-cover-modern" />
+                    <div className="song-card-info-modern">
+                      <div className="song-card-title-modern" style={{ color: isActive ? '#daa520' : '#fff' }}>{song.title}</div>
+                      <div className="song-card-artist-modern">{song.artist}</div>
+                    </div>
                   </div>
-                  <img src={song.cover} alt={song.title} className="song-card-cover-modern" />
-                  <div className="song-card-info-modern">
-                    <div className="song-card-title-modern" style={{ color: isActive ? '#daa520' : '#fff' }}>{song.title}</div>
-                    <div className="song-card-artist-modern">{song.artist}</div>
+                  <div className="song-card-duration-modern">
+                    {song.duration}
                   </div>
                 </div>
-                <div className="song-card-duration-modern">
-                  {song.duration}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="no-songs-found bengali-text animation-pop-in">
+              গানটি উপলব্ধ নয়
+            </div>
+          )}
         </div>
         
       </div>
