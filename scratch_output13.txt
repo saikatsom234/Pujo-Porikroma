@@ -1,0 +1,5 @@
+    { id: 173, title: 'Jago Tumi Jago', artist: 'Trissha Chatterjee', duration: '2:28', cover: '/jago-tumi-jago-cover.jpg', src: '/songs/jago-tumi-jago.mp3' },
+    { id: 174, title: 'Raai Jago Go', artist: 'Pousali Banerjee', duration: '6:00', cover: '/raai-jago-go-cover.jpg', src: '/songs/raai-jago-go.mp3' },
+    { id: 175, title: 'Barondala Saaja', artist: 'Madhuraa Bhattacharya', duration: '4:09', cover: '/barondala-saaja-cover.jpg', src: '/songs/barondala-saaja.mp3' },
+    { id: 176, title: 'Ogo Amar Agamani Alo', artist: 'Sipra Bose', duration: '3:41', cover: '/ogo-amar-agamani-alo-cover.jpg', src: '/songs/ogo-amar-agamani-alo.mp3' },
+    { id: 177, title: 'Phagun Haoyay Haoyay', artist: 'Jayati Chakraborty', duration: '2:41', cover: '/phagun-haoyay-haoyay-cover.jpg', src: '/songs/phagun-haoyay-haoyay.mp3' },
