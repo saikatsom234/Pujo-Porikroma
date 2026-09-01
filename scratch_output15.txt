@@ -1,0 +1,2 @@
+    { id: 179, title: 'Agomonir Gaan', artist: 'Anupam Roy', duration: '6:03', cover: '/agomonir-gaan-cover.jpg', src: '/songs/agomonir-gaan.mp3' },
+    { id: 180, title: 'ওগো আমার আগমনী আলো', artist: 'Samadrita Ghosh', duration: '5:00', cover: '/ogo-amar-agamani-alo-samadrita-cover.jpg', src: '/songs/ogo-amar-agamani-alo-samadrita.mp3' },
