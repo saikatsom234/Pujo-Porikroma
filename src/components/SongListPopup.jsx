@@ -155,7 +155,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 233, title: 'Pyaar Ka Bukhar', artist: 'Challenge 2', duration: '3:32', cover: '/pyaar-ka-bukhar-cover.jpg', src: '/songs/pyaar-ka-bukhar.mp3' },
     { id: 234, title: 'Pakka Ghughu Maal', artist: 'Aami Sudhu Cheyechi Tomay', duration: '4:15', cover: '/pakka-ghughu-maal-cover.jpg', src: '/songs/pakka-ghughu-maal.mp3' },
     { id: 235, title: 'Dhichkiyaon', artist: 'Jamai 420', duration: '3:46', cover: '/dhichkiyaon-cover.jpg', src: '/songs/dhichkiyaon.mp3' },
-    { id: 236, title: 'Jamai 420', artist: 'Jamai 420', duration: '3:46', cover: '/jamai-420-cover.jpg', src: '/songs/jamai-420.mp3' },
+    { id: 236, title: 'Jamai 420', artist: 'Jamai 420', duration: '3:43', cover: '/jamai-420-cover.jpg', src: '/songs/jamai-420.mp3' },
     { id: 237, title: '3G', artist: 'Hero 420', duration: '3:36', cover: '/3g-cover.jpg', src: '/songs/3g.mp3' },
     { id: 238, title: 'Aami Raaji', artist: 'Katmundu', duration: '4:02', cover: '/aami-raaji-cover.png', src: '/songs/aami-raaji.mp3' },
     { id: 239, title: 'Eto Alo', artist: 'Katmundu', duration: '3:34', cover: '/eto-alo-cover.png', src: '/songs/eto-alo.mp3' },
