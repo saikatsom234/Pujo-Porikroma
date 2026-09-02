@@ -41,6 +41,40 @@ const MusicPlayer = () => {
     setIsPlaying(true);
   };
 
+  const playNext = () => {
+    let nextSong = null;
+    const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
+    if (pandalIndex !== -1) {
+      nextSong = pandalSongs[(pandalIndex + 1) % pandalSongs.length];
+    } else {
+      const mahalayaIndex = mahalayaSongs.findIndex(s => s.src === currentSong.src);
+      if (mahalayaIndex !== -1) {
+        nextSong = mahalayaSongs[(mahalayaIndex + 1) % mahalayaSongs.length];
+      }
+    }
+    if (nextSong) {
+      setCurrentSong(nextSong);
+      setIsPlaying(true);
+    }
+  };
+
+  const playPrevious = () => {
+    let prevSong = null;
+    const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
+    if (pandalIndex !== -1) {
+      prevSong = pandalSongs[(pandalIndex - 1 + pandalSongs.length) % pandalSongs.length];
+    } else {
+      const mahalayaIndex = mahalayaSongs.findIndex(s => s.src === currentSong.src);
+      if (mahalayaIndex !== -1) {
+        prevSong = mahalayaSongs[(mahalayaIndex - 1 + mahalayaSongs.length) % mahalayaSongs.length];
+      }
+    }
+    if (prevSong) {
+      setCurrentSong(prevSong);
+      setIsPlaying(true);
+    }
+  };
+
   // Handle audio playback whenever the song changes or play state toggles
   useEffect(() => {
     if (audioRef.current) {
@@ -152,11 +186,11 @@ const MusicPlayer = () => {
           </div>
           
           <div className="player-controls">
-            <button className="control-btn"><SkipBack size={20} fill="currentColor" /></button>
+            <button className="control-btn" onClick={playPrevious}><SkipBack size={20} fill="currentColor" /></button>
             <button className="play-btn" onClick={togglePlay}>
               {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" className="play-icon-offset" />}
             </button>
-            <button className="control-btn"><SkipForward size={20} fill="currentColor" /></button>
+            <button className="control-btn" onClick={playNext}><SkipForward size={20} fill="currentColor" /></button>
           </div>
         </div>
         
