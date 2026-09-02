@@ -169,7 +169,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 999, title: 'Simhasta Sashishekhara', artist: 'Birendra Krishna Bhadra', duration: '0:57', cover: '/mahalaya-cover.jpg', src: '/songs/simhasta.mp3' },
     { id: 14, title: 'Bajlo Tomar Aalor Benu', artist: 'Supriti Ghosh', duration: '3:40', cover: '/mahalaya-cover.jpg', src: '/songs/bajlo-tomar-aalor-benu-supriti.mp3' },
     { id: 15, title: 'Ogo Amar Agamani', artist: 'Sipra Bose', duration: '3:41', cover: '/mahalaya-cover.jpg', src: '/songs/ogo-amar-agamani-alo.mp3' },
-    { id: 16, title: 'Tabo Achinta Rupa', artist: 'Dwijen Mukhopadhyay', duration: '6:10', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 16, title: 'Tabo Achinta Rupa', artist: 'Manabendra Mukherjee', duration: '4:25', cover: '/mahalaya-cover.jpg', src: '/songs/tabo-achinta-rupa.mp3' },
     { id: 17, title: 'Aha Ki Ananda', artist: 'Utpala Sen', duration: '4:25', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 18, title: 'Bimano Bihari', artist: 'Tarun Banerjee', duration: '5:05', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 19, title: 'Amal Kiran', artist: 'Sandhya Mukherjee', duration: '3:50', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
