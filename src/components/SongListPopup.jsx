@@ -294,7 +294,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
             })
           ) : (
             <div className="no-songs-found bengali-text animation-pop-in">
-              গানটি উপলব্ধ নয়
+              {activeTab === 'favorites' && favoriteSongs.length === 0 ? 'গান যোগ করুন' : 'গানটি উপলব্ধ নয়'}
             </div>
           )}
         </div>
