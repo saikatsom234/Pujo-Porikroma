@@ -163,17 +163,17 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
 
   // Placeholder replica array for Mahalaya & Songs
   const mahalayaSongs = [
-    { id: 10, title: 'Demo Song 1', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 11, title: 'Mahisasuramardini Part 1', artist: 'Birendra Krishna Bhadra', duration: '15:30', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 12, title: 'Mahisasuramardini Part 2', artist: 'Birendra Krishna Bhadra', duration: '18:20', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 13, title: 'Jago Tumi Jago', artist: 'Supriti Ghosh', duration: '4:55', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 14, title: 'Bajlo Tomar Alor Benu', artist: 'Supriti Ghosh', duration: '5:12', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 15, title: 'Ogo Amar Agomoni', artist: 'Pankaj Mullick', duration: '3:45', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 16, title: 'Tabo Achinta Rupa', artist: 'Dwijen Mukhopadhyay', duration: '6:10', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 17, title: 'Aha Ki Ananda', artist: 'Utpala Sen', duration: '4:25', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 18, title: 'Bimano Bihari', artist: 'Tarun Banerjee', duration: '5:05', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 19, title: 'Amal Kiran', artist: 'Sandhya Mukherjee', duration: '3:50', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 20, title: 'Jaya Jaya Japya', artist: 'Chorus', duration: '4:15', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 10, title: 'Demo Song 1', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 11, title: 'Mahisasuramardini Part 1', artist: 'Birendra Krishna Bhadra', duration: '15:30', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 12, title: 'Mahisasuramardini Part 2', artist: 'Birendra Krishna Bhadra', duration: '18:20', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 13, title: 'Jago Tumi Jago', artist: 'Supriti Ghosh', duration: '4:55', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 14, title: 'Bajlo Tomar Alor Benu', artist: 'Supriti Ghosh', duration: '5:12', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 15, title: 'Ogo Amar Agomoni', artist: 'Pankaj Mullick', duration: '3:45', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 16, title: 'Tabo Achinta Rupa', artist: 'Dwijen Mukhopadhyay', duration: '6:10', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 17, title: 'Aha Ki Ananda', artist: 'Utpala Sen', duration: '4:25', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 18, title: 'Bimano Bihari', artist: 'Tarun Banerjee', duration: '5:05', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 19, title: 'Amal Kiran', artist: 'Sandhya Mukherjee', duration: '3:50', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 20, title: 'Jaya Jaya Japya', artist: 'Chorus', duration: '4:15', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
   ];
 
   const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
