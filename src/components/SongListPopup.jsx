@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Music, Search } from 'lucide-react';
+import { X, Music, Search, Heart } from 'lucide-react';
 import './SongListPopup.css';
 
 export const pandalSongs = [
@@ -181,7 +181,7 @@ export const mahalayaSongs = [
     { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' }
   ];
 
-const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs }) => {
+const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs, favoriteSongs = [], toggleFavorite }) => {
   const [activeTab, setActiveTab] = useState('pandal');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -189,7 +189,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
   
   // Placeholder replica array for Mahalaya & Songs
   
-  const currentSongs = activeTab === 'pandal' ? pandalList : mahalayaList;
+  const currentSongs = activeTab === 'pandal' ? pandalList : activeTab === 'mahalaya' ? mahalayaList : favoriteSongs;
   
   const filteredSongs = currentSongs.filter((song, index) => {
     const serialNumber = (index + 1).toString();
@@ -228,6 +228,13 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
                 >
                   মহালয়া ও গান
                 </button>
+                <button 
+                  className={`tab-btn-modern ${activeTab === 'favorites' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('favorites')}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}
+                >
+                  <Heart size={16} fill={activeTab === 'favorites' ? '#fff' : 'none'} />
+                </button>
               </div>
             ) : (
               <div className="search-input-container animation-pop-in">
@@ -261,7 +268,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
               const isActive = song.src === currentSong?.src;
               const originalIndex = currentSongs.indexOf(song);
               return (
-                <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
+                <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song, activeTab)}>
                   <div className="song-card-left-modern">
                     <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
                       {isActive ? <Music size={14} /> : (originalIndex + 1).toString().padStart(2, '0')}
@@ -272,7 +279,14 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
                       <div className="song-card-artist-modern">{song.artist}</div>
                     </div>
                   </div>
-                  <div className="song-card-duration-modern">
+                  <div className="song-card-duration-modern" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <button 
+                      className="favorite-toggle-btn"
+                      onClick={(e) => { e.stopPropagation(); toggleFavorite(song); }}
+                      style={{ background: 'transparent', border: 'none', color: favoriteSongs.some(s => s.src === song.src) ? '#ff4b4b' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', padding: 0 }}
+                    >
+                      <Heart size={16} fill={favoriteSongs.some(s => s.src === song.src) ? '#ff4b4b' : 'none'} />
+                    </button>
                     {song.duration}
                   </div>
                 </div>
