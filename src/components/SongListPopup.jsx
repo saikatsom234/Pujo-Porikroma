@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import { X, Music, Search } from 'lucide-react';
 import './SongListPopup.css';
 
-const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
-  const [activeTab, setActiveTab] = useState('pandal');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Placeholder array for Pandal Collection
-  const pandalSongs = [
+export const pandalSongs = [
     { id: 0, title: 'Bolo Dugga Elo', artist: 'Sunidhi Chauhan', duration: '3:45', cover: '/bolo-dugga-elo-cover.jpg', src: '/songs/bolo-dugga-elo.mp3' },
     { id: 1, title: 'Dugga Elo', artist: 'Monali Thakur', duration: '2:30', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 2, title: 'Dhak Baja Kashor Baja', artist: 'Shreya Ghoshal', duration: '3:15', cover: '/dhak-baja-kashor-baja-cover.jpg', src: '/songs/dhak-baja-kashor-baja.mp3' },
@@ -161,8 +155,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 239, title: 'Eto Alo', artist: 'Katmundu', duration: '3:34', cover: '/eto-alo-cover.png', src: '/songs/eto-alo.mp3' },
   ];
 
-  // Placeholder replica array for Mahalaya & Songs
-  const mahalayaSongs = [
+export const mahalayaSongs = [
     { id: 10, title: 'Mahalaya', artist: 'Birendra Krishna Bhadra', duration: '89:13', cover: '/mahalaya-cover.jpg', src: '/songs/mahalaya.mp3' },
     { id: 11, title: 'Chandipath', artist: 'Birendra Krishna Bhadra', duration: '12:15', cover: '/mahalaya-cover.jpg', src: '/songs/chandipath.mp3' },
     { id: 12, title: 'Ya Chandi', artist: 'Chorus', duration: '1:57', cover: '/mahalaya-cover.jpg', src: '/songs/ya-chandi.mp3' },
@@ -188,6 +181,14 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' }
   ];
 
+const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
+  const [activeTab, setActiveTab] = useState('pandal');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  
+  // Placeholder replica array for Mahalaya & Songs
+  
   const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
   
   const filteredSongs = currentSongs.filter((song, index) => {

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Music, ChevronDown } from 'lucide-react';
-import SongListPopup from './SongListPopup';
+import SongListPopup, { pandalSongs, mahalayaSongs } from './SongListPopup';
 import './MusicPlayer.css';
 
 const MusicPlayer = () => {
@@ -68,8 +68,27 @@ const MusicPlayer = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    const handleEnded = () => {
+      let nextSong = null;
+      
+      const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
+      if (pandalIndex !== -1) {
+        nextSong = pandalSongs[(pandalIndex + 1) % pandalSongs.length];
+      } else {
+        const mahalayaIndex = mahalayaSongs.findIndex(s => s.src === currentSong.src);
+        if (mahalayaIndex !== -1) {
+          nextSong = mahalayaSongs[(mahalayaIndex + 1) % mahalayaSongs.length];
+        }
+      }
+      
+      if (nextSong) {
+        setCurrentSong(nextSong);
+        setIsPlaying(true);
+      } else {
+        setIsPlaying(false);
+      }
+    };
     
-    const handleEnded = () => setIsPlaying(false);
     const handleTimeUpdate = () => {
       if (!isDraggingRef.current) {
         setCurrentTime(audio.currentTime);
@@ -90,7 +109,7 @@ const MusicPlayer = () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, []);
+  }, [currentSong]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
