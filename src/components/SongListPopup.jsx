@@ -233,7 +233,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
               <div className="search-input-container animation-pop-in">
                 <input
                   type="text"
-                  className="search-input bengali-text"
+                  className={`search-input ${(!searchQuery || /[\u0980-\u09FF]/.test(searchQuery)) ? 'bengali-text' : ''}`}
                   placeholder="গান খুঁজুন..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
