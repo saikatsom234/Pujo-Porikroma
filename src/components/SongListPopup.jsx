@@ -182,7 +182,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 1017, title: 'Ya Devi Sarbabhutesu', artist: 'Birendrakrishna Bhadra', duration: '5:12', cover: '/mahalaya-cover.jpg', src: '/songs/ya-devi-sarbabhutesu.mp3' },
     { id: 1018, title: 'Namo Chandi, Namo Chandi', artist: 'Bimal Bhushan', duration: '3:23', cover: '/mahalaya-cover.jpg', src: '/songs/namo-chandi.mp3' },
     { id: 1019, title: 'Ma Go Tabu Beene Sangeeta', artist: 'Sumitra Sen', duration: '3:40', cover: '/mahalaya-cover.jpg', src: '/songs/ma-go-tabu-beene.mp3' },
-    { id: 1020, title: 'Demo Song 20', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1020, title: 'Bimane Bimane', artist: 'Sandhya Mukherjee', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/bimane-bimane.mp3' },
     { id: 1021, title: 'Demo Song 21', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1022, title: 'Demo Song 22', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1023, title: 'Demo Song 23', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
