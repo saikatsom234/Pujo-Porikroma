@@ -163,6 +163,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
 
   // Placeholder replica array for Mahalaya & Songs
   const mahalayaSongs = [
+    { id: 10, title: 'Demo Song 1', artist: 'Artist Name', duration: '0:00', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 11, title: 'Mahisasuramardini Part 1', artist: 'Birendra Krishna Bhadra', duration: '15:30', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 12, title: 'Mahisasuramardini Part 2', artist: 'Birendra Krishna Bhadra', duration: '18:20', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 13, title: 'Jago Tumi Jago', artist: 'Supriti Ghosh', duration: '4:55', cover: '/dugga-elo-cover.jpg', src: '/songs/dugga-elo.mp3' },
