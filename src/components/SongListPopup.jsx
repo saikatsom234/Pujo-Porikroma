@@ -180,7 +180,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 1015, title: 'Subhra Sankha', artist: 'Shyamal Mitra', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/subhra-sankha.mp3' },
     { id: 1016, title: 'Jatajutasamayuktamardhendukrita-Sekharam', artist: 'Mahishasura Mardini', duration: '4:26', cover: '/mahalaya-cover.jpg', src: '/songs/jatajutasamayuktamardhendukrita-sekharam.mp3' },
     { id: 1017, title: 'Ya Devi Sarbabhutesu', artist: 'Birendrakrishna Bhadra', duration: '5:12', cover: '/mahalaya-cover.jpg', src: '/songs/ya-devi-sarbabhutesu.mp3' },
-    { id: 1018, title: 'Demo Song 18', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1018, title: 'Namo Chandi, Namo Chandi', artist: 'Bimal Bhushan', duration: '3:23', cover: '/mahalaya-cover.jpg', src: '/songs/namo-chandi.mp3' },
     { id: 1019, title: 'Demo Song 19', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1020, title: 'Demo Song 20', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1021, title: 'Demo Song 21', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
