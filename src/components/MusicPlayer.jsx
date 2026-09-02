@@ -18,9 +18,15 @@ const MusicPlayer = () => {
   
   const audioRef = useRef(null);
   const isDraggingRef = useRef(false);
+  const [isDhakPlaying, setIsDhakPlaying] = useState(false);
+  const dhakAudioRef = useRef(null);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const toggleDhak = () => {
+    setIsDhakPlaying(!isDhakPlaying);
   };
 
   const handleSelectSong = (song) => {
@@ -43,8 +49,15 @@ const MusicPlayer = () => {
     }
   }, [isPlaying, currentSong.src]);
 
-
-
+  useEffect(() => {
+    if (dhakAudioRef.current) {
+      if (isDhakPlaying) {
+        dhakAudioRef.current.play().catch(e => console.log(e));
+      } else {
+        dhakAudioRef.current.pause();
+      }
+    }
+  }, [isDhakPlaying]);
   const formatTime = (time) => {
     if (isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
@@ -84,6 +97,7 @@ const MusicPlayer = () => {
   return (
     <div className="music-player-container">
       <audio ref={audioRef} src={currentSong.src} preload="metadata" />
+      <audio ref={dhakAudioRef} src="/songs/dhak-song.webm" loop preload="auto" />
       {/* Mobile only selector */}
       <div className="mobile-category-selector show-mobile-flex">
         <button className="category-btn glass-panel bengali-text" onClick={() => setShowSongList(true)}>
@@ -153,7 +167,11 @@ const MusicPlayer = () => {
             <span style={{ position: 'relative', top: '2px' }}>পুনরাবৃত্তি</span>
           </button>
           <div className="divider"></div>
-          <button className="action-btn bengali-text">
+          <button 
+            className={`action-btn bengali-text ${isDhakPlaying ? 'active' : ''}`}
+            onClick={toggleDhak}
+            style={{ color: isDhakPlaying ? '#daa520' : '' }}
+          >
             <Music size={16} />
             <span style={{ position: 'relative', top: '2px' }}>ঢাক</span>
           </button>
