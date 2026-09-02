@@ -268,7 +268,12 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
               const isActive = song.src === currentSong?.src;
               const originalIndex = currentSongs.indexOf(song);
               return (
-                <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song, activeTab)}>
+                <div 
+                  key={song.id} 
+                  className={`song-card-modern ${isActive ? 'active' : ''}`} 
+                  onClick={() => onSelectSong(song, activeTab)}
+                  onDoubleClick={(e) => { e.preventDefault(); toggleFavorite(song); }}
+                >
                   <div className="song-card-left-modern">
                     <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
                       {isActive ? <Music size={14} /> : (originalIndex + 1).toString().padStart(2, '0')}
@@ -279,14 +284,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
                       <div className="song-card-artist-modern">{song.artist}</div>
                     </div>
                   </div>
-                  <div className="song-card-duration-modern" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <button 
-                      className="favorite-toggle-btn"
-                      onClick={(e) => { e.stopPropagation(); toggleFavorite(song); }}
-                      style={{ background: 'transparent', border: 'none', color: favoriteSongs.some(s => s.src === song.src) ? '#ff4b4b' : 'rgba(255,255,255,0.4)', cursor: 'pointer', display: 'flex', padding: 0 }}
-                    >
-                      <Heart size={16} fill={favoriteSongs.some(s => s.src === song.src) ? '#ff4b4b' : 'none'} />
-                    </button>
+                  <div className="song-card-duration-modern">
                     {song.duration}
                   </div>
                 </div>
