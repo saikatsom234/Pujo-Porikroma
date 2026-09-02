@@ -166,6 +166,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 10, title: 'Mahalaya', artist: 'Birendra Krishna Bhadra', duration: '89:13', cover: '/mahalaya-cover.jpg', src: '/songs/mahalaya.mp3' },
     { id: 11, title: 'Chandipath', artist: 'Birendra Krishna Bhadra', duration: '12:15', cover: '/mahalaya-cover.jpg', src: '/songs/chandipath.mp3' },
     { id: 12, title: 'Ya Chandi', artist: 'Chorus', duration: '1:57', cover: '/mahalaya-cover.jpg', src: '/songs/ya-chandi.mp3' },
+    { id: 999, title: 'Demo Song 4', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 13, title: 'Jago Tumi Jago', artist: 'Supriti Ghosh', duration: '4:55', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 14, title: 'Bajlo Tomar Alor Benu', artist: 'Supriti Ghosh', duration: '5:12', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 15, title: 'Ogo Amar Agomoni', artist: 'Pankaj Mullick', duration: '3:45', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
