@@ -175,7 +175,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 19, title: 'Arunkanti Ke Go Jogi', artist: 'Manabendra Mukherjee', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/arunkanti.mp3' },
     { id: 20, title: 'Jaya Jaya Japya', artist: 'Chorus', duration: '2:32', cover: '/mahalaya-cover.jpg', src: '/songs/jaya-jaya-japya.mp3' },
     { id: 1012, title: 'Aham Rudrebhirvasubhischara', artist: 'Mahishasura Mardini', duration: '4:00', cover: '/mahalaya-cover.jpg', src: '/songs/aham-rudrebhirvasubhischara.mp3' },
-    { id: 1013, title: 'Demo Song 13', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1013, title: 'Akhila-Bimane Taba Jaya-Gane', artist: 'Krishna Dasgupta', duration: '4:03', cover: '/mahalaya-cover.jpg', src: '/songs/akhila-bimane.mp3' },
     { id: 1014, title: 'Demo Song 14', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1015, title: 'Demo Song 15', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1016, title: 'Demo Song 16', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
