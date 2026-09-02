@@ -8,28 +8,6 @@ const MusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showSongList, setShowSongList] = useState(false);
-    
-    const [activePlaylist, setActivePlaylist] = useState('pandal');
-    const [favoriteSongs, setFavoriteSongs] = useState(() => {
-      const saved = localStorage.getItem('pujo_favoriteSongs');
-      return saved ? JSON.parse(saved) : [];
-    });
-    
-    useEffect(() => {
-      localStorage.setItem('pujo_favoriteSongs', JSON.stringify(favoriteSongs));
-    }, [favoriteSongs]);
-    
-    const toggleFavorite = (song) => {
-      setFavoriteSongs(prev => {
-        const isFav = prev.some(s => s.src === song.src);
-        if (isFav) {
-          return prev.filter(s => s.src !== song.src);
-        } else {
-          return [...prev, song];
-        }
-      });
-    };
-
   
   const [currentSong, setCurrentSong] = useState({
     title: 'Dugga Elo',
@@ -82,24 +60,22 @@ const MusicPlayer = () => {
     setIsDhakPlaying(!isDhakPlaying);
   };
 
-  const handleSelectSong = (song, tab) => {
+  const handleSelectSong = (song) => {
     setCurrentSong(song);
-    if (tab) setActivePlaylist(tab);
     setShowSongList(false);
     setIsPlaying(true);
   };
 
   const playNext = () => {
     let nextSong = null;
-    if (activePlaylist === 'favorites') {
-      const idx = favoriteSongs.findIndex(s => s.src === currentSong.src);
-      if (idx !== -1) nextSong = favoriteSongs[(idx + 1) % favoriteSongs.length];
-    } else if (activePlaylist === 'mahalaya') {
-      const idx = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
-      if (idx !== -1) nextSong = activeMahalayaSongs[(idx + 1) % activeMahalayaSongs.length];
+    const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
+    if (pandalIndex !== -1) {
+      nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
     } else {
-      const idx = activePandalSongs.findIndex(s => s.src === currentSong.src);
-      if (idx !== -1) nextSong = activePandalSongs[(idx + 1) % activePandalSongs.length];
+      const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
+      if (mahalayaIndex !== -1) {
+        nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
+      }
     }
     if (nextSong) {
       setCurrentSong(nextSong);
@@ -109,15 +85,14 @@ const MusicPlayer = () => {
 
   const playPrevious = () => {
     let prevSong = null;
-    if (activePlaylist === 'favorites') {
-      const idx = favoriteSongs.findIndex(s => s.src === currentSong.src);
-      if (idx !== -1) prevSong = favoriteSongs[(idx - 1 + favoriteSongs.length) % favoriteSongs.length];
-    } else if (activePlaylist === 'mahalaya') {
-      const idx = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
-      if (idx !== -1) prevSong = activeMahalayaSongs[(idx - 1 + activeMahalayaSongs.length) % activeMahalayaSongs.length];
+    const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
+    if (pandalIndex !== -1) {
+      prevSong = activePandalSongs[(pandalIndex - 1 + activePandalSongs.length) % activePandalSongs.length];
     } else {
-      const idx = activePandalSongs.findIndex(s => s.src === currentSong.src);
-      if (idx !== -1) prevSong = activePandalSongs[(idx - 1 + activePandalSongs.length) % activePandalSongs.length];
+      const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
+      if (mahalayaIndex !== -1) {
+        prevSong = activeMahalayaSongs[(mahalayaIndex - 1 + activeMahalayaSongs.length) % activeMahalayaSongs.length];
+      }
     }
     if (prevSong) {
       setCurrentSong(prevSong);
@@ -167,15 +142,14 @@ const MusicPlayer = () => {
       
       let nextSong = null;
       
-      if (activePlaylist === 'favorites') {
-        const idx = favoriteSongs.findIndex(s => s.src === currentSong.src);
-        if (idx !== -1) nextSong = favoriteSongs[(idx + 1) % favoriteSongs.length];
-      } else if (activePlaylist === 'mahalaya') {
-        const idx = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
-        if (idx !== -1) nextSong = activeMahalayaSongs[(idx + 1) % activeMahalayaSongs.length];
+      const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
+      if (pandalIndex !== -1) {
+        nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
       } else {
-        const idx = activePandalSongs.findIndex(s => s.src === currentSong.src);
-        if (idx !== -1) nextSong = activePandalSongs[(idx + 1) % activePandalSongs.length];
+        const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
+        if (mahalayaIndex !== -1) {
+          nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
+        }
       }
       
       if (nextSong) {
@@ -206,7 +180,7 @@ const MusicPlayer = () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs, favoriteSongs, activePlaylist]);
+  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
@@ -302,7 +276,7 @@ const MusicPlayer = () => {
         </div>
       </div>
       
-      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} favoriteSongs={favoriteSongs} toggleFavorite={toggleFavorite} />}
+      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} />}
     </div>
   );
 };
