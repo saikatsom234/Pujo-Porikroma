@@ -172,7 +172,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 16, title: 'Tabo Achinta Rupa', artist: 'Manabendra Mukherjee', duration: '4:25', cover: '/mahalaya-cover.jpg', src: '/songs/tabo-achinta-rupa.mp3' },
     { id: 17, title: 'Jago Durga Dashapraharanadharinee', artist: 'Dwijen Mukherjee', duration: '1:45', cover: '/mahalaya-cover.jpg', src: '/songs/jago-durga.mp3' },
     { id: 18, title: 'Dosh Karo Noy Go Ma', artist: 'Pannalal Bhattacharya', duration: '3:26', cover: '/mahalaya-cover.jpg', src: '/songs/dosh-karo-noy-go-ma.mp3' },
-    { id: 19, title: 'Amal Kiran', artist: 'Sandhya Mukherjee', duration: '3:50', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 19, title: 'Arunkanti Ke Go Jogi', artist: 'Manabendra Mukherjee', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/arunkanti.mp3' },
     { id: 20, title: 'Jaya Jaya Japya', artist: 'Chorus', duration: '2:32', cover: '/mahalaya-cover.jpg', src: '/songs/jaya-jaya-japya.mp3' },
   ];
 
