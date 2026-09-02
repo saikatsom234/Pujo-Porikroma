@@ -21,8 +21,14 @@ const MusicPlayer = () => {
   const [isDhakPlaying, setIsDhakPlaying] = useState(false);
   const dhakAudioRef = useRef(null);
 
+  const [isRepeat, setIsRepeat] = useState(false);
+
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const toggleRepeat = () => {
+    setIsRepeat(!isRepeat);
   };
 
   const toggleDhak = () => {
@@ -69,6 +75,12 @@ const MusicPlayer = () => {
     const audio = audioRef.current;
     if (!audio) return;
     const handleEnded = () => {
+      if (isRepeat) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log(e));
+        return;
+      }
+      
       let nextSong = null;
       
       const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
@@ -109,7 +121,7 @@ const MusicPlayer = () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [currentSong]);
+  }, [currentSong, isRepeat]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
@@ -181,7 +193,11 @@ const MusicPlayer = () => {
             <span style={{ position: 'relative', top: '2px' }}>এলোমেলো</span>
           </button>
           <div className="divider"></div>
-          <button className="action-btn bengali-text">
+          <button 
+            className={`action-btn bengali-text ${isRepeat ? 'active' : ''}`}
+            onClick={toggleRepeat}
+            style={{ color: isRepeat ? '#ffffff' : '' }}
+          >
             <Repeat size={16} />
             <span style={{ position: 'relative', top: '2px' }}>পুনরাবৃত্তি</span>
           </button>
