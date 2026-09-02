@@ -174,6 +174,21 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 18, title: 'Dosh Karo Noy Go Ma', artist: 'Pannalal Bhattacharya', duration: '3:26', cover: '/mahalaya-cover.jpg', src: '/songs/dosh-karo-noy-go-ma.mp3' },
     { id: 19, title: 'Arunkanti Ke Go Jogi', artist: 'Manabendra Mukherjee', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/arunkanti.mp3' },
     { id: 20, title: 'Jaya Jaya Japya', artist: 'Chorus', duration: '2:32', cover: '/mahalaya-cover.jpg', src: '/songs/jaya-jaya-japya.mp3' },
+    { id: 1012, title: 'Demo Song 12', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1013, title: 'Demo Song 13', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1014, title: 'Demo Song 14', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1015, title: 'Demo Song 15', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1016, title: 'Demo Song 16', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1017, title: 'Demo Song 17', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1018, title: 'Demo Song 18', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1019, title: 'Demo Song 19', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1020, title: 'Demo Song 20', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1021, title: 'Demo Song 21', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1022, title: 'Demo Song 22', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1023, title: 'Demo Song 23', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1024, title: 'Demo Song 24', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1025, title: 'Demo Song 25', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1026, title: 'Demo Song 26', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
   ];
 
   const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
