@@ -167,7 +167,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 11, title: 'Chandipath', artist: 'Birendra Krishna Bhadra', duration: '12:15', cover: '/mahalaya-cover.jpg', src: '/songs/chandipath.mp3' },
     { id: 12, title: 'Ya Chandi', artist: 'Chorus', duration: '1:57', cover: '/mahalaya-cover.jpg', src: '/songs/ya-chandi.mp3' },
     { id: 999, title: 'Simhasta Sashishekhara', artist: 'Birendra Krishna Bhadra', duration: '0:57', cover: '/mahalaya-cover.jpg', src: '/songs/simhasta.mp3' },
-    { id: 14, title: 'Bajlo Tomar Alor Benu', artist: 'Supriti Ghosh', duration: '5:12', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 14, title: 'Bajlo Tomar Aalor Benu', artist: 'Supriti Ghosh', duration: '3:40', cover: '/mahalaya-cover.jpg', src: '/songs/bajlo-tomar-aalor-benu-supriti.mp3' },
     { id: 15, title: 'Ogo Amar Agomoni', artist: 'Pankaj Mullick', duration: '3:45', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 16, title: 'Tabo Achinta Rupa', artist: 'Dwijen Mukhopadhyay', duration: '6:10', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 17, title: 'Aha Ki Ananda', artist: 'Utpala Sen', duration: '4:25', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
