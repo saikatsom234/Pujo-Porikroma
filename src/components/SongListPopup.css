@@ -21,7 +21,7 @@
   height: 80dvh;
   background: linear-gradient(to bottom, #2a2a2a, #111111);
   border-radius: 32px; /* All 4 corners curved */
-  padding: 32px 24px;
+  padding: 32px 12px;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -135,7 +135,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 12px 8px;
   border-radius: 20px;
   background: transparent;
   cursor: pointer;
@@ -153,11 +153,11 @@
 .song-card-left-modern {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
 .song-index {
-  width: 24px;
+  width: 20px;
   font-size: 13px;
   font-weight: 500;
   text-align: left;
@@ -203,7 +203,7 @@
     border-radius: 32px; /* All 4 corners curved */
     height: 85vh; /* Slightly reduced height to fit bottom margin */
     height: 85dvh;
-    padding: 24px 16px;
+    padding: 24px 8px;
     margin-bottom: 16px; /* Float off the bottom edge */
   }
   
