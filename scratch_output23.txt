@@ -1,0 +1,4 @@
+    { id: 236, title: 'Jamai 420', artist: 'Jamai 420', duration: '3:46', cover: '/jamai-420-cover.jpg', src: '/songs/jamai-420.mp3' },
+    { id: 237, title: '3G', artist: 'Hero 420', duration: '3:36', cover: '/3g-cover.jpg', src: '/songs/3g.mp3' },
+    { id: 238, title: 'Aami Raaji', artist: 'Katmundu', duration: '4:02', cover: '/aami-raaji-cover.png', src: '/songs/aami-raaji.mp3' },
+    { id: 239, title: 'Eto Alo', artist: 'Katmundu', duration: '3:34', cover: '/eto-alo-cover.png', src: '/songs/eto-alo.mp3' },
