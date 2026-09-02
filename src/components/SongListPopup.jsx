@@ -181,7 +181,7 @@ export const mahalayaSongs = [
     { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' }
   ];
 
-const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
+const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs }) => {
   const [activeTab, setActiveTab] = useState('pandal');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -189,7 +189,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
   
   // Placeholder replica array for Mahalaya & Songs
   
-  const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
+  const currentSongs = activeTab === 'pandal' ? pandalList : mahalayaList;
   
   const filteredSongs = currentSongs.filter((song, index) => {
     const serialNumber = (index + 1).toString();

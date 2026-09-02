@@ -31,6 +31,31 @@ const MusicPlayer = () => {
     setIsRepeat(!isRepeat);
   };
 
+  const [isShuffled, setIsShuffled] = useState(false);
+  const [activePandalSongs, setActivePandalSongs] = useState(pandalSongs);
+  const [activeMahalayaSongs, setActiveMahalayaSongs] = useState(mahalayaSongs);
+
+  const toggleShuffle = () => {
+    if (!isShuffled) {
+      const shuffleArray = (array) => {
+        const newArr = [...array];
+        for (let i = newArr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+        }
+        return newArr;
+      };
+      setActivePandalSongs(shuffleArray(pandalSongs));
+      setActiveMahalayaSongs(shuffleArray(mahalayaSongs));
+      setIsShuffled(true);
+    } else {
+      setActivePandalSongs(pandalSongs);
+      setActiveMahalayaSongs(mahalayaSongs);
+      setIsShuffled(false);
+    }
+  };
+
+
   const toggleDhak = () => {
     setIsDhakPlaying(!isDhakPlaying);
   };
@@ -43,13 +68,13 @@ const MusicPlayer = () => {
 
   const playNext = () => {
     let nextSong = null;
-    const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
+    const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
     if (pandalIndex !== -1) {
-      nextSong = pandalSongs[(pandalIndex + 1) % pandalSongs.length];
+      nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
     } else {
-      const mahalayaIndex = mahalayaSongs.findIndex(s => s.src === currentSong.src);
+      const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
       if (mahalayaIndex !== -1) {
-        nextSong = mahalayaSongs[(mahalayaIndex + 1) % mahalayaSongs.length];
+        nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
       }
     }
     if (nextSong) {
@@ -60,13 +85,13 @@ const MusicPlayer = () => {
 
   const playPrevious = () => {
     let prevSong = null;
-    const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
+    const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
     if (pandalIndex !== -1) {
-      prevSong = pandalSongs[(pandalIndex - 1 + pandalSongs.length) % pandalSongs.length];
+      prevSong = activePandalSongs[(pandalIndex - 1 + activePandalSongs.length) % activePandalSongs.length];
     } else {
-      const mahalayaIndex = mahalayaSongs.findIndex(s => s.src === currentSong.src);
+      const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
       if (mahalayaIndex !== -1) {
-        prevSong = mahalayaSongs[(mahalayaIndex - 1 + mahalayaSongs.length) % mahalayaSongs.length];
+        prevSong = activeMahalayaSongs[(mahalayaIndex - 1 + activeMahalayaSongs.length) % activeMahalayaSongs.length];
       }
     }
     if (prevSong) {
@@ -117,13 +142,13 @@ const MusicPlayer = () => {
       
       let nextSong = null;
       
-      const pandalIndex = pandalSongs.findIndex(s => s.src === currentSong.src);
+      const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
       if (pandalIndex !== -1) {
-        nextSong = pandalSongs[(pandalIndex + 1) % pandalSongs.length];
+        nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
       } else {
-        const mahalayaIndex = mahalayaSongs.findIndex(s => s.src === currentSong.src);
+        const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
         if (mahalayaIndex !== -1) {
-          nextSong = mahalayaSongs[(mahalayaIndex + 1) % mahalayaSongs.length];
+          nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
         }
       }
       
@@ -155,7 +180,7 @@ const MusicPlayer = () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [currentSong, isRepeat]);
+  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
@@ -222,7 +247,11 @@ const MusicPlayer = () => {
         
         {/* Mobile bottom controls */}
         <div className="player-bottom show-mobile-flex">
-          <button className="action-btn bengali-text">
+          <button 
+            className={`action-btn bengali-text ${isShuffled ? 'active' : ''}`}
+            onClick={toggleShuffle}
+            style={{ color: isShuffled ? '#ffffff' : '' }}
+          >
             <Shuffle size={16} />
             <span style={{ position: 'relative', top: '2px' }}>এলোমেলো</span>
           </button>
@@ -247,7 +276,7 @@ const MusicPlayer = () => {
         </div>
       </div>
       
-      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} />}
+      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} />}
     </div>
   );
 };
