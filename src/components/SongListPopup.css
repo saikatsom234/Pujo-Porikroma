@@ -123,12 +123,24 @@
 }
 
 .song-stack::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
+}
+
+.song-stack::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .song-stack::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.song-stack::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.song-stack::-webkit-scrollbar-thumb:active {
+  background: rgba(218, 165, 32, 0.6);
 }
 
 .song-card-modern {
