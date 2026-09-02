@@ -185,10 +185,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 1020, title: 'Bimane Bimane', artist: 'Sandhya Mukherjee', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/bimane-bimane.mp3' },
     { id: 1021, title: 'He Chinmoyi', artist: 'Tarun Banerjee', duration: '3:12', cover: '/mahalaya-cover.jpg', src: '/songs/he-chinmoyi.mp3' },
     { id: 1022, title: 'Santi Dile Bhari', artist: 'Utpala Sen', duration: '2:12', cover: '/mahalaya-cover.jpg', src: '/songs/santi-dile-bhari.mp3' },
-    { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' },
-    { id: 1024, title: 'Demo Song 24', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 1025, title: 'Demo Song 25', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
-    { id: 1026, title: 'Demo Song 26', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' }
   ];
 
   const currentSongs = activeTab === 'pandal' ? pandalSongs : mahalayaSongs;
