@@ -170,7 +170,7 @@ const MusicPlayer = () => {
           <button 
             className={`action-btn bengali-text ${isDhakPlaying ? 'active' : ''}`}
             onClick={toggleDhak}
-            style={{ color: isDhakPlaying ? '#daa520' : '' }}
+            style={{ color: isDhakPlaying ? '#ffffff' : '' }}
           >
             <Music size={16} />
             <span style={{ position: 'relative', top: '2px' }}>ঢাক</span>
