@@ -177,7 +177,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong }) => {
     { id: 1012, title: 'Aham Rudrebhirvasubhischara', artist: 'Mahishasura Mardini', duration: '4:00', cover: '/mahalaya-cover.jpg', src: '/songs/aham-rudrebhirvasubhischara.mp3' },
     { id: 1013, title: 'Akhila-Bimane Taba Jaya-Gane', artist: 'Krishna Dasgupta', duration: '4:03', cover: '/mahalaya-cover.jpg', src: '/songs/akhila-bimane.mp3' },
     { id: 1014, title: 'Jayanti Mangala Kali', artist: 'Birendra Krishna Bhadra', duration: '7:10', cover: '/mahalaya-cover.jpg', src: '/songs/jayanti.mp3' },
-    { id: 1015, title: 'Demo Song 15', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
+    { id: 1015, title: 'Subhra Sankha', artist: 'Shyamal Mitra', duration: '3:00', cover: '/mahalaya-cover.jpg', src: '/songs/subhra-sankha.mp3' },
     { id: 1016, title: 'Demo Song 16', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1017, title: 'Demo Song 17', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
     { id: 1018, title: 'Demo Song 18', artist: 'Artist Name', duration: '0:00', cover: '/mahalaya-cover.jpg', src: '/songs/dugga-elo.mp3' },
