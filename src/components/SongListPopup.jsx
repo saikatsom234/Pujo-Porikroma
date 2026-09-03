@@ -181,15 +181,15 @@ export const mahalayaSongs = [
     { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' }
   ];
 
-const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs, favoriteList = [], initialTab = 'pandal' }) => {
-  const [activeTab, setActiveTab] = useState(initialTab);
+const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs, favoriteList = [], isFavoriteMode = false }) => {
+  const [activeTab, setActiveTab] = useState('pandal');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   
   // Placeholder replica array for Mahalaya & Songs
   
-  const currentSongs = activeTab === 'pandal' ? pandalList : activeTab === 'mahalaya' ? mahalayaList : favoriteList;
+  const currentSongs = isFavoriteMode ? favoriteList : (activeTab === 'pandal' ? pandalList : mahalayaList);
   
   const filteredSongs = currentSongs.filter((song, index) => {
     const serialNumber = (index + 1).toString();
@@ -208,34 +208,29 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
         {/* Header Section */}
         <div className="song-list-header">
           <div className="song-list-header-top">
-            <h2 className="song-list-title-text bengali-text">পুজো স্পেশাল</h2>
+            <h2 className="song-list-title-text bengali-text">{isFavoriteMode ? 'প্রিয় গান' : 'পুজো স্পেশাল'}</h2>
             <button className="close-btn" onClick={onClose}>
               <X size={24} />
             </button>
           </div>
           <div className="song-list-tabs-container">
             {!isSearchOpen ? (
-              <div className="song-list-tabs bengali-text animation-pop-in">
-                <button 
-                  className={`tab-btn-modern ${activeTab === 'pandal' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('pandal')}
-                >
-                  প্যান্ডেল কালেকশন
-                </button>
-                <button 
-                  className={`tab-btn-modern ${activeTab === 'mahalaya' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('mahalaya')}
-                >
-                  মহালয়া ও গান
-                </button>
-                <button 
-                  className={`tab-btn-modern ${activeTab === 'favorites' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('favorites')}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}
-                >
-                  <Heart size={16} fill={activeTab === 'favorites' ? '#fff' : 'none'} />
-                </button>
-              </div>
+              !isFavoriteMode && (
+                <div className="song-list-tabs bengali-text animation-pop-in">
+                  <button 
+                    className={`tab-btn-modern ${activeTab === 'pandal' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('pandal')}
+                  >
+                    প্যান্ডেল কালেকশন
+                  </button>
+                  <button 
+                    className={`tab-btn-modern ${activeTab === 'mahalaya' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('mahalaya')}
+                  >
+                    মহালয়া ও গান
+                  </button>
+                </div>
+              )
             ) : (
               <div className="search-input-container animation-pop-in">
                 <input
@@ -287,7 +282,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
             })
           ) : (
             <div className="no-songs-found bengali-text animation-pop-in">
-              {activeTab === 'favorites' && favoriteList.length === 0 ? 'গান যোগ করুন' : 'গানটি উপলব্ধ নয়'}
+              {isFavoriteMode && favoriteList.length === 0 ? 'গান যোগ করুন' : 'গানটি উপলব্ধ নয়'}
             </div>
           )}
         </div>

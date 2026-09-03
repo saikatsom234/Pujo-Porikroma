@@ -35,7 +35,7 @@ const MusicPlayer = () => {
   const [activePandalSongs, setActivePandalSongs] = useState(pandalSongs);
   const [activeMahalayaSongs, setActiveMahalayaSongs] = useState(mahalayaSongs);
   const [favoriteSongs, setFavoriteSongs] = useState([]);
-  const [initialTab, setInitialTab] = useState('pandal');
+  const [isFavoriteMode, setIsFavoriteMode] = useState(false);
 
   const toggleFavoriteCurrent = () => {
     setFavoriteSongs(prev => {
@@ -81,7 +81,7 @@ const MusicPlayer = () => {
   const playNext = () => {
     let nextSong = null;
     const favIndex = favoriteSongs.findIndex(s => s.src === currentSong.src);
-    if (initialTab === 'favorites' && favIndex !== -1) {
+    if (isFavoriteMode && favIndex !== -1) {
       nextSong = favoriteSongs[(favIndex + 1) % favoriteSongs.length];
     } else {
       const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
@@ -103,7 +103,7 @@ const MusicPlayer = () => {
   const playPrevious = () => {
     let prevSong = null;
     const favIndex = favoriteSongs.findIndex(s => s.src === currentSong.src);
-    if (initialTab === 'favorites' && favIndex !== -1) {
+    if (isFavoriteMode && favIndex !== -1) {
       prevSong = favoriteSongs[(favIndex - 1 + favoriteSongs.length) % favoriteSongs.length];
     } else {
       const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
@@ -165,7 +165,7 @@ const MusicPlayer = () => {
       let nextSong = null;
       
       const favIndex = favoriteSongs.findIndex(s => s.src === currentSong.src);
-      if (initialTab === 'favorites' && favIndex !== -1) {
+      if (isFavoriteMode && favIndex !== -1) {
         nextSong = favoriteSongs[(favIndex + 1) % favoriteSongs.length];
       } else {
         const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
@@ -207,7 +207,7 @@ const MusicPlayer = () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs, favoriteSongs, initialTab]);
+  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs, favoriteSongs, isFavoriteMode]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
@@ -217,14 +217,14 @@ const MusicPlayer = () => {
       <audio ref={dhakAudioRef} src="/songs/dhak-song.webm" loop preload="auto" />
       {/* Mobile only selector */}
       <div className="mobile-category-selector show-mobile-flex" style={{ gap: '12px' }}>
-        <button className="category-btn glass-panel bengali-text" onClick={() => { setInitialTab('pandal'); setShowSongList(true); }}>
+        <button className="category-btn glass-panel bengali-text" onClick={() => { setIsFavoriteMode(false); setShowSongList(true); }}>
           <Music size={16} />
           পূজো সংগ্রহ
           <ChevronDown size={16} />
         </button>
         <button 
           className="category-btn glass-panel" 
-          onClick={() => { setInitialTab('favorites'); setShowSongList(true); }}
+          onClick={() => { setIsFavoriteMode(true); setShowSongList(true); }}
           style={{ width: '40px', height: '40px', borderRadius: '50%', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}
           title="My Favorite Playlist"
         >
@@ -321,7 +321,7 @@ const MusicPlayer = () => {
         </div>
       </div>
       
-      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} favoriteList={favoriteSongs} initialTab={initialTab} />}
+      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} favoriteList={favoriteSongs} isFavoriteMode={isFavoriteMode} />}
     </div>
   );
 };
