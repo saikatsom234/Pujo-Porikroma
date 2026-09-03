@@ -113,7 +113,10 @@ const ChatPopup = ({ onClose, socket }) => {
               </button>
             </div>
             <div className="chat-popup-tabs bengali-text animation-pop-in">
-              <button className="chat-invite-btn">
+              <button 
+                className={`chat-invite-btn ${activeTab === 'invite' ? 'active' : ''}`}
+                onClick={() => setActiveTab('invite')}
+              >
                 <Mail size={16} />
                 আমন্ত্রণ
               </button>
@@ -127,6 +130,12 @@ const ChatPopup = ({ onClose, socket }) => {
             {activeTab === 'group_adda' && (
               <div className="chat-content-placeholder bengali-text">
                 গ্রুপ আড্ডা ফিচারটি শীঘ্রই আসছে...
+              </div>
+            )}
+            
+            {activeTab === 'invite' && (
+              <div className="chat-content-placeholder bengali-text">
+                আমন্ত্রণ ফিচারটি শীঘ্রই আসছে...
               </div>
             )}
             
