@@ -134,8 +134,16 @@ const ChatPopup = ({ onClose, socket }) => {
             )}
             
             {activeTab === 'invite' && (
-              <div className="chat-content-placeholder bengali-text">
-                আমন্ত্রণ ফিচারটি শীঘ্রই আসছে...
+              <div className="invite-section-container animation-pop-in">
+                <h3 className="invite-section-title">Have an invite?</h3>
+                <div className="invite-section-card">
+                  <p className="invite-section-text">
+                    Got a code from a friend? Join their group to see everyone live.
+                  </p>
+                  <button className="invite-join-btn">
+                    Join with a code
+                  </button>
+                </div>
               </div>
             )}
             

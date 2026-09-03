@@ -163,6 +163,59 @@
   color: #fff;
 }
 
+/* Invite Section Styles */
+.invite-section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.invite-section-title {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.invite-section-card {
+  background: rgba(255, 255, 255, 0.05); /* subtle gray background */
+  border-radius: 16px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.invite-section-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.invite-join-btn {
+  background-color: rgba(255, 255, 255, 0.15); /* Light brown/gray requested by user */
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.invite-join-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
 .chat-messages {
   flex: 1;
   overflow-y: auto;
