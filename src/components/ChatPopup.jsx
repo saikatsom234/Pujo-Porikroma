@@ -138,11 +138,13 @@ const ChatPopup = ({ onClose, socket }) => {
                     <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
                   )}
                   <div className="chat-bubble-wrapper">
-                    {!isMine && <span className="chat-username">{msg.username}</span>}
                     <div className="chat-bubble bengali-text">
                       {msg.text}
                     </div>
                   </div>
+                  {isMine && (
+                    <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
+                  )}
                 </div>
               );
             })}
