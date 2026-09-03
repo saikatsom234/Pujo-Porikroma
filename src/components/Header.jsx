@@ -50,20 +50,23 @@ const Header = () => {
     return `${timePrefix} ${strHours}:${strMins}`;
   };
 
+  const [socket, setSocket] = useState(null);
+
   useEffect(() => {
     // Connect to the backend server dynamically using the host's IP
-    const socket = io(`http://${window.location.hostname}:3000`);
+    const newSocket = io(`http://${window.location.hostname}:3000`);
+    setSocket(newSocket);
 
-    socket.on('connect', () => {
+    newSocket.on('connect', () => {
       console.log('Connected to real-time server');
     });
 
-    socket.on('onlineUsersUpdate', (count) => {
+    newSocket.on('onlineUsersUpdate', (count) => {
       setOnlineCount(count);
     });
 
     return () => {
-      socket.disconnect();
+      newSocket.disconnect();
     };
   }, []);
 
@@ -98,7 +101,7 @@ const Header = () => {
       {/* Render popups over everything when state is true */}
       {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
       {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
-      {showChatPopup && <ChatPopup onClose={() => setShowChatPopup(false)} />}
+      {showChatPopup && <ChatPopup onClose={() => setShowChatPopup(false)} socket={socket} />}
     </>
   );
 };

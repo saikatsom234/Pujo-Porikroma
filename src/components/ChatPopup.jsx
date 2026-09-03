@@ -1,9 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, ThumbsUp } from 'lucide-react';
 import './ChatPopup.css';
 
-const ChatPopup = ({ onClose }) => {
+const ChatPopup = ({ onClose, socket }) => {
   const [activeTab, setActiveTab] = useState('adda');
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState('');
+  const [myUserId, setMyUserId] = useState(null);
+  const messagesEndRef = useRef(null);
+
+  // Auto-scroll to bottom of messages
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, activeTab]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleInitChat = (data) => {
+      setMyUserId(data.myUserId);
+      setMessages(data.messages);
+    };
+
+    const handleNewMessage = (msg) => {
+      setMessages((prev) => [...prev, msg]);
+    };
+
+    const handleChatCleared = () => {
+      setMessages([]);
+    };
+
+    const handleChatError = (err) => {
+      alert(err);
+    };
+
+    socket.on('initChat', handleInitChat);
+    socket.on('newMessage', handleNewMessage);
+    socket.on('chatCleared', handleChatCleared);
+    socket.on('chatError', handleChatError);
+
+    // If socket is already connected when ChatPopup mounts, we might miss the initial initChat.
+    // However, the backend sends initChat on connection. If we miss it, we should ideally fetch history.
+    // But for a simple global chat, it's ok. We can just wait for new messages or force a reconnect if myUserId is missing.
+
+    return () => {
+      socket.off('initChat', handleInitChat);
+      socket.off('newMessage', handleNewMessage);
+      socket.off('chatCleared', handleChatCleared);
+      socket.off('chatError', handleChatError);
+    };
+  }, [socket]);
+
+  const sendMessage = () => {
+    if (!inputText.trim() || !socket) return;
+    
+    const words = inputText.trim().split(/\s+/);
+    if (words.length > 50) {
+      alert('একটি বার্তায় ৫০টি শব্দের বেশি লেখা যাবে না। (Maximum 50 words allowed)');
+      return;
+    }
+
+    socket.emit('sendMessage', inputText);
+    setInputText('');
+  };
+
+  const sendLike = () => {
+    if (!socket) return;
+    socket.emit('sendMessage', '👍');
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const text = e.target.value;
+    const words = text.trim().split(/\s+/);
+    // Optionally block typing beyond 50 words, but here we just update state and check on send.
+    setInputText(text);
+  };
 
   return (
     <div className="chat-popup-overlay">
@@ -38,33 +119,57 @@ const ChatPopup = ({ onClose }) => {
         {/* Content Section */}
         <div className="chat-popup-content">
           <div className="chat-messages">
-            {activeTab === 'adda' && (
-              <div className="chat-content-placeholder bengali-text">
-                {/* Adda content goes here */}
-              </div>
-            )}
             {activeTab === 'group_adda' && (
               <div className="chat-content-placeholder bengali-text">
-                {/* Group Adda content goes here */}
+                গ্রুপ আড্ডা ফিচারটি শীঘ্রই আসছে...
               </div>
             )}
+            
+            {activeTab === 'adda' && messages.length === 0 && (
+              <div className="chat-content-placeholder bengali-text">
+                এখনও কোনো বার্তা নেই। আড্ডা শুরু করুন!
+              </div>
+            )}
+
+            {activeTab === 'adda' && messages.map((msg) => {
+              const isMine = msg.userId === myUserId;
+              return (
+                <div key={msg.id} className={`chat-message-row ${isMine ? 'mine' : 'theirs'}`}>
+                  {!isMine && (
+                    <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
+                  )}
+                  <div className="chat-bubble-wrapper">
+                    {!isMine && <span className="chat-username">{msg.username}</span>}
+                    <div className="chat-bubble bengali-text">
+                      {msg.text}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div ref={messagesEndRef} />
           </div>
           
-          <div className="chat-input-area">
-            <div className="chat-input-wrapper">
-              <input 
-                type="text" 
-                placeholder="বার্তা লিখুন..." 
-                className="chat-input-field bengali-text" 
-              />
-              <button className="chat-send-btn">
-                <Send size={18} />
+          {activeTab === 'adda' && (
+            <div className="chat-input-area">
+              <div className="chat-input-wrapper">
+                <input 
+                  type="text" 
+                  placeholder="বার্তা লিখুন... (Max 50 words)" 
+                  className="chat-input-field bengali-text"
+                  value={inputText}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                />
+                <button className="chat-send-btn" onClick={sendMessage}>
+                  <Send size={18} />
+                </button>
+              </div>
+              <button className="chat-like-btn" onClick={sendLike}>
+                <ThumbsUp size={24} color="#1877F2" fill="#1877F2" />
               </button>
             </div>
-            <button className="chat-like-btn">
-              <ThumbsUp size={24} color="#1877F2" fill="#1877F2" />
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </div>
