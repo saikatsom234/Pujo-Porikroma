@@ -124,6 +124,10 @@ const ChatPopup = ({ onClose, socket }) => {
           </div>
         </div>
 
+        <div className="chat-warning-message bengali-text">
+          <marquee scrollamount="4">বিজ্ঞপ্তি : অশ্লীল ভাষা, গালিগালাজ, কুরুচিপূর্ণ মন্তব্য এবং যৌনতাপূর্ণ ভাষা ব্যবহার কঠোরভাবে নিষিদ্ধ। অন্য ব্যবহারকারীদের প্রতি যেকোনো ধরনের হেনস্থা, বিদ্বেষমূলক বক্তব্য বা হুমকি দেওয়ার মতো আচরণ করলে স্থায়ীভাবে ব্লক করা হবে।</marquee>
+        </div>
+
         {/* Content Section */}
         <div className="chat-popup-content">
           <div className="chat-messages">
