@@ -53,8 +53,12 @@ const Header = () => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // Connect to the backend server dynamically using the host's IP
-    const newSocket = io(`http://${window.location.hostname}:3000`);
+    // In production (Vercel), connect to the hosted backend URL. In local dev, connect to localhost:3000
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? `http://${window.location.hostname}:3000` 
+      : `http://${window.location.hostname}:3000`); // Fallback if no backend URL is set
+
+    const newSocket = io(backendUrl);
     setSocket(newSocket);
 
     newSocket.on('connect', () => {
