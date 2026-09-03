@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, ThumbsUp, Mail } from 'lucide-react';
+import { X, Send, ThumbsUp, Mail, Plus } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose, socket }) => {
@@ -174,6 +174,12 @@ const ChatPopup = ({ onClose, socket }) => {
             <div ref={messagesEndRef} />
           </div>
           
+          {activeTab === 'group_adda' && (
+            <button className="chat-fab-btn animation-pop-in">
+              <Plus size={24} color="#fff" />
+            </button>
+          )}
+
           {activeTab === 'adda' && (
             <div className="chat-input-area">
               <div className="chat-input-wrapper">
