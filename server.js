@@ -18,23 +18,23 @@ let onlineUsers = 0;
 let userCounter = 0;
 let messages = [];
 
-// Helper to calculate the current 5-hour block index
+// Helper to calculate the current 3-hour block index
 function getCurrentTimeBlock() {
   const currentHour = new Date().getHours();
-  // Shifts at 18:00, 23:00, 04:00, 09:00, 14:00
-  return Math.floor(((currentHour + 6) % 24) / 5);
+  // 3-hour blocks: 00:00, 03:00, 06:00, 09:00, 12:00, 15:00, 18:00, 21:00
+  return Math.floor(currentHour / 3);
 }
 
 let currentBlock = getCurrentTimeBlock();
 
-// Check every minute if the 5-hour block has changed
+// Check every minute if the 3-hour block has changed
 setInterval(() => {
   const newBlock = getCurrentTimeBlock();
   if (newBlock !== currentBlock) {
     currentBlock = newBlock;
     messages = []; // Clear chat history
     io.emit('chatCleared'); // Notify all clients
-    console.log(`[System] 5-hour boundary crossed. Cleared chat history.`);
+    console.log(`[System] 3-hour boundary crossed. Cleared chat history.`);
   }
 }, 60000);
 
