@@ -105,20 +105,22 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: rgba(198, 40, 40, 0.15); /* matching the deep red background from reference */
-  border: 1.5px solid #c62828; /* deep red border */
-  color: #ffcdd2; /* light red/pinkish text */
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
   font-weight: 600;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 24px;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-bottom: 8px; /* align visually with tabs that have padding-bottom */
+  white-space: nowrap;
+  letter-spacing: 1px;
 }
 
 .chat-invite-btn:hover {
-  background-color: rgba(198, 40, 40, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
 }
 
 .chat-popup-content {

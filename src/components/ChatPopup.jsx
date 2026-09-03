@@ -112,10 +112,12 @@ const ChatPopup = ({ onClose, socket }) => {
                 গ্রুপ আড্ডা
               </button>
             </div>
-            <button className="chat-invite-btn bengali-text animation-pop-in">
-              <Mail size={16} />
-              আমন্ত্রণ
-            </button>
+            <div className="chat-popup-tabs bengali-text animation-pop-in">
+              <button className="chat-invite-btn">
+                <Mail size={16} />
+                আমন্ত্রণ
+              </button>
+            </div>
           </div>
         </div>
 
