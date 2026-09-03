@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import { toBengaliNumber, getPujoText } from '../utils/dateUtils';
 import CreatorCard from './CreatorCard';
 import ChaiPopup from './ChaiPopup';
+import ChatPopup from './ChatPopup';
 import './Header.css';
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCreatorCard, setShowCreatorCard] = useState(false);
   const [showChaiPopup, setShowChaiPopup] = useState(false);
+  const [showChatPopup, setShowChatPopup] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -69,7 +71,7 @@ const Header = () => {
     <>
       <header className="header">
         <div className="header-left">
-          <div className="online-badge glass-panel">
+          <div className="online-badge glass-panel" onClick={() => setShowChatPopup(true)} style={{ cursor: 'pointer' }}>
             <span className="dot"></span>
             <span className="bengali-text">{toBengaliNumber(onlineCount)} সক্রিয়</span>
           </div>
@@ -93,10 +95,10 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Render CreatorCard over everything when state is true */}
+      {/* Render popups over everything when state is true */}
       {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
-      {/* Render ChaiPopup over everything when state is true */}
       {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
+      {showChatPopup && <ChatPopup onClose={() => setShowChatPopup(false)} />}
     </>
   );
 };
