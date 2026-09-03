@@ -97,7 +97,7 @@
 .player-controls {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
@@ -110,8 +110,8 @@
 }
 
 .play-btn {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: var(--text-primary);
   color: var(--bg-dark);
