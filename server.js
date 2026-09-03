@@ -59,6 +59,16 @@ function getBengaliHourString(date) {
   return `${strHours}:০০ ${timePrefix}`;
 }
 
+
+
+// Add the initial hourly reminder immediately upon server startup
+messages.push({
+  id: Date.now() + Math.random().toString(36).substr(2, 9),
+  isSystemMessage: true,
+  text: getBengaliHourString(new Date()),
+  timestamp: new Date().toISOString()
+});
+
 // Check every minute if the 3-hour block or hour has changed
 setInterval(() => {
   const now = new Date();
@@ -68,6 +78,16 @@ setInterval(() => {
   if (newBlock !== currentBlock) {
     currentBlock = newBlock;
     messages = []; // Clear chat history
+    
+    // Instantly add the current hour's reminder to the clean chat
+    const initialTimeMessage = {
+      id: Date.now() + Math.random().toString(36).substr(2, 9),
+      isSystemMessage: true,
+      text: getBengaliHourString(now),
+      timestamp: now.toISOString()
+    };
+    messages.push(initialTimeMessage);
+    
     io.emit('chatCleared'); // Notify all clients
     console.log(`[System] 3-hour boundary crossed. Cleared chat history.`);
   }
