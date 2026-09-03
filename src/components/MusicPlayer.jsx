@@ -216,8 +216,8 @@ const MusicPlayer = () => {
       <audio ref={audioRef} src={currentSong.src} preload="metadata" />
       <audio ref={dhakAudioRef} src="/songs/dhak-song.webm" loop preload="auto" />
       {/* Mobile only selector */}
-      <div className="mobile-category-selector show-mobile-flex" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <button className="category-btn glass-panel bengali-text" onClick={() => { setInitialTab('pandal'); setShowSongList(true); }} style={{ flex: 1 }}>
+      <div className="mobile-category-selector show-mobile-flex" style={{ gap: '12px' }}>
+        <button className="category-btn glass-panel bengali-text" onClick={() => { setInitialTab('pandal'); setShowSongList(true); }}>
           <Music size={16} />
           পূজো সংগ্রহ
           <ChevronDown size={16} />
