@@ -176,7 +176,7 @@ const ChatPopup = ({ onClose, socket }) => {
           
           {activeTab === 'group_adda' && (
             <button className="chat-fab-btn animation-pop-in">
-              <Plus size={24} color="#fff" />
+              <Plus size={24} />
             </button>
           )}
 
