@@ -7,6 +7,7 @@ const ChatPopup = ({ onClose, socket }) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [myUserId, setMyUserId] = useState(null);
+  const [showCreateGroup, setShowCreateGroup] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Auto-scroll to bottom of messages
@@ -185,9 +186,35 @@ const ChatPopup = ({ onClose, socket }) => {
           </div>
           
           {activeTab === 'group_adda' && (
-            <button className="chat-fab-btn animation-pop-in">
-              <Plus size={24} />
-            </button>
+            <>
+              <button className="chat-fab-btn animation-pop-in" onClick={() => setShowCreateGroup(true)}>
+                <Plus size={24} />
+              </button>
+              
+              {showCreateGroup && (
+                <div className="create-group-modal-overlay animation-pop-in">
+                  <div className="create-group-modal">
+                    <div className="create-group-modal-drag-handle"></div>
+                    <div className="create-group-modal-header">
+                      <h3>Create a group</h3>
+                    </div>
+                    
+                    <div className="create-group-info">
+                      A group holds up to <strong>3 members</strong> (including you), and you can have 3 groups of your own at a time.
+                    </div>
+                    
+                    <div className="create-group-input-section">
+                      <label>Group name</label>
+                      <input type="text" placeholder="North Kolkata Tour" />
+                    </div>
+                    
+                    <button className="create-group-submit-btn" onClick={() => setShowCreateGroup(false)}>
+                      Create group
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
           {activeTab === 'adda' && (
