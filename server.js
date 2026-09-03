@@ -102,30 +102,12 @@ setInterval(() => {
       text: getBengaliHourString(now),
       timestamp: now.toISOString()
     };
-    
     messages.push(timeMessage);
     io.emit('newMessage', timeMessage);
-    console.log(`[System] Hourly reminder sent: ${timeMessage.text}`);
   }
 }, 60000);
 
-let messagesSinceLast5Min = false;
-
-// 5-minute interval for time reminder
-setInterval(() => {
-  if (messagesSinceLast5Min) {
-    const reminder = {
-      id: Date.now() + Math.random().toString(36).substr(2, 9),
-      isSystemMessage: true,
-      isTimeReminder: true,
-      text: "৫ মিনিট আগে",
-      timestamp: new Date().toISOString()
-    };
-    messages.push(reminder);
-    io.emit('newMessage', reminder);
-    messagesSinceLast5Min = false; // reset for next 5 mins
-  }
-}, 5 * 60 * 1000);
+let idleTimeout = null;
 
 io.on('connection', (socket) => {
   onlineUsers++;
@@ -179,11 +161,22 @@ io.on('connection', (socket) => {
       timestamp: new Date().toISOString()
     };
 
-    messagesSinceLast5Min = true;
     messages.push(newMessage);
-    
-    // Broadcast message to everyone
     io.emit('newMessage', newMessage);
+    
+    // Set exactly 5-minute relative timeout for inactivity
+    if (idleTimeout) clearTimeout(idleTimeout);
+    idleTimeout = setTimeout(() => {
+      const reminder = {
+        id: Date.now() + Math.random().toString(36).substr(2, 9),
+        isSystemMessage: true,
+        isTimeReminder: true,
+        text: "৫ মিনিট আগে",
+        timestamp: new Date().toISOString()
+      };
+      messages.push(reminder);
+      io.emit('newMessage', reminder);
+    }, 5 * 60 * 1000);
   });
 
   socket.on('disconnect', () => {
