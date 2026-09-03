@@ -246,9 +246,9 @@ const MusicPlayer = () => {
                 </div>
                 <button 
                   onClick={toggleFavoriteCurrent} 
-                  style={{ background: 'transparent', border: 'none', color: favoriteSongs.some(s => s.src === currentSong.src) ? '#ff4b4b' : 'rgba(255,255,255,0.4)', cursor: 'pointer', padding: '4px' }}
+                  style={{ background: 'transparent', border: 'none', color: favoriteSongs.some(s => s.src === currentSong.src) ? '#ff4b4b' : 'rgba(255,255,255,0.4)', cursor: 'pointer', padding: 0, marginTop: '2px', transform: 'translateY(-1px)' }}
                 >
-                  <Heart size={20} fill={favoriteSongs.some(s => s.src === currentSong.src) ? '#ff4b4b' : 'none'} />
+                  <Heart size={18} fill={favoriteSongs.some(s => s.src === currentSong.src) ? '#ff4b4b' : 'none'} />
                 </button>
               </div>
               <div className="track-time">{formatTime(currentTime)} / {formatTime(duration)}</div>
