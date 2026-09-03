@@ -256,11 +256,11 @@ const MusicPlayer = () => {
           </div>
           
           <div className="player-controls">
-            <button className="control-btn" onClick={playPrevious}><SkipBack size={16} fill="currentColor" /></button>
+            <button className="control-btn" onClick={playPrevious}><SkipBack size={12} fill="currentColor" /></button>
             <button className="play-btn" onClick={togglePlay}>
               {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="play-icon-offset" />}
             </button>
-            <button className="control-btn" onClick={playNext}><SkipForward size={16} fill="currentColor" /></button>
+            <button className="control-btn" onClick={playNext}><SkipForward size={12} fill="currentColor" /></button>
           </div>
         </div>
         
