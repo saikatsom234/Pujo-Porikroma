@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, ThumbsUp } from 'lucide-react';
+import { X, Send, ThumbsUp, Mail } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose, socket }) => {
@@ -112,6 +112,10 @@ const ChatPopup = ({ onClose, socket }) => {
                 গ্রুপ আড্ডা
               </button>
             </div>
+            <button className="chat-invite-btn bengali-text animation-pop-in">
+              <Mail size={16} />
+              আমন্ত্রণ
+            </button>
           </div>
         </div>
 
