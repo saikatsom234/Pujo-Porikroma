@@ -157,7 +157,9 @@ const ChatPopup = ({ onClose, socket }) => {
               if (msg.isSystemMessage) {
                 return (
                   <div key={msg.id} className="chat-system-message-row">
-                    <span className="chat-system-message bengali-text">{msg.text}</span>
+                    <span className={`chat-system-message bengali-text ${msg.isTimeReminder ? 'time-reminder' : ''}`}>
+                      {msg.text}
+                    </span>
                   </div>
                 );
               }

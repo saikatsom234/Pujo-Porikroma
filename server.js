@@ -109,6 +109,24 @@ setInterval(() => {
   }
 }, 60000);
 
+let messagesSinceLast5Min = false;
+
+// 5-minute interval for time reminder
+setInterval(() => {
+  if (messagesSinceLast5Min) {
+    const reminder = {
+      id: Date.now() + Math.random().toString(36).substr(2, 9),
+      isSystemMessage: true,
+      isTimeReminder: true,
+      text: "৫ মিনিট আগে",
+      timestamp: new Date().toISOString()
+    };
+    messages.push(reminder);
+    io.emit('newMessage', reminder);
+    messagesSinceLast5Min = false; // reset for next 5 mins
+  }
+}, 5 * 60 * 1000);
+
 io.on('connection', (socket) => {
   onlineUsers++;
   userCounter++;
@@ -161,6 +179,7 @@ io.on('connection', (socket) => {
       timestamp: new Date().toISOString()
     };
 
+    messagesSinceLast5Min = true;
     messages.push(newMessage);
     
     // Broadcast message to everyone
