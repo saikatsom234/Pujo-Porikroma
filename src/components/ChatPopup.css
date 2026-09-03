@@ -31,7 +31,7 @@
 .chat-popup-header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0px;
+  margin-bottom: 1.5px;
 }
 
 .chat-warning-message {
