@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Music, Search } from 'lucide-react';
+import { X, Music, Search, Heart } from 'lucide-react';
 import './SongListPopup.css';
 
 export const pandalSongs = [
@@ -181,15 +181,15 @@ export const mahalayaSongs = [
     { id: 1023, title: 'Aaha Ki Anando Akashe Batashy', artist: 'Hirak Rajar Deshe', duration: '7:08', cover: '/mahalaya-cover.jpg', src: '/songs/aaha-ki-anando.mp3' }
   ];
 
-const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs }) => {
-  const [activeTab, setActiveTab] = useState('pandal');
+const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs, favoriteList = [], initialTab = 'pandal' }) => {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   
   // Placeholder replica array for Mahalaya & Songs
   
-  const currentSongs = activeTab === 'pandal' ? pandalList : mahalayaList;
+  const currentSongs = activeTab === 'pandal' ? pandalList : activeTab === 'mahalaya' ? mahalayaList : favoriteList;
   
   const filteredSongs = currentSongs.filter((song, index) => {
     const serialNumber = (index + 1).toString();
@@ -227,6 +227,13 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
                   onClick={() => setActiveTab('mahalaya')}
                 >
                   মহালয়া ও গান
+                </button>
+                <button 
+                  className={`tab-btn-modern ${activeTab === 'favorites' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('favorites')}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}
+                >
+                  <Heart size={16} fill={activeTab === 'favorites' ? '#fff' : 'none'} />
                 </button>
               </div>
             ) : (
@@ -280,7 +287,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
             })
           ) : (
             <div className="no-songs-found bengali-text animation-pop-in">
-              গানটি উপলব্ধ নয়
+              {activeTab === 'favorites' && favoriteList.length === 0 ? 'গান যোগ করুন' : 'গানটি উপলব্ধ নয়'}
             </div>
           )}
         </div>

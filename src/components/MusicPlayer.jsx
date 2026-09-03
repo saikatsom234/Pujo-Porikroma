@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Music, ChevronDown } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Music, ChevronDown, Heart } from 'lucide-react';
 import SongListPopup, { pandalSongs, mahalayaSongs } from './SongListPopup';
 import './MusicPlayer.css';
 
@@ -34,6 +34,18 @@ const MusicPlayer = () => {
   const [isShuffled, setIsShuffled] = useState(false);
   const [activePandalSongs, setActivePandalSongs] = useState(pandalSongs);
   const [activeMahalayaSongs, setActiveMahalayaSongs] = useState(mahalayaSongs);
+  const [favoriteSongs, setFavoriteSongs] = useState([]);
+  const [initialTab, setInitialTab] = useState('pandal');
+
+  const toggleFavoriteCurrent = () => {
+    setFavoriteSongs(prev => {
+      const exists = prev.find(s => s.src === currentSong.src);
+      if (exists) {
+        return prev.filter(s => s.src !== currentSong.src);
+      }
+      return [...prev, currentSong];
+    });
+  };
 
   const toggleShuffle = () => {
     if (!isShuffled) {
@@ -68,13 +80,18 @@ const MusicPlayer = () => {
 
   const playNext = () => {
     let nextSong = null;
-    const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
-    if (pandalIndex !== -1) {
-      nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
+    const favIndex = favoriteSongs.findIndex(s => s.src === currentSong.src);
+    if (initialTab === 'favorites' && favIndex !== -1) {
+      nextSong = favoriteSongs[(favIndex + 1) % favoriteSongs.length];
     } else {
-      const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
-      if (mahalayaIndex !== -1) {
-        nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
+      const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
+      if (pandalIndex !== -1) {
+        nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
+      } else {
+        const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
+        if (mahalayaIndex !== -1) {
+          nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
+        }
       }
     }
     if (nextSong) {
@@ -85,13 +102,18 @@ const MusicPlayer = () => {
 
   const playPrevious = () => {
     let prevSong = null;
-    const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
-    if (pandalIndex !== -1) {
-      prevSong = activePandalSongs[(pandalIndex - 1 + activePandalSongs.length) % activePandalSongs.length];
+    const favIndex = favoriteSongs.findIndex(s => s.src === currentSong.src);
+    if (initialTab === 'favorites' && favIndex !== -1) {
+      prevSong = favoriteSongs[(favIndex - 1 + favoriteSongs.length) % favoriteSongs.length];
     } else {
-      const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
-      if (mahalayaIndex !== -1) {
-        prevSong = activeMahalayaSongs[(mahalayaIndex - 1 + activeMahalayaSongs.length) % activeMahalayaSongs.length];
+      const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
+      if (pandalIndex !== -1) {
+        prevSong = activePandalSongs[(pandalIndex - 1 + activePandalSongs.length) % activePandalSongs.length];
+      } else {
+        const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
+        if (mahalayaIndex !== -1) {
+          prevSong = activeMahalayaSongs[(mahalayaIndex - 1 + activeMahalayaSongs.length) % activeMahalayaSongs.length];
+        }
       }
     }
     if (prevSong) {
@@ -142,13 +164,18 @@ const MusicPlayer = () => {
       
       let nextSong = null;
       
-      const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
-      if (pandalIndex !== -1) {
-        nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
+      const favIndex = favoriteSongs.findIndex(s => s.src === currentSong.src);
+      if (initialTab === 'favorites' && favIndex !== -1) {
+        nextSong = favoriteSongs[(favIndex + 1) % favoriteSongs.length];
       } else {
-        const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
-        if (mahalayaIndex !== -1) {
-          nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
+        const pandalIndex = activePandalSongs.findIndex(s => s.src === currentSong.src);
+        if (pandalIndex !== -1) {
+          nextSong = activePandalSongs[(pandalIndex + 1) % activePandalSongs.length];
+        } else {
+          const mahalayaIndex = activeMahalayaSongs.findIndex(s => s.src === currentSong.src);
+          if (mahalayaIndex !== -1) {
+            nextSong = activeMahalayaSongs[(mahalayaIndex + 1) % activeMahalayaSongs.length];
+          }
         }
       }
       
@@ -180,7 +207,7 @@ const MusicPlayer = () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs]);
+  }, [currentSong, isRepeat, activePandalSongs, activeMahalayaSongs, favoriteSongs, initialTab]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
 
@@ -189,11 +216,19 @@ const MusicPlayer = () => {
       <audio ref={audioRef} src={currentSong.src} preload="metadata" />
       <audio ref={dhakAudioRef} src="/songs/dhak-song.webm" loop preload="auto" />
       {/* Mobile only selector */}
-      <div className="mobile-category-selector show-mobile-flex">
-        <button className="category-btn glass-panel bengali-text" onClick={() => setShowSongList(true)}>
+      <div className="mobile-category-selector show-mobile-flex" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+        <button className="category-btn glass-panel bengali-text" onClick={() => { setInitialTab('pandal'); setShowSongList(true); }} style={{ flex: 1 }}>
           <Music size={16} />
           পূজো সংগ্রহ
           <ChevronDown size={16} />
+        </button>
+        <button 
+          className="category-btn glass-panel" 
+          onClick={() => { setInitialTab('favorites'); setShowSongList(true); }}
+          style={{ width: '40px', height: '40px', borderRadius: '50%', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}
+          title="My Favorite Playlist"
+        >
+          <Heart size={18} fill="none" />
         </button>
       </div>
 
@@ -203,9 +238,19 @@ const MusicPlayer = () => {
             <div className={`album-art ${isPlaying ? 'playing' : ''}`}>
               <img src={currentSong.cover} alt={currentSong.title} />
             </div>
-            <div className="track-details">
-              <div className="track-title">{currentSong.title}</div>
-              <div className="track-artist">{currentSong.artist}</div>
+            <div className="track-details" style={{ position: 'relative', width: '100%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div style={{ overflow: 'hidden' }}>
+                  <div className="track-title">{currentSong.title}</div>
+                  <div className="track-artist">{currentSong.artist}</div>
+                </div>
+                <button 
+                  onClick={toggleFavoriteCurrent} 
+                  style={{ background: 'transparent', border: 'none', color: favoriteSongs.some(s => s.src === currentSong.src) ? '#ff4b4b' : 'rgba(255,255,255,0.4)', cursor: 'pointer', padding: '4px' }}
+                >
+                  <Heart size={20} fill={favoriteSongs.some(s => s.src === currentSong.src) ? '#ff4b4b' : 'none'} />
+                </button>
+              </div>
               <div className="track-time">{formatTime(currentTime)} / {formatTime(duration)}</div>
             </div>
           </div>
@@ -276,7 +321,7 @@ const MusicPlayer = () => {
         </div>
       </div>
       
-      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} />}
+      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} favoriteList={favoriteSongs} initialTab={initialTab} />}
     </div>
   );
 };
