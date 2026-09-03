@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose }) => {
@@ -35,18 +35,36 @@ const ChatPopup = ({ onClose }) => {
           </div>
         </div>
 
-        {/* Content Section (Empty for now) */}
+        {/* Content Section */}
         <div className="chat-popup-content">
-          {activeTab === 'adda' && (
-            <div className="chat-content-placeholder bengali-text">
-              {/* Adda content goes here */}
+          <div className="chat-messages">
+            {activeTab === 'adda' && (
+              <div className="chat-content-placeholder bengali-text">
+                {/* Adda content goes here */}
+              </div>
+            )}
+            {activeTab === 'group_adda' && (
+              <div className="chat-content-placeholder bengali-text">
+                {/* Group Adda content goes here */}
+              </div>
+            )}
+          </div>
+          
+          <div className="chat-input-area">
+            <div className="chat-input-wrapper">
+              <input 
+                type="text" 
+                placeholder="বার্তা লিখুন..." 
+                className="chat-input-field bengali-text" 
+              />
+              <button className="chat-send-btn">
+                <Send size={18} />
+              </button>
             </div>
-          )}
-          {activeTab === 'group_adda' && (
-            <div className="chat-content-placeholder bengali-text">
-              {/* Group Adda content goes here */}
-            </div>
-          )}
+            <button className="chat-like-btn">
+              👍
+            </button>
+          </div>
         </div>
       </div>
     </div>
