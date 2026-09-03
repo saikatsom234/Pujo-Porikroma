@@ -203,8 +203,10 @@
   min-width: 0;
 }
 
-.action-btn:hover {
-  color: var(--text-primary);
+@media (hover: hover) {
+  .action-btn:hover {
+    color: var(--text-primary);
+  }
 }
 
 .divider {
