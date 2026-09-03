@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send } from 'lucide-react';
+import { X, Send, ThumbsUp } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose }) => {
@@ -62,7 +62,7 @@ const ChatPopup = ({ onClose }) => {
               </button>
             </div>
             <button className="chat-like-btn">
-              👍
+              <ThumbsUp size={24} color="#1877F2" fill="#1877F2" />
             </button>
           </div>
         </div>
