@@ -426,7 +426,7 @@
 
 .create-group-modal {
   width: 100%;
-  background: #1e1e24;
+  background: rgba(25, 18, 18, 0.98);
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   padding: 16px 20px 24px;
@@ -452,7 +452,7 @@
 }
 
 .create-group-info {
-  background: #27272f;
+  background: rgba(255, 255, 255, 0.05);
   color: #aaa;
   font-size: 13px;
   padding: 12px 16px;
@@ -479,7 +479,7 @@
 }
 
 .create-group-input-section input {
-  background: #27272f;
+  background: rgba(255, 255, 255, 0.05);
   border: none;
   outline: none;
   color: #fff;
