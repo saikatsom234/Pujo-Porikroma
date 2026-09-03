@@ -238,23 +238,15 @@
 .chat-system-message-row {
   display: flex;
   justify-content: center;
-  margin: 16px 0;
+  margin: 8px 0;
 }
 
 .chat-system-message {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 6px 14px;
-  border-radius: 12px;
-  font-size: 11px;
-  letter-spacing: 0.5px;
-}
-
-.chat-system-message.time-reminder {
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
   padding: 0;
-  font-size: 12px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
 }
 
 .chat-message-row {
