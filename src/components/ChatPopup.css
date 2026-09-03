@@ -6,10 +6,9 @@
   height: 100vh;
   height: 100dvh;
   z-index: 2000;
-  /* Transparent like playlist color, filling the whole screen */
-  background: rgba(40, 30, 30, 0.6); 
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(25, 18, 18, 0.92); 
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
   animation: slideUpChat 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   display: flex;
   flex-direction: column;
