@@ -146,6 +146,14 @@ const ChatPopup = ({ onClose, socket }) => {
             )}
 
             {activeTab === 'adda' && messages.map((msg) => {
+              if (msg.isSystemMessage) {
+                return (
+                  <div key={msg.id} className="chat-system-message-row">
+                    <span className="chat-system-message bengali-text">{msg.text}</span>
+                  </div>
+                );
+              }
+
               const isMine = msg.userId === myUserId;
               return (
                 <div key={msg.id} className={`chat-message-row ${isMine ? 'mine' : 'theirs'}`}>

@@ -26,15 +26,66 @@ function getCurrentTimeBlock() {
 }
 
 let currentBlock = getCurrentTimeBlock();
+let lastHourReported = new Date().getHours();
 
-// Check every minute if the 3-hour block has changed
+function getBengaliHourString(date) {
+  const hours = date.getHours();
+  let timePrefix = '';
+  if (hours >= 5 && hours < 12) {
+    timePrefix = 'সকাল';
+  } else if (hours >= 12 && hours < 16) {
+    timePrefix = 'দুপুর';
+  } else if (hours >= 16 && hours < 18) {
+    timePrefix = 'বিকেল';
+  } else if (hours >= 18 && hours < 21) {
+    timePrefix = 'সন্ধ্যা';
+  } else if (hours >= 21 && hours < 24) {
+    timePrefix = 'রাত';
+  } else if (hours >= 0 && hours < 3) {
+    timePrefix = 'মধ্যরাত';
+  } else if (hours >= 3 && hours < 5) {
+    timePrefix = 'ভোর';
+  }
+  
+  let displayHours = hours % 12;
+  displayHours = displayHours ? displayHours : 12;
+  
+  const bengaliNumbers = {
+    '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
+    '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
+  };
+  
+  const strHours = String(displayHours).split('').map(d => bengaliNumbers[d]).join('');
+  return `${strHours}:০০ ${timePrefix}`;
+}
+
+// Check every minute if the 3-hour block or hour has changed
 setInterval(() => {
+  const now = new Date();
+  
+  // 1. Check for 3-hour boundary (clear chat)
   const newBlock = getCurrentTimeBlock();
   if (newBlock !== currentBlock) {
     currentBlock = newBlock;
     messages = []; // Clear chat history
     io.emit('chatCleared'); // Notify all clients
     console.log(`[System] 3-hour boundary crossed. Cleared chat history.`);
+  }
+
+  // 2. Check for hour boundary (add time reminder)
+  if (now.getHours() !== lastHourReported) {
+    lastHourReported = now.getHours();
+    
+    const timeMessage = {
+      id: Date.now() + Math.random().toString(36).substr(2, 9),
+      isSystemMessage: true,
+      text: getBengaliHourString(now),
+      timestamp: now.toISOString()
+    };
+    
+    messages.push(timeMessage);
+    io.emit('newMessage', timeMessage);
+    console.log(`[System] Hourly reminder sent: ${timeMessage.text}`);
   }
 }, 60000);
 

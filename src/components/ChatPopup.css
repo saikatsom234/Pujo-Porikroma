@@ -157,6 +157,21 @@
   border-radius: 4px;
 }
 
+.chat-system-message-row {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.chat-system-message {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
 .chat-message-row {
   display: flex;
   margin-bottom: 12px;
