@@ -131,11 +131,7 @@ const ChatPopup = ({ onClose, socket }) => {
         {/* Content Section */}
         <div className="chat-popup-content">
           <div className="chat-messages">
-            {activeTab === 'group_adda' && (
-              <div className="chat-content-placeholder bengali-text">
-                গ্রুপ আড্ডা ফিচারটি শীঘ্রই আসছে...
-              </div>
-            )}
+
             
             {activeTab === 'invite' && (
               <div className="invite-section-container animation-pop-in">
