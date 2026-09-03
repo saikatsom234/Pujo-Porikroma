@@ -56,6 +56,16 @@ io.on('connection', (socket) => {
     myAvatar,
     messages
   });
+
+  // Handle explicit requests for initChat (e.g., when ChatPopup mounts after connection)
+  socket.on('requestInitChat', () => {
+    socket.emit('initChat', {
+      myUserId,
+      myUsername,
+      myAvatar,
+      messages
+    });
+  });
   
   // Broadcast the new online count
   io.emit('onlineUsersUpdate', onlineUsers);

@@ -43,9 +43,8 @@ const ChatPopup = ({ onClose, socket }) => {
     socket.on('chatCleared', handleChatCleared);
     socket.on('chatError', handleChatError);
 
-    // If socket is already connected when ChatPopup mounts, we might miss the initial initChat.
-    // However, the backend sends initChat on connection. If we miss it, we should ideally fetch history.
-    // But for a simple global chat, it's ok. We can just wait for new messages or force a reconnect if myUserId is missing.
+    // Request initial chat state since we might have missed the initial connection event
+    socket.emit('requestInitChat');
 
     return () => {
       socket.off('initChat', handleInitChat);
