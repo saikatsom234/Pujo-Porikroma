@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Music, Search, Heart } from 'lucide-react';
 import './SongListPopup.css';
 
@@ -183,13 +183,34 @@ export const mahalayaSongs = [
 
 const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandalSongs, mahalayaList = mahalayaSongs, favoriteList = [], isFavoriteMode = false }) => {
   const [activeTab, setActiveTab] = useState('pandal');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  
-  // Placeholder replica array for Mahalaya & Songs
+  const activeSongRef = useRef(null);
   
   const currentSongs = isFavoriteMode ? favoriteList : (activeTab === 'pandal' ? pandalList : mahalayaList);
+
+  useEffect(() => {
+    if (activeSongRef.current) {
+      setTimeout(() => {
+        if (!activeSongRef.current) return;
+        
+        const originalIndex = currentSongs.findIndex(s => s.src === currentSong?.src);
+        let shouldScroll = true;
+        
+        if (activeTab === 'pandal' && originalIndex >= 142) {
+          shouldScroll = false;
+        } else if (activeTab === 'mahalaya' && originalIndex >= 15) {
+          shouldScroll = false;
+        }
+        
+        if (shouldScroll) {
+          activeSongRef.current.scrollIntoView({ block: 'start' });
+        } else {
+          activeSongRef.current.scrollIntoView({ block: 'nearest' });
+        }
+      }, 50);
+    }
+  }, [activeTab]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   
   const filteredSongs = currentSongs.filter((song, index) => {
     const serialNumber = (index + 1).toString();
@@ -263,7 +284,7 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
               const isActive = song.src === currentSong?.src;
               const originalIndex = currentSongs.indexOf(song);
               return (
-                <div key={song.id} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
+                <div key={song.id} ref={isActive ? activeSongRef : null} className={`song-card-modern ${isActive ? 'active' : ''}`} onClick={() => onSelectSong(song)}>
                   <div className="song-card-left-modern">
                     <div className="song-index" style={{ color: isActive ? '#daa520' : 'rgba(255,255,255,0.5)' }}>
                       {isActive ? <Music size={14} /> : (originalIndex + 1).toString().padStart(2, '0')}
