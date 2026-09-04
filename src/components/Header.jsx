@@ -6,7 +6,6 @@ import CreatorCard from './CreatorCard';
 import ChaiPopup from './ChaiPopup';
 import ChatPopup from './ChatPopup';
 import SettingsPopup from './SettingsPopup';
-import { getBengaliHourString } from '../utils/dateUtils';
 import './Header.css';
 
 const Header = () => {
