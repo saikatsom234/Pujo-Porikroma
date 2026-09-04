@@ -531,12 +531,11 @@ const ChatPopup = ({ onClose, socket }) => {
 
                 {selectedUserForInvite && (
                   <div 
-                    className="create-group-modal-overlay fade-in" 
+                    className="user-invite-modal-overlay fade-in" 
                     onClick={() => setSelectedUserForInvite(null)}
-                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1000 }}
                   >
                     <div 
-                      className="user-invite-modal slide-up" 
+                      className="user-invite-modal animation-pop-in" 
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="user-invite-content bengali-text">
