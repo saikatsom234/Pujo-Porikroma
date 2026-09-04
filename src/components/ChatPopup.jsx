@@ -17,6 +17,9 @@ const ChatPopup = ({ onClose, socket }) => {
   const [isClosingGroupOptions, setIsClosingGroupOptions] = useState(false);
   const [activeGroupChatId, setActiveGroupChatId] = useState(null);
   const [groupInputText, setGroupInputText] = useState('');
+  
+  const [selectedUserForInvite, setSelectedUserForInvite] = useState(null);
+  const [invites, setInvites] = useState([]);
 
   const messagesEndRef = useRef(null);
 
@@ -108,6 +111,12 @@ const ChatPopup = ({ onClose, socket }) => {
       }));
     };
 
+    const handleReceiveGroupInvite = (inviteData) => {
+      if (inviteData.targetUserId === myUserId) {
+        setInvites(prev => [...prev, inviteData]);
+      }
+    };
+
     socket.on('initChat', handleInitChat);
     socket.on('newMessage', handleNewMessage);
     socket.on('chatCleared', handleChatCleared);
@@ -117,6 +126,7 @@ const ChatPopup = ({ onClose, socket }) => {
     socket.on('groupUpdated', handleGroupUpdated);
     socket.on('groupDeleted', handleGroupDeleted);
     socket.on('newGroupMessage', handleNewGroupMessage);
+    socket.on('receiveGroupInvite', handleReceiveGroupInvite);
 
     // Request initial chat state since we might have missed the initial connection event
     socket.emit('requestInitChat');
@@ -131,8 +141,9 @@ const ChatPopup = ({ onClose, socket }) => {
       socket.off('groupUpdated', handleGroupUpdated);
       socket.off('groupDeleted', handleGroupDeleted);
       socket.off('newGroupMessage', handleNewGroupMessage);
+      socket.off('receiveGroupInvite', handleReceiveGroupInvite);
     };
-  }, [socket]);
+  }, [socket, myUserId]);
 
   const sendMessage = () => {
     if (!inputText.trim() || !socket) return;
@@ -272,6 +283,31 @@ const ChatPopup = ({ onClose, socket }) => {
                     Join Group
                   </button>
                 </div>
+                
+                {invites.length > 0 && (
+                  <div style={{ marginTop: '24px' }}>
+                    <h3 className="invite-section-title bengali-text" style={{ fontSize: '15px' }}>নতুন আমন্ত্রণ</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {invites.map((invite, index) => (
+                        <div key={index} className="invite-section-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <div style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>{invite.groupName}</div>
+                            <div style={{ color: '#aaa', fontSize: '12px' }}>from {invite.fromUserName}</div>
+                          </div>
+                          <button 
+                            style={{ background: '#f9a826', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '16px', fontWeight: 'bold', cursor: 'pointer' }}
+                            onClick={() => {
+                              socket.emit('joinGroup', invite.groupId);
+                              setInvites(prev => prev.filter((_, i) => i !== index));
+                            }}
+                          >
+                            Join
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
             
@@ -295,7 +331,13 @@ const ChatPopup = ({ onClose, socket }) => {
                 return (
                   <div key={msg.id} className={`chat-message-row ${isMine ? 'mine' : 'theirs'}`}>
                     {!isMine && (
-                      <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
+                      <img 
+                        src={msg.avatar} 
+                        alt="User Logo" 
+                        className="chat-avatar" 
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username })}
+                      />
                     )}
                     <div className={`chat-message-bubble ${msg.text === '👍' ? 'like-message' : ''} bengali-text`}>
                       {!isMine && <div className="chat-message-sender">{msg.username}</div>}
@@ -326,7 +368,13 @@ const ChatPopup = ({ onClose, socket }) => {
               return (
                 <div key={msg.id} className={`chat-message-row ${isMine ? 'mine' : 'theirs'}`}>
                   {!isMine && (
-                    <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
+                    <img 
+                      src={msg.avatar} 
+                      alt="User Logo" 
+                      className="chat-avatar" 
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username })}
+                    />
                   )}
                   <div className="chat-bubble-wrapper">
                     <div className="chat-bubble bengali-text">
@@ -477,6 +525,49 @@ const ChatPopup = ({ onClose, socket }) => {
                       }}>
                         {selectedGroup.creatorId === myUserId ? 'Delete group' : 'Leave group'}
                       </button>
+                    </div>
+                  </div>
+                )}
+
+                {selectedUserForInvite && (
+                  <div 
+                    className="create-group-modal-overlay fade-in" 
+                    onClick={() => setSelectedUserForInvite(null)}
+                    style={{ backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 1000 }}
+                  >
+                    <div 
+                      className="user-invite-modal slide-up" 
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="user-invite-content bengali-text">
+                        <span>গ্রুপ আমন্ত্রণ পাঠান</span>
+                        <div className="user-invite-actions">
+                          <button 
+                            className="user-invite-btn-plus"
+                            onClick={() => {
+                              const myGroups = groups.filter(g => g.creatorId === myUserId);
+                              if (myGroups.length === 0) {
+                                alert('You need to create a group first to send an invite.');
+                              } else {
+                                socket.emit('sendGroupInvite', { 
+                                  targetUserId: selectedUserForInvite.userId, 
+                                  groupId: myGroups[0].id 
+                                });
+                                alert('Invite sent successfully!');
+                              }
+                              setSelectedUserForInvite(null);
+                            }}
+                          >
+                            <Plus size={18} />
+                          </button>
+                          <button 
+                            className="user-invite-btn-close"
+                            onClick={() => setSelectedUserForInvite(null)}
+                          >
+                            <X size={18} />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

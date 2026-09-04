@@ -707,3 +707,42 @@
   cursor: pointer;
   border: 1px solid rgba(255, 178, 107, 0.2);
 }
+.user-invite-modal {
+  background-color: #242424;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 280px;
+}
+
+.user-invite-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 16px;
+}
+
+.user-invite-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.user-invite-btn-plus, .user-invite-btn-close {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-invite-btn-plus:hover, .user-invite-btn-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

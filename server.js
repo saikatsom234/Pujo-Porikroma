@@ -253,6 +253,21 @@ io.on('connection', (socket) => {
     io.emit('newGroupMessage', { groupId, message: newMessage });
   });
 
+  socket.on('sendGroupInvite', ({ targetUserId, groupId }) => {
+    const group = groups.find(g => g.id === groupId);
+    if (!group) return;
+
+    // Send the invite directly to everyone, but clients will filter by targetUserId
+    // In a real app, this should only emit to the specific targetUserId's socket room
+    io.emit('receiveGroupInvite', {
+      targetUserId,
+      groupId: group.id,
+      groupName: group.name,
+      fromUserName: myUsername,
+      timestamp: new Date().toISOString()
+    });
+  });
+
   // Broadcast the new online count
   io.emit('onlineUsersUpdate', onlineUsers);
 
