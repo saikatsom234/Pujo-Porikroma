@@ -12,6 +12,10 @@ const ChatPopup = ({ onClose, socket }) => {
   const [myUserId, setMyUserId] = useState(null);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [isClosingCreateGroup, setIsClosingCreateGroup] = useState(false);
+  
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [isClosingGroupOptions, setIsClosingGroupOptions] = useState(false);
+
   const messagesEndRef = useRef(null);
 
   // Auto-scroll to bottom of messages
@@ -25,6 +29,14 @@ const ChatPopup = ({ onClose, socket }) => {
       setShowCreateGroup(false);
       setIsClosingCreateGroup(false);
       setGroupNameInput('');
+    }, 300);
+  };
+
+  const handleCloseGroupOptions = () => {
+    setIsClosingGroupOptions(true);
+    setTimeout(() => {
+      setSelectedGroup(null);
+      setIsClosingGroupOptions(false);
     }, 300);
   };
 
@@ -81,6 +93,10 @@ const ChatPopup = ({ onClose, socket }) => {
       setGroups((prev) => prev.map(g => g.id === updatedGroup.id ? updatedGroup : g));
     };
 
+    const handleGroupDeleted = (deletedGroupId) => {
+      setGroups((prev) => prev.filter(g => g.id !== deletedGroupId));
+    };
+
     socket.on('initChat', handleInitChat);
     socket.on('newMessage', handleNewMessage);
     socket.on('chatCleared', handleChatCleared);
@@ -88,6 +104,7 @@ const ChatPopup = ({ onClose, socket }) => {
     socket.on('initGroups', handleInitGroups);
     socket.on('newGroup', handleNewGroup);
     socket.on('groupUpdated', handleGroupUpdated);
+    socket.on('groupDeleted', handleGroupDeleted);
 
     // Request initial chat state since we might have missed the initial connection event
     socket.emit('requestInitChat');
@@ -100,6 +117,7 @@ const ChatPopup = ({ onClose, socket }) => {
       socket.off('initGroups', handleInitGroups);
       socket.off('newGroup', handleNewGroup);
       socket.off('groupUpdated', handleGroupUpdated);
+      socket.off('groupDeleted', handleGroupDeleted);
     };
   }, [socket]);
 
@@ -250,7 +268,7 @@ const ChatPopup = ({ onClose, socket }) => {
                           {group.membersCount} of 3 members
                         </div>
                       </div>
-                      <div className="group-list-item-more">
+                      <div className="group-list-item-more" onClick={() => setSelectedGroup(group)}>
                         <MoreVertical size={16} />
                       </div>
                     </div>
@@ -300,6 +318,60 @@ const ChatPopup = ({ onClose, socket }) => {
                       
                       <button className="create-group-submit-btn" onClick={handleCreateGroupSubmit}>
                         Create group
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {selectedGroup && (
+                  <div 
+                    className={`create-group-modal-overlay ${isClosingGroupOptions ? 'fade-out' : 'fade-in'}`} 
+                    onClick={handleCloseGroupOptions}
+                  >
+                    <div 
+                      className={`create-group-modal group-options-modal ${isClosingGroupOptions ? 'slide-down' : 'slide-up'}`} 
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="group-options-header">
+                        <img src="/group-icon.jpg" alt="group icon" className="group-options-icon" />
+                        <div className="group-options-header-text">
+                          <h4>{selectedGroup.name}</h4>
+                          <span>{selectedGroup.membersCount} member{selectedGroup.membersCount !== 1 ? 's' : ''}</span>
+                        </div>
+                      </div>
+
+                      <div className="group-options-divider"></div>
+                      
+                      <button className="group-options-btn" onClick={() => {
+                        // Open group logic would go here
+                        handleCloseGroupOptions();
+                      }}>
+                        Open group
+                      </button>
+
+                      <div className="group-options-divider"></div>
+
+                      <div className="group-options-row">
+                        <span className="group-options-label">Copy invite code</span>
+                        <div className="group-options-code-box" onClick={() => {
+                          navigator.clipboard.writeText(selectedGroup.id);
+                          alert('Invite code copied!');
+                        }}>
+                          {selectedGroup.id}
+                        </div>
+                      </div>
+
+                      <div className="group-options-divider"></div>
+
+                      <button className="group-options-btn delete-btn" onClick={() => {
+                        if (selectedGroup.creatorId === myUserId) {
+                          socket.emit('deleteGroup', selectedGroup.id);
+                        } else {
+                          socket.emit('leaveGroup', selectedGroup.id);
+                        }
+                        handleCloseGroupOptions();
+                      }}>
+                        {selectedGroup.creatorId === myUserId ? 'Delete group' : 'Leave group'}
                       </button>
                     </div>
                   </div>

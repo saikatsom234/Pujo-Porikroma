@@ -622,3 +622,87 @@
 .group-list-item-more:hover {
   color: #fff;
 }
+.group-options-modal {
+  padding: 24px 20px;
+}
+
+.group-options-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.group-options-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #fff;
+  flex-shrink: 0;
+}
+
+.group-options-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group-options-header-text h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.group-options-header-text span {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.group-options-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 -20px;
+}
+
+.group-options-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  padding: 20px 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.group-options-btn.delete-btn {
+  color: #d94444;
+}
+
+.group-options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.group-options-label {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.group-options-code-box {
+  background: rgba(60, 30, 20, 0.6);
+  color: #ffb26b;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255, 178, 107, 0.2);
+}

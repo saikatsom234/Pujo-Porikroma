@@ -203,6 +203,29 @@ io.on('connection', (socket) => {
     io.emit('groupUpdated', group);
   });
 
+  // Handle deleting a group
+  socket.on('deleteGroup', (groupId) => {
+    const groupIndex = groups.findIndex(g => g.id === groupId);
+    if (groupIndex === -1) return;
+    if (groups[groupIndex].creatorId !== myUserId) return; // Only creator can delete
+    
+    groups.splice(groupIndex, 1);
+    io.emit('groupDeleted', groupId);
+  });
+
+  // Handle leaving a group
+  socket.on('leaveGroup', (groupId) => {
+    const group = groups.find(g => g.id === groupId);
+    if (!group) return;
+    
+    const memberIndex = group.members.indexOf(myUserId);
+    if (memberIndex === -1) return;
+    
+    group.members.splice(memberIndex, 1);
+    group.membersCount = group.members.length;
+    io.emit('groupUpdated', group);
+  });
+
   // Broadcast the new online count
   io.emit('onlineUsersUpdate', onlineUsers);
 
