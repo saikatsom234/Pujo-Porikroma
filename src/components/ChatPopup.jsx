@@ -8,11 +8,20 @@ const ChatPopup = ({ onClose, socket }) => {
   const [inputText, setInputText] = useState('');
   const [myUserId, setMyUserId] = useState(null);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
+  const [isClosingCreateGroup, setIsClosingCreateGroup] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleCloseCreateGroup = () => {
+    setIsClosingCreateGroup(true);
+    setTimeout(() => {
+      setShowCreateGroup(false);
+      setIsClosingCreateGroup(false);
+    }, 300);
   };
 
   useEffect(() => {
@@ -192,8 +201,14 @@ const ChatPopup = ({ onClose, socket }) => {
               </button>
               
               {showCreateGroup && (
-                <div className="create-group-modal-overlay animation-pop-in">
-                  <div className="create-group-modal">
+                <div 
+                  className={`create-group-modal-overlay ${isClosingCreateGroup ? 'fade-out' : 'fade-in'}`} 
+                  onClick={handleCloseCreateGroup}
+                >
+                  <div 
+                    className={`create-group-modal ${isClosingCreateGroup ? 'slide-down' : 'slide-up'}`} 
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <div className="create-group-modal-drag-handle"></div>
                     <div className="create-group-modal-header">
                       <h3>Create a group</h3>
@@ -208,7 +223,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       <input type="text" placeholder="North Kolkata Tour" />
                     </div>
                     
-                    <button className="create-group-submit-btn" onClick={() => setShowCreateGroup(false)}>
+                    <button className="create-group-submit-btn" onClick={handleCloseCreateGroup}>
                       Create group
                     </button>
                   </div>
