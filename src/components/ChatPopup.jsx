@@ -8,6 +8,7 @@ const ChatPopup = ({ onClose, socket }) => {
   const [groups, setGroups] = useState([]);
   const [inputText, setInputText] = useState('');
   const [groupNameInput, setGroupNameInput] = useState('');
+  const [joinCodeInput, setJoinCodeInput] = useState('');
   const [myUserId, setMyUserId] = useState(null);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [isClosingCreateGroup, setIsClosingCreateGroup] = useState(false);
@@ -31,6 +32,17 @@ const ChatPopup = ({ onClose, socket }) => {
     if (!groupNameInput.trim()) return;
     socket.emit('createGroup', groupNameInput);
     handleCloseCreateGroup();
+  };
+
+  const handleJoinGroupSubmit = () => {
+    if (!joinCodeInput.trim()) return;
+    const joinedGroupsCount = groups.filter(g => g.creatorId !== myUserId && g.members && g.members.includes(myUserId)).length;
+    if (joinedGroupsCount >= 3) {
+      alert('You can only join up to 3 groups created by others.');
+      return;
+    }
+    socket.emit('joinGroup', joinCodeInput.trim());
+    setJoinCodeInput('');
   };
 
   useEffect(() => {
@@ -65,12 +77,17 @@ const ChatPopup = ({ onClose, socket }) => {
       setGroups((prev) => [...prev, newGroup]);
     };
 
+    const handleGroupUpdated = (updatedGroup) => {
+      setGroups((prev) => prev.map(g => g.id === updatedGroup.id ? updatedGroup : g));
+    };
+
     socket.on('initChat', handleInitChat);
     socket.on('newMessage', handleNewMessage);
     socket.on('chatCleared', handleChatCleared);
     socket.on('chatError', handleChatError);
     socket.on('initGroups', handleInitGroups);
     socket.on('newGroup', handleNewGroup);
+    socket.on('groupUpdated', handleGroupUpdated);
 
     // Request initial chat state since we might have missed the initial connection event
     socket.emit('requestInitChat');
@@ -82,6 +99,7 @@ const ChatPopup = ({ onClose, socket }) => {
       socket.off('chatError', handleChatError);
       socket.off('initGroups', handleInitGroups);
       socket.off('newGroup', handleNewGroup);
+      socket.off('groupUpdated', handleGroupUpdated);
     };
   }, [socket]);
 
@@ -171,8 +189,15 @@ const ChatPopup = ({ onClose, socket }) => {
                   <p className="invite-section-text">
                     Got a code from a friend? Join their group to see everyone live.
                   </p>
-                  <button className="invite-join-btn">
-                    Join with a code
+                  <input 
+                    type="text" 
+                    placeholder="Enter Group Code" 
+                    className="invite-code-input"
+                    value={joinCodeInput}
+                    onChange={(e) => setJoinCodeInput(e.target.value)}
+                  />
+                  <button className="invite-join-btn" onClick={handleJoinGroupSubmit}>
+                    Join Group
                   </button>
                 </div>
               </div>
@@ -215,7 +240,7 @@ const ChatPopup = ({ onClose, socket }) => {
             {activeTab === 'group_adda' && (
               <>
                 <div className="groups-list">
-                  {groups.map((group) => (
+                  {groups.filter(g => g.members && g.members.includes(myUserId)).map((group) => (
                     <div key={group.id} className="group-list-item">
                       <div className="group-list-item-icon">
                         🪔
@@ -224,7 +249,7 @@ const ChatPopup = ({ onClose, socket }) => {
                         <div className="group-list-item-name">{group.name}</div>
                         <div className="group-list-item-meta">
                           <img src={group.creatorAvatar} alt="creator" className="group-list-item-avatar" />
-                          {group.membersCount} of 3 members
+                          {group.membersCount} of 3 members • Code: <strong style={{color: '#f9a826', marginLeft: '4px'}}>{group.id}</strong>
                         </div>
                       </div>
                       <div className="group-list-item-more">

@@ -151,12 +151,14 @@ io.on('connection', (socket) => {
       return;
     }
 
+    const shortCode = Math.random().toString(36).substr(2, 6).toUpperCase();
     const newGroup = {
-      id: Date.now() + Math.random().toString(36).substr(2, 9),
+      id: shortCode,
       name: groupName.trim(),
       creatorId: myUserId,
       creatorName: myUsername,
       creatorAvatar: myAvatar,
+      members: [myUserId],
       membersCount: 1, // Start with 1 (the creator)
       timestamp: new Date().toISOString()
     };
@@ -164,6 +166,43 @@ io.on('connection', (socket) => {
     io.emit('newGroup', newGroup);
   });
   
+  // Handle joining a group via code
+  socket.on('joinGroup', (code) => {
+    if (!code || typeof code !== 'string') return;
+    
+    // Check if group exists
+    const group = groups.find(g => g.id === code.toUpperCase());
+    if (!group) {
+      socket.emit('chatError', 'Group not found with this code.');
+      return;
+    }
+
+    // Check if already a member
+    if (group.members.includes(myUserId)) {
+      socket.emit('chatError', 'You are already in this group.');
+      return;
+    }
+
+    // Check max joined groups limit
+    const joinedGroupsCount = groups.filter(g => g.creatorId !== myUserId && g.members.includes(myUserId)).length;
+    if (joinedGroupsCount >= 3) {
+      socket.emit('chatError', 'You can only join up to 3 groups created by others.');
+      return;
+    }
+
+    // Check max members per group (the UI says "holds up to 3 members")
+    if (group.members.length >= 3) {
+      socket.emit('chatError', 'This group is already full (max 3 members).');
+      return;
+    }
+
+    // Join the group
+    group.members.push(myUserId);
+    group.membersCount = group.members.length;
+    
+    io.emit('groupUpdated', group);
+  });
+
   // Broadcast the new online count
   io.emit('onlineUsersUpdate', onlineUsers);
 

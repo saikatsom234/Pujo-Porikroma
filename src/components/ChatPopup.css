@@ -210,6 +210,22 @@
   margin: 0;
 }
 
+.invite-code-input {
+  width: 100%;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.invite-code-input:focus {
+  outline: none;
+  border-color: #f9a826;
+}
+
 .invite-join-btn {
   background-color: rgba(255, 255, 255, 0.15); /* Light brown/gray requested by user */
   color: #fff;
