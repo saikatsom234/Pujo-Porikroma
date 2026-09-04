@@ -196,14 +196,18 @@ const ChatPopup = ({ onClose, socket }) => {
         <div className="chat-popup-header">
           <div className="chat-popup-header-top">
             {activeGroupChatId ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <button className="chat-close-btn" style={{ padding: '4px' }} onClick={() => setActiveGroupChatId(null)}>
+              <>
+                <button 
+                  className="chat-close-btn" 
+                  style={{ left: 0, right: 'auto' }} 
+                  onClick={() => setActiveGroupChatId(null)}
+                >
                   <ArrowLeft size={24} />
                 </button>
-                <h2 className="chat-popup-title-text bengali-text" style={{ margin: 0 }}>
+                <h2 className="chat-popup-title-text bengali-text" style={{ margin: 0, padding: '0 40px 6px 40px' }}>
                   {groups.find(g => g.id === activeGroupChatId)?.name || 'Group Chat'}
                 </h2>
-              </div>
+              </>
             ) : (
               <h2 className="chat-popup-title-text bengali-text">পূজার আড্ডা</h2>
             )}
