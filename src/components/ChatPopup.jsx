@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, ThumbsUp, Mail, Plus, MoreVertical, ArrowLeft } from 'lucide-react';
+import { X, Send, ThumbsUp, Mail, Plus, Check, MoreVertical, ArrowLeft } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose, socket }) => {
@@ -643,7 +643,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       setSelectedUserForInvite(null);
                     }}
                   >
-                    <Plus size={18} />
+                    {selectedUserForInvite.mode === 'kick' ? <Check size={18} /> : <Plus size={18} />}
                   </button>
                   <button 
                     className="user-invite-btn-close"
