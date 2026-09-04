@@ -11,6 +11,12 @@ export default defineConfig({
         path.resolve(__dirname, 'image') + '/**',
         path.resolve(__dirname, 'songs') + '/**'
       ]
+    },
+    proxy: {
+      '/socket.io': {
+        target: 'http://127.0.0.1:3000',
+        ws: true
+      }
     }
   }
 })
