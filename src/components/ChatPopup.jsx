@@ -212,71 +212,71 @@ const ChatPopup = ({ onClose, socket }) => {
                 </div>
               );
             })}
-            <div ref={messagesEndRef} />
-          </div>
-          
-          {activeTab === 'group_adda' && (
-            <>
-              <div className="groups-list">
-                {groups.map((group) => (
-                  <div key={group.id} className="group-list-item">
-                    <div className="group-list-item-icon">
-                      🪔
-                    </div>
-                    <div className="group-list-item-details">
-                      <div className="group-list-item-name">{group.name}</div>
-                      <div className="group-list-item-meta">
-                        <img src={group.creatorAvatar} alt="creator" className="group-list-item-avatar" />
-                        {group.membersCount} of 3 members
+            {activeTab === 'group_adda' && (
+              <>
+                <div className="groups-list">
+                  {groups.map((group) => (
+                    <div key={group.id} className="group-list-item">
+                      <div className="group-list-item-icon">
+                        🪔
+                      </div>
+                      <div className="group-list-item-details">
+                        <div className="group-list-item-name">{group.name}</div>
+                        <div className="group-list-item-meta">
+                          <img src={group.creatorAvatar} alt="creator" className="group-list-item-avatar" />
+                          {group.membersCount} of 3 members
+                        </div>
+                      </div>
+                      <div className="group-list-item-more">
+                        <MoreVertical size={16} />
                       </div>
                     </div>
-                    <div className="group-list-item-more">
-                      <MoreVertical size={16} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button className="chat-fab-btn animation-pop-in" onClick={() => setShowCreateGroup(true)}>
-                <Plus size={24} />
-              </button>
-              
-              {showCreateGroup && (
-                <div 
-                  className={`create-group-modal-overlay ${isClosingCreateGroup ? 'fade-out' : 'fade-in'}`} 
-                  onClick={handleCloseCreateGroup}
-                >
-                  <div 
-                    className={`create-group-modal ${isClosingCreateGroup ? 'slide-down' : 'slide-up'}`} 
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="create-group-modal-drag-handle"></div>
-                    <div className="create-group-modal-header">
-                      <h3>Create a group</h3>
-                    </div>
-                    
-                    <div className="create-group-info">
-                      A group holds up to <strong>3 members</strong> (including you), and you can have 3 groups of your own at a time.
-                    </div>
-                    
-                    <div className="create-group-input-section">
-                      <label>Group name</label>
-                      <input 
-                        type="text" 
-                        placeholder="North Kolkata Tour" 
-                        value={groupNameInput}
-                        onChange={(e) => setGroupNameInput(e.target.value)}
-                      />
-                    </div>
-                    
-                    <button className="create-group-submit-btn" onClick={handleCreateGroupSubmit}>
-                      Create group
-                    </button>
-                  </div>
+                  ))}
                 </div>
-              )}
-            </>
-          )}
+
+                <button className="chat-fab-btn animation-pop-in" onClick={() => setShowCreateGroup(true)}>
+                  <Plus size={24} />
+                </button>
+                
+                {showCreateGroup && (
+                  <div 
+                    className={`create-group-modal-overlay ${isClosingCreateGroup ? 'fade-out' : 'fade-in'}`} 
+                    onClick={handleCloseCreateGroup}
+                  >
+                    <div 
+                      className={`create-group-modal ${isClosingCreateGroup ? 'slide-down' : 'slide-up'}`} 
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="create-group-modal-drag-handle"></div>
+                      <div className="create-group-modal-header">
+                        <h3>Create a group</h3>
+                      </div>
+                      
+                      <div className="create-group-info">
+                        A group holds up to <strong>3 members</strong> (including you), and you can have 3 groups of your own at a time.
+                      </div>
+                      
+                      <div className="create-group-input-section">
+                        <label>Group name</label>
+                        <input 
+                          type="text" 
+                          placeholder="North Kolkata Tour" 
+                          value={groupNameInput}
+                          onChange={(e) => setGroupNameInput(e.target.value)}
+                        />
+                      </div>
+                      
+                      <button className="create-group-submit-btn" onClick={handleCreateGroupSubmit}>
+                        Create group
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+
+            {activeTab === 'adda' && <div ref={messagesEndRef} />}
+          </div>
 
           {activeTab === 'adda' && (
             <div className="chat-input-area">

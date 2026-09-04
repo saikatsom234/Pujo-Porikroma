@@ -552,6 +552,9 @@
   padding: 16px;
   box-sizing: border-box;
   gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+  justify-content: flex-start;
 }
 
 .group-list-item {
