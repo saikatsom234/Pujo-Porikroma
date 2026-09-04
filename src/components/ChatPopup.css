@@ -246,6 +246,7 @@
 .chat-messages {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
@@ -328,6 +329,8 @@
   font-size: 14px;
   line-height: 1.4;
   word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
   color: rgba(255, 255, 255, 0.9);
   white-space: pre-wrap;
   background: rgba(255, 255, 255, 0.1); /* Dark greyish/transparent to match image */
