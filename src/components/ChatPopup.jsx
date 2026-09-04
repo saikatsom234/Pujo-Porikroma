@@ -242,9 +242,7 @@ const ChatPopup = ({ onClose, socket }) => {
                 <div className="groups-list">
                   {groups.filter(g => g.members && g.members.includes(myUserId)).map((group) => (
                     <div key={group.id} className="group-list-item">
-                      <div className="group-list-item-icon">
-                        🪔
-                      </div>
+                      <img src="/group-icon.jpg" alt="group icon" className="group-list-item-icon" />
                       <div className="group-list-item-details">
                         <div className="group-list-item-name">{group.name}</div>
                         <div className="group-list-item-meta">
