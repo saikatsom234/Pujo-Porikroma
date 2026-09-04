@@ -351,12 +351,29 @@ const ChatPopup = ({ onClose, socket }) => {
 
                       <div className="group-options-divider"></div>
 
-                      <div className="group-options-row">
-                        <span className="group-options-label">Copy invite code</span>
-                        <div className="group-options-code-box" onClick={() => {
-                          navigator.clipboard.writeText(selectedGroup.id);
-                          alert('Invite code copied!');
-                        }}>
+                      <div className="group-options-row" onClick={() => {
+                          if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(selectedGroup.id)
+                              .then(() => alert('Invite code copied!'))
+                              .catch(() => alert('Could not copy automatically. Code is: ' + selectedGroup.id));
+                          } else {
+                            // Fallback for non-HTTPS (like mobile testing on local network)
+                            const textArea = document.createElement("textarea");
+                            textArea.value = selectedGroup.id;
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+                            try {
+                              document.execCommand('copy');
+                              alert('Invite code copied!');
+                            } catch (err) {
+                              alert('Could not copy automatically. Code is: ' + selectedGroup.id);
+                            }
+                            document.body.removeChild(textArea);
+                          }
+                      }}>
+                        <span className="group-options-label" style={{cursor: 'pointer'}}>Copy invite code</span>
+                        <div className="group-options-code-box">
                           {selectedGroup.id}
                         </div>
                       </div>
