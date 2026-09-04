@@ -6,7 +6,7 @@
   height: 100vh;
   height: 100dvh;
   z-index: 2000;
-  background: rgba(15, 10, 10, 0.98); 
+  background: #211c19; 
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   animation: slideUpChat 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -56,7 +56,7 @@
 .chat-popup-title-text {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: #f5e6d3;
   text-transform: uppercase;
   margin: 0;
   text-align: center;
