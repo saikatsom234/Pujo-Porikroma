@@ -351,7 +351,14 @@ const ChatPopup = ({ onClose, socket }) => {
                         alt="User Logo" 
                         className="chat-avatar" 
                         style={{ cursor: 'pointer' }}
-                        onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar })}
+                        onClick={() => {
+                          const currentGroup = groups.find(g => g.id === activeGroupChatId);
+                          if (currentGroup && currentGroup.creatorId === myUserId) {
+                             setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar, mode: 'kick', groupId: currentGroup.id });
+                          } else {
+                             setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar, mode: 'invite' });
+                          }
+                        }}
                       />
                     )}
                     <div className={`chat-message-bubble ${msg.text === '👍' ? 'like-message' : ''} bengali-text`}>
@@ -609,21 +616,29 @@ const ChatPopup = ({ onClose, socket }) => {
                     alt="User Avatar" 
                     style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} 
                   />
-                  <span>গ্রুপ আমন্ত্রণ পাঠান</span>
+                  <span>{selectedUserForInvite.mode === 'kick' ? 'বিতাড়িত করুন' : 'গ্রুপ আমন্ত্রণ পাঠান'}</span>
                 </div>
                 <div className="user-invite-actions">
                   <button 
                     className="user-invite-btn-plus"
                     onClick={() => {
-                      const myGroups = groups.filter(g => g.creatorId === myUserId);
-                      if (myGroups.length === 0) {
-                        alert('You need to create a group first to send an invite.');
-                      } else {
-                        socket.emit('sendGroupInvite', { 
+                      if (selectedUserForInvite.mode === 'kick') {
+                        socket.emit('kickUser', { 
                           targetUserId: selectedUserForInvite.userId, 
-                          groupId: myGroups[0].id 
+                          groupId: selectedUserForInvite.groupId 
                         });
-                        alert('Invite sent successfully!');
+                        alert('User removed successfully!');
+                      } else {
+                        const myGroups = groups.filter(g => g.creatorId === myUserId);
+                        if (myGroups.length === 0) {
+                          alert('You need to create a group first to send an invite.');
+                        } else {
+                          socket.emit('sendGroupInvite', { 
+                            targetUserId: selectedUserForInvite.userId, 
+                            groupId: myGroups[0].id 
+                          });
+                          alert('Invite sent successfully!');
+                        }
                       }
                       setSelectedUserForInvite(null);
                     }}

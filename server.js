@@ -227,6 +227,24 @@ io.on('connection', (socket) => {
     io.emit('groupUpdated', group);
   });
 
+  // Handle kicking a user from a group
+  socket.on('kickUser', ({ targetUserId, groupId }) => {
+    const group = groups.find(g => g.id === groupId);
+    if (!group) return;
+    
+    // Only creator can kick
+    if (group.creatorId !== myUserId) return;
+    // Cannot kick yourself this way
+    if (targetUserId === myUserId) return;
+
+    const memberIndex = group.members.indexOf(targetUserId);
+    if (memberIndex === -1) return;
+    
+    group.members.splice(memberIndex, 1);
+    group.membersCount = group.members.length;
+    io.emit('groupUpdated', group);
+  });
+
   // Handle sending a message in a group
   socket.on('sendGroupMessage', ({ groupId, text }) => {
     if (!text || typeof text !== 'string') return;
