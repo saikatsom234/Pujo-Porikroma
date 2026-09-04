@@ -247,7 +247,7 @@ const ChatPopup = ({ onClose, socket }) => {
                         <div className="group-list-item-name">{group.name}</div>
                         <div className="group-list-item-meta">
                           <img src={group.creatorAvatar} alt="creator" className="group-list-item-avatar" />
-                          {group.membersCount} of 3 members • Code: <strong style={{color: '#f9a826', marginLeft: '4px'}}>{group.id}</strong>
+                          {group.membersCount} of 3 members
                         </div>
                       </div>
                       <div className="group-list-item-more">
