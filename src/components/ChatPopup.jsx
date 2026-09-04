@@ -247,7 +247,6 @@ const ChatPopup = ({ onClose, socket }) => {
                       className={`create-group-modal ${isClosingCreateGroup ? 'slide-down' : 'slide-up'}`} 
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <div className="create-group-modal-drag-handle"></div>
                       <div className="create-group-modal-header">
                         <h3>Create a group</h3>
                       </div>
