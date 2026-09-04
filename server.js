@@ -17,6 +17,7 @@ const io = new Server(httpServer, {
 let onlineUsers = 0;
 let userCounter = 0;
 let messages = [];
+let groups = [];
 
 // Helper to calculate the current 3-hour block index
 function getCurrentTimeBlock() {
@@ -136,6 +137,23 @@ io.on('connection', (socket) => {
       myAvatar,
       messages
     });
+    socket.emit('initGroups', groups);
+  });
+  
+  // Handle creating a new group
+  socket.on('createGroup', (groupName) => {
+    if (!groupName || typeof groupName !== 'string') return;
+    const newGroup = {
+      id: Date.now() + Math.random().toString(36).substr(2, 9),
+      name: groupName.trim(),
+      creatorId: myUserId,
+      creatorName: myUsername,
+      creatorAvatar: myAvatar,
+      membersCount: 1, // Start with 1 (the creator)
+      timestamp: new Date().toISOString()
+    };
+    groups.push(newGroup);
+    io.emit('newGroup', newGroup);
   });
   
   // Broadcast the new online count

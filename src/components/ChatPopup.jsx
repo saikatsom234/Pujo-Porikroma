@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, ThumbsUp, Mail, Plus } from 'lucide-react';
+import { X, Send, ThumbsUp, Mail, Plus, MoreVertical } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose, socket }) => {
   const [activeTab, setActiveTab] = useState('adda');
   const [messages, setMessages] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [groupNameInput, setGroupNameInput] = useState('');
   const [myUserId, setMyUserId] = useState(null);
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [isClosingCreateGroup, setIsClosingCreateGroup] = useState(false);
@@ -21,7 +23,14 @@ const ChatPopup = ({ onClose, socket }) => {
     setTimeout(() => {
       setShowCreateGroup(false);
       setIsClosingCreateGroup(false);
+      setGroupNameInput('');
     }, 300);
+  };
+
+  const handleCreateGroupSubmit = () => {
+    if (!groupNameInput.trim()) return;
+    socket.emit('createGroup', groupNameInput);
+    handleCloseCreateGroup();
   };
 
   useEffect(() => {
@@ -48,10 +57,20 @@ const ChatPopup = ({ onClose, socket }) => {
       alert(err);
     };
 
+    const handleInitGroups = (data) => {
+      setGroups(data);
+    };
+
+    const handleNewGroup = (newGroup) => {
+      setGroups((prev) => [...prev, newGroup]);
+    };
+
     socket.on('initChat', handleInitChat);
     socket.on('newMessage', handleNewMessage);
     socket.on('chatCleared', handleChatCleared);
     socket.on('chatError', handleChatError);
+    socket.on('initGroups', handleInitGroups);
+    socket.on('newGroup', handleNewGroup);
 
     // Request initial chat state since we might have missed the initial connection event
     socket.emit('requestInitChat');
@@ -61,6 +80,8 @@ const ChatPopup = ({ onClose, socket }) => {
       socket.off('newMessage', handleNewMessage);
       socket.off('chatCleared', handleChatCleared);
       socket.off('chatError', handleChatError);
+      socket.off('initGroups', handleInitGroups);
+      socket.off('newGroup', handleNewGroup);
     };
   }, [socket]);
 
@@ -196,6 +217,26 @@ const ChatPopup = ({ onClose, socket }) => {
           
           {activeTab === 'group_adda' && (
             <>
+              <div className="groups-list">
+                {groups.map((group) => (
+                  <div key={group.id} className="group-list-item">
+                    <div className="group-list-item-icon">
+                      🪔
+                    </div>
+                    <div className="group-list-item-details">
+                      <div className="group-list-item-name">{group.name}</div>
+                      <div className="group-list-item-meta">
+                        <img src={group.creatorAvatar} alt="creator" className="group-list-item-avatar" />
+                        {group.membersCount} of 3 members
+                      </div>
+                    </div>
+                    <div className="group-list-item-more">
+                      <MoreVertical size={16} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
               <button className="chat-fab-btn animation-pop-in" onClick={() => setShowCreateGroup(true)}>
                 <Plus size={24} />
               </button>
@@ -220,10 +261,15 @@ const ChatPopup = ({ onClose, socket }) => {
                     
                     <div className="create-group-input-section">
                       <label>Group name</label>
-                      <input type="text" placeholder="North Kolkata Tour" />
+                      <input 
+                        type="text" 
+                        placeholder="North Kolkata Tour" 
+                        value={groupNameInput}
+                        onChange={(e) => setGroupNameInput(e.target.value)}
+                      />
                     </div>
                     
-                    <button className="create-group-submit-btn" onClick={handleCloseCreateGroup}>
+                    <button className="create-group-submit-btn" onClick={handleCreateGroupSubmit}>
                       Create group
                     </button>
                   </div>
