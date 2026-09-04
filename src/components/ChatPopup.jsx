@@ -113,7 +113,12 @@ const ChatPopup = ({ onClose, socket }) => {
 
     const handleReceiveGroupInvite = (inviteData) => {
       if (inviteData.targetUserId === myUserId) {
-        setInvites(prev => [...prev, inviteData]);
+        setInvites(prev => {
+          if (prev.length >= 3) {
+            return prev;
+          }
+          return [...prev, inviteData];
+        });
       }
     };
 
@@ -294,15 +299,25 @@ const ChatPopup = ({ onClose, socket }) => {
                             <div style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>{invite.groupName}</div>
                             <div style={{ color: '#aaa', fontSize: '12px' }}>from {invite.fromUserName}</div>
                           </div>
-                          <button 
-                            style={{ background: '#f9a826', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '16px', fontWeight: 'bold', cursor: 'pointer' }}
-                            onClick={() => {
-                              socket.emit('joinGroup', invite.groupId);
-                              setInvites(prev => prev.filter((_, i) => i !== index));
-                            }}
-                          >
-                            Join
-                          </button>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button 
+                              style={{ background: '#f9a826', color: '#000', border: 'none', padding: '6px 12px', borderRadius: '16px', fontWeight: 'bold', cursor: 'pointer' }}
+                              onClick={() => {
+                                socket.emit('joinGroup', invite.groupId);
+                                setInvites(prev => prev.filter((_, i) => i !== index));
+                              }}
+                            >
+                              Join
+                            </button>
+                            <button 
+                              style={{ background: 'transparent', color: '#aaa', border: '1px solid #aaa', padding: '6px 12px', borderRadius: '16px', fontWeight: 'bold', cursor: 'pointer' }}
+                              onClick={() => {
+                                setInvites(prev => prev.filter((_, i) => i !== index));
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
                       ))}
                     </div>
