@@ -355,8 +355,6 @@ const ChatPopup = ({ onClose, socket }) => {
                           const currentGroup = groups.find(g => g.id === activeGroupChatId);
                           if (currentGroup && currentGroup.creatorId === myUserId) {
                              setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar, mode: 'kick', groupId: currentGroup.id });
-                          } else {
-                             setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar, mode: 'invite' });
                           }
                         }}
                       />
