@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, ThumbsUp, Mail, Plus, MoreVertical } from 'lucide-react';
+import { X, Send, ThumbsUp, Mail, Plus, MoreVertical, ArrowLeft } from 'lucide-react';
 import './ChatPopup.css';
 
 const ChatPopup = ({ onClose, socket }) => {
@@ -15,6 +15,8 @@ const ChatPopup = ({ onClose, socket }) => {
   
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [isClosingGroupOptions, setIsClosingGroupOptions] = useState(false);
+  const [activeGroupChatId, setActiveGroupChatId] = useState(null);
+  const [groupInputText, setGroupInputText] = useState('');
 
   const messagesEndRef = useRef(null);
 
@@ -97,6 +99,15 @@ const ChatPopup = ({ onClose, socket }) => {
       setGroups((prev) => prev.filter(g => g.id !== deletedGroupId));
     };
 
+    const handleNewGroupMessage = ({ groupId, message }) => {
+      setGroups((prev) => prev.map(g => {
+        if (g.id === groupId) {
+          return { ...g, messages: [...(g.messages || []), message] };
+        }
+        return g;
+      }));
+    };
+
     socket.on('initChat', handleInitChat);
     socket.on('newMessage', handleNewMessage);
     socket.on('chatCleared', handleChatCleared);
@@ -105,6 +116,7 @@ const ChatPopup = ({ onClose, socket }) => {
     socket.on('newGroup', handleNewGroup);
     socket.on('groupUpdated', handleGroupUpdated);
     socket.on('groupDeleted', handleGroupDeleted);
+    socket.on('newGroupMessage', handleNewGroupMessage);
 
     // Request initial chat state since we might have missed the initial connection event
     socket.emit('requestInitChat');
@@ -118,6 +130,7 @@ const ChatPopup = ({ onClose, socket }) => {
       socket.off('newGroup', handleNewGroup);
       socket.off('groupUpdated', handleGroupUpdated);
       socket.off('groupDeleted', handleGroupDeleted);
+      socket.off('newGroupMessage', handleNewGroupMessage);
     };
   }, [socket]);
 
@@ -139,17 +152,41 @@ const ChatPopup = ({ onClose, socket }) => {
     socket.emit('sendMessage', '👍');
   };
 
+  const sendGroupMessage = () => {
+    if (!groupInputText.trim() || !socket || !activeGroupChatId) return;
+    
+    const words = groupInputText.trim().split(/\s+/);
+    if (words.length > 50) {
+      alert('একটি বার্তায় ৫০টি শব্দের বেশি লেখা যাবে না। (Maximum 50 words allowed)');
+      return;
+    }
+
+    socket.emit('sendGroupMessage', { groupId: activeGroupChatId, text: groupInputText });
+    setGroupInputText('');
+  };
+
+  const sendGroupLike = () => {
+    if (!socket || !activeGroupChatId) return;
+    socket.emit('sendGroupMessage', { groupId: activeGroupChatId, text: '👍' });
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      sendMessage();
+      if (activeGroupChatId) {
+        sendGroupMessage();
+      } else {
+        sendMessage();
+      }
     }
   };
 
   const handleInputChange = (e) => {
     const text = e.target.value;
-    const words = text.trim().split(/\s+/);
-    // Optionally block typing beyond 50 words, but here we just update state and check on send.
-    setInputText(text);
+    if (activeGroupChatId) {
+      setGroupInputText(text);
+    } else {
+      setInputText(text);
+    }
   };
 
   return (
@@ -158,13 +195,25 @@ const ChatPopup = ({ onClose, socket }) => {
         {/* Header Section */}
         <div className="chat-popup-header">
           <div className="chat-popup-header-top">
-            <h2 className="chat-popup-title-text bengali-text">পূজার আড্ডা</h2>
+            {activeGroupChatId ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button className="chat-close-btn" style={{ padding: '4px' }} onClick={() => setActiveGroupChatId(null)}>
+                  <ArrowLeft size={24} />
+                </button>
+                <h2 className="chat-popup-title-text bengali-text" style={{ margin: 0 }}>
+                  {groups.find(g => g.id === activeGroupChatId)?.name || 'Group Chat'}
+                </h2>
+              </div>
+            ) : (
+              <h2 className="chat-popup-title-text bengali-text">পূজার আড্ডা</h2>
+            )}
             <button className="chat-close-btn" onClick={onClose}>
               <X size={24} />
             </button>
           </div>
           
-          <div className="chat-popup-tabs-container">
+          {!activeGroupChatId && (
+            <div className="chat-popup-tabs-container">
             <div className="chat-popup-tabs bengali-text animation-pop-in">
               <button 
                 className={`chat-tab-btn-modern ${activeTab === 'adda' ? 'active' : ''}`}
@@ -188,7 +237,8 @@ const ChatPopup = ({ onClose, socket }) => {
                 আমন্ত্রণ
               </button>
             </div>
-          </div>
+            </div>
+          )}
         </div>
 
         <div className="chat-warning-message bengali-text">
@@ -200,7 +250,7 @@ const ChatPopup = ({ onClose, socket }) => {
           <div className="chat-messages">
 
             
-            {activeTab === 'invite' && (
+            {!activeGroupChatId && activeTab === 'invite' && (
               <div className="invite-section-container animation-pop-in">
                 <h3 className="invite-section-title bengali-text">আমন্ত্রণ আছে?</h3>
                 <div className="invite-section-card">
@@ -221,13 +271,43 @@ const ChatPopup = ({ onClose, socket }) => {
               </div>
             )}
             
-            {activeTab === 'adda' && messages.length === 0 && (
+            {!activeGroupChatId && activeTab === 'adda' && messages.length === 0 && (
               <div className="chat-content-placeholder bengali-text">
                 এখনও কোনো বার্তা নেই। আড্ডা শুরু করুন!
               </div>
             )}
 
-            {activeTab === 'adda' && messages.map((msg) => {
+            {activeGroupChatId && (() => {
+              const groupMessages = groups.find(g => g.id === activeGroupChatId)?.messages || [];
+              if (groupMessages.length === 0) {
+                return (
+                  <div className="chat-content-placeholder bengali-text">
+                    এখনও কোনো বার্তা নেই। আড্ডা শুরু করুন!
+                  </div>
+                );
+              }
+              return groupMessages.map((msg) => {
+                const isMine = msg.userId === myUserId;
+                return (
+                  <div key={msg.id} className={`chat-message-row ${isMine ? 'mine' : 'theirs'}`}>
+                    {!isMine && (
+                      <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
+                    )}
+                    <div className={`chat-message-bubble ${msg.text === '👍' ? 'like-message' : ''} bengali-text`}>
+                      {!isMine && <div className="chat-message-sender">{msg.username}</div>}
+                      <div className="chat-message-text">
+                        {msg.text}
+                      </div>
+                    </div>
+                    {isMine && (
+                      <img src={msg.avatar} alt="User Logo" className="chat-avatar" />
+                    )}
+                  </div>
+                );
+              });
+            })()}
+
+            {!activeGroupChatId && activeTab === 'adda' && messages.map((msg) => {
               if (msg.isSystemMessage) {
                 return (
                   <div key={msg.id} className="chat-system-message-row">
@@ -255,11 +335,11 @@ const ChatPopup = ({ onClose, socket }) => {
                 </div>
               );
             })}
-            {activeTab === 'group_adda' && (
+            {!activeGroupChatId && activeTab === 'group_adda' && (
               <>
                 <div className="groups-list">
                   {groups.filter(g => g.members && g.members.includes(myUserId)).map((group) => (
-                    <div key={group.id} className="group-list-item">
+                    <div key={group.id} className="group-list-item" onClick={() => setActiveGroupChatId(group.id)}>
                       <img src="/group-icon.jpg" alt="group icon" className="group-list-item-icon" />
                       <div className="group-list-item-details">
                         <div className="group-list-item-name">{group.name}</div>
@@ -268,7 +348,10 @@ const ChatPopup = ({ onClose, socket }) => {
                           {group.membersCount} of 3 members
                         </div>
                       </div>
-                      <div className="group-list-item-more" onClick={() => setSelectedGroup(group)}>
+                      <div className="group-list-item-more" onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedGroup(group);
+                      }}>
                         <MoreVertical size={16} />
                       </div>
                     </div>
@@ -343,7 +426,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       <div className="group-options-divider"></div>
                       
                       <button className="group-options-btn" onClick={() => {
-                        // Open group logic would go here
+                        setActiveGroupChatId(selectedGroup.id);
                         handleCloseGroupOptions();
                       }}>
                         Open group
@@ -399,7 +482,7 @@ const ChatPopup = ({ onClose, socket }) => {
             {activeTab === 'adda' && <div ref={messagesEndRef} />}
           </div>
 
-          {activeTab === 'adda' && (
+          {!activeGroupChatId && activeTab === 'adda' && (
             <div className="chat-input-area">
               <div className="chat-input-wrapper">
                 <input 
@@ -415,6 +498,27 @@ const ChatPopup = ({ onClose, socket }) => {
                 </button>
               </div>
               <button className="chat-like-btn" onClick={sendLike}>
+                <ThumbsUp size={24} color="#1877F2" fill="#1877F2" />
+              </button>
+            </div>
+          )}
+
+          {activeGroupChatId && (
+            <div className="chat-input-area">
+              <div className="chat-input-wrapper">
+                <input 
+                  type="text" 
+                  placeholder="বার্তা লিখুন... (Max 50 words)" 
+                  className="chat-input-field bengali-text"
+                  value={groupInputText}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                />
+                <button className="chat-send-btn" onClick={sendGroupMessage}>
+                  <Send size={18} />
+                </button>
+              </div>
+              <button className="chat-like-btn" onClick={sendGroupLike}>
                 <ThumbsUp size={24} color="#1877F2" fill="#1877F2" />
               </button>
             </div>

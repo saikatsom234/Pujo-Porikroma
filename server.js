@@ -160,6 +160,7 @@ io.on('connection', (socket) => {
       creatorAvatar: myAvatar,
       members: [myUserId],
       membersCount: 1, // Start with 1 (the creator)
+      messages: [],
       timestamp: new Date().toISOString()
     };
     groups.push(newGroup);
@@ -224,6 +225,32 @@ io.on('connection', (socket) => {
     group.members.splice(memberIndex, 1);
     group.membersCount = group.members.length;
     io.emit('groupUpdated', group);
+  });
+
+  // Handle sending a message in a group
+  socket.on('sendGroupMessage', ({ groupId, text }) => {
+    if (!text || typeof text !== 'string') return;
+    
+    const group = groups.find(g => g.id === groupId);
+    if (!group) return;
+
+    // Verify membership
+    if (!group.members.includes(myUserId)) return;
+
+    const newMessage = {
+      id: Date.now() + Math.random().toString(36).substr(2, 9),
+      userId: myUserId,
+      username: myUsername,
+      avatar: myAvatar,
+      text: text.trim(),
+      timestamp: new Date().toISOString(),
+      isSystemMessage: false
+    };
+
+    if (!group.messages) group.messages = [];
+    group.messages.push(newMessage);
+    
+    io.emit('newGroupMessage', { groupId, message: newMessage });
   });
 
   // Broadcast the new online count
