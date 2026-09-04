@@ -294,7 +294,7 @@ const ChatPopup = ({ onClose, socket }) => {
                     <h3 className="invite-section-title bengali-text" style={{ fontSize: '15px' }}>গ্রুপ আমন্ত্রণ এসেছে 👉</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {invites.map((invite, index) => (
-                        <div key={index} className="invite-section-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div key={index} className="invite-section-card" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px' }}>
                           <div>
                             <div style={{ color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>{invite.groupName}</div>
                             <div style={{ color: '#aaa', fontSize: '12px' }}>from {invite.fromUserName}</div>
