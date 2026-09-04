@@ -143,6 +143,14 @@ io.on('connection', (socket) => {
   // Handle creating a new group
   socket.on('createGroup', (groupName) => {
     if (!groupName || typeof groupName !== 'string') return;
+    
+    // Enforce max 3 groups per user
+    const userGroupCount = groups.filter(g => g.creatorId === myUserId).length;
+    if (userGroupCount >= 3) {
+      socket.emit('chatError', 'You can only create up to 3 groups at a time.');
+      return;
+    }
+
     const newGroup = {
       id: Date.now() + Math.random().toString(36).substr(2, 9),
       name: groupName.trim(),

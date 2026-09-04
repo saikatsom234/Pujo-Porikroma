@@ -234,7 +234,17 @@ const ChatPopup = ({ onClose, socket }) => {
                   ))}
                 </div>
 
-                <button className="chat-fab-btn animation-pop-in" onClick={() => setShowCreateGroup(true)}>
+                <button 
+                  className="chat-fab-btn animation-pop-in" 
+                  onClick={() => {
+                    const myGroupsCount = groups.filter(g => g.creatorId === myUserId).length;
+                    if (myGroupsCount >= 3) {
+                      alert('You can only create up to 3 groups at a time.');
+                      return;
+                    }
+                    setShowCreateGroup(true);
+                  }}
+                >
                   <Plus size={24} />
                 </button>
                 
