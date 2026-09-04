@@ -336,7 +336,7 @@ const ChatPopup = ({ onClose, socket }) => {
                         alt="User Logo" 
                         className="chat-avatar" 
                         style={{ cursor: 'pointer' }}
-                        onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username })}
+                        onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar })}
                       />
                     )}
                     <div className={`chat-message-bubble ${msg.text === '👍' ? 'like-message' : ''} bengali-text`}>
@@ -373,7 +373,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       alt="User Logo" 
                       className="chat-avatar" 
                       style={{ cursor: 'pointer' }}
-                      onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username })}
+                        onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar })}
                     />
                   )}
                   <div className="chat-bubble-wrapper">
@@ -539,7 +539,14 @@ const ChatPopup = ({ onClose, socket }) => {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="user-invite-content bengali-text">
-                        <span>গ্রুপ আমন্ত্রণ পাঠান</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <img 
+                            src={selectedUserForInvite.avatar} 
+                            alt="User Avatar" 
+                            style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} 
+                          />
+                          <span>গ্রুপ আমন্ত্রণ পাঠান</span>
+                        </div>
                         <div className="user-invite-actions">
                           <button 
                             className="user-invite-btn-plus"
