@@ -17,10 +17,10 @@
   background-color: #211c19; /* Very dark brown/grey */
   width: 100%;
   max-width: 500px;
-  max-height: calc(100vh - 70px);
+  max-height: calc(100vh - 80px);
   height: 90vh;
   border-radius: 24px;
-  margin-bottom: 70px;
+  margin-bottom: 80px;
   display: flex;
   flex-direction: column;
   position: relative;
