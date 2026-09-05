@@ -4,11 +4,13 @@ import {
   Share2, LogOut, Navigation, Home, Flame 
 } from 'lucide-react';
 import EditProfilePopup from './EditProfilePopup';
+import HomeLocationPopup from './HomeLocationPopup';
 import './SettingsPopup.css';
 
-const SettingsPopup = ({ onClose }) => {
+const SettingsPopup = ({ onClose, onLogout }) => {
   const [pushEnabled, setPushEnabled] = useState(true);
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [showHomeLocation, setShowHomeLocation] = useState(false);
   const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
   const [avatarSrc] = useState(() => {
@@ -87,7 +89,7 @@ const SettingsPopup = ({ onClose }) => {
           <div className="settings-section">
             <h3 className="settings-section-title">Preferences</h3>
             <div className="settings-list-group">
-              <div className="settings-list-item">
+              <div className="settings-list-item" onClick={() => setShowHomeLocation(true)}>
                 <div className="settings-list-icon">
                   <MapPin size={20} />
                 </div>
@@ -194,6 +196,12 @@ const SettingsPopup = ({ onClose }) => {
         <EditProfilePopup 
           onClose={() => setShowEditProfile(false)} 
           avatarSrc={avatarSrc}
+        />
+      )}
+
+      {showHomeLocation && (
+        <HomeLocationPopup 
+          onClose={() => setShowHomeLocation(false)} 
         />
       )}
     </div>
