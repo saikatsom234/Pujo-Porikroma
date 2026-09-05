@@ -96,6 +96,8 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #211c19;
+  image-rendering: -webkit-optimize-contrast; /* Sharpens images on webkit */
+  image-rendering: high-quality;
 }
 
 .settings-profile-info {
@@ -104,7 +106,7 @@
 
 .settings-username {
   font-family: 'Outfit', sans-serif;
-  font-size: 28px;
+  font-size: 20px; /* Reduced from 28px */
   font-weight: 800;
   margin: 0 0 4px 0;
   letter-spacing: 1px;

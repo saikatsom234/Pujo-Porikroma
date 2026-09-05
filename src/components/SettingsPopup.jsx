@@ -7,6 +7,9 @@ import './SettingsPopup.css';
 
 const SettingsPopup = ({ onClose }) => {
   const [pushEnabled, setPushEnabled] = useState(true);
+  const userGender = 'male'; // Can be changed to 'female' to test the female avatar
+
+  const avatarSrc = userGender === 'male' ? '/avatar-male.png' : '/avatar-female.png';
 
   return (
     <div className="settings-popup-overlay fade-in" onClick={onClose}>
@@ -18,7 +21,7 @@ const SettingsPopup = ({ onClose }) => {
           {/* User Profile Section */}
           <div className="settings-profile-section">
             <div className="settings-avatar-wrapper">
-              <img src="/user-avatar.jpg" alt="User" className="settings-avatar" onError={(e) => e.target.src = 'https://i.pravatar.cc/150?img=11'} />
+              <img src={avatarSrc} alt="User Avatar" className="settings-avatar" />
             </div>
             <div className="settings-profile-info">
               <h2 className="settings-username">USER</h2>
