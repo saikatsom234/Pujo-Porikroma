@@ -21,7 +21,7 @@
   flex-direction: column;
   box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
   animation: slideUpInvite 0.3s ease-out forwards;
-  padding-bottom: 40px;
+  padding-bottom: 24px;
 }
 
 @keyframes slideUpInvite {
@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 24px;
+  padding: 16px;
 }
 
 .invite-close-btn {
@@ -52,14 +52,14 @@
 
 .invite-title {
   color: #ffffff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   margin: 0;
   font-family: 'Outfit', sans-serif;
 }
 
 .invite-body {
-  padding: 16px 24px;
+  padding: 8px 20px 16px;
   display: flex;
   justify-content: center;
 }
@@ -68,7 +68,7 @@
   width: 100%;
   background-color: #3b3b3b;
   border-radius: 12px;
-  padding: 18px 20px;
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,7 +83,7 @@
 
 .invite-text {
   color: rgba(255, 255, 255, 0.7);
-  font-size: 15px;
+  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
