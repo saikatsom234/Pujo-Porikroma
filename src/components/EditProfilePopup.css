@@ -105,10 +105,10 @@
 
 .edit-profile-avatar-wrapper {
   position: relative;
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .edit-profile-avatar {
@@ -130,18 +130,18 @@
 .edit-profile-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .edit-profile-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .edit-profile-field label {
-  font-size: 13px;
+  font-size: 12px;
   color: rgba(245, 230, 211, 0.5);
   font-weight: 500;
   padding-left: 4px;
@@ -152,9 +152,9 @@
   background-color: #2a221f;
   border: 1px solid rgba(245, 230, 211, 0.05);
   border-radius: 12px;
-  padding: 16px;
+  padding: 12px 16px;
   color: #f5e6d3;
-  font-size: 15px;
+  font-size: 14px;
   font-family: inherit;
   outline: none;
   transition: border-color 0.2s;
@@ -207,7 +207,7 @@
   color: #f5e6d3;
   border: none;
   border-radius: 12px;
-  padding: 16px;
+  padding: 12px;
   font-size: 16px;
   font-weight: 600;
   display: flex;
