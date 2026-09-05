@@ -14,10 +14,6 @@ const SettingsPopup = ({ onClose }) => {
         className="settings-popup-content slide-up" 
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="settings-close-btn" onClick={onClose}>
-          <X size={24} />
-        </button>
-
         <div className="settings-scroll-area">
           {/* User Profile Section */}
           <div className="settings-profile-section">
