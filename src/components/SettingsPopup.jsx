@@ -7,9 +7,28 @@ import './SettingsPopup.css';
 
 const SettingsPopup = ({ onClose }) => {
   const [pushEnabled, setPushEnabled] = useState(true);
-  const userGender = 'male'; // Can be changed to 'female' to test the female avatar
+  const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
-  const avatarSrc = userGender === 'male' ? '/avatar-male.png' : '/avatar-female.png';
+  const [avatarSrc] = useState(() => {
+    const maleAvatars = [
+      '/avatar-male-1.png',
+      '/avatar-male-2.png',
+      '/avatar-male-3.png',
+      '/user logo1.png',
+      '/user logo3.png',
+      '/user logo4.png',
+      '/user logo6.png'
+    ];
+    const femaleAvatars = [
+      '/avatar-female-1.png',
+      '/user logo2.png',
+      '/user logo5.png',
+      '/user logo7.png'
+    ];
+    
+    const arrayToUse = userGender === 'female' ? femaleAvatars : maleAvatars;
+    return arrayToUse[Math.floor(Math.random() * arrayToUse.length)];
+  });
 
   return (
     <div className="settings-popup-overlay fade-in" onClick={onClose}>
