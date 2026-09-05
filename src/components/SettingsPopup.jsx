@@ -196,7 +196,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
 
           {/* Footer */}
           <div className="settings-footer bengali-text">
-            মেড ইন কলকাতা • দুর্গা পূজা ২০২৬
+            Pujo Porikroma V0.1 · Durga Puja 2026
           </div>
         </div>
       </div>
