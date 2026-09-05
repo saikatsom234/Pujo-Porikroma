@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronDown } from 'lucide-react';
+import { GenderPickerModal, DatePickerModal } from './CustomPickers';
 import './EditProfilePopup.css';
 
 const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEmail = 'user@gmail.com' }) => {
@@ -8,6 +9,9 @@ const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEma
   const [mobile, setMobile] = useState('');
   const [gender, setGender] = useState('Prefer not to say');
   const [dob, setDob] = useState('');
+  
+  const [showGenderPicker, setShowGenderPicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   return (
     <div className="edit-profile-overlay fade-in" onClick={onClose}>
@@ -63,16 +67,13 @@ const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEma
 
             <div className="edit-profile-field">
               <label>Gender</label>
-              <div className="dropdown-input-wrapper">
-                <select 
+              <div className="dropdown-input-wrapper" onClick={() => setShowGenderPicker(true)}>
+                <input 
+                  type="text" 
                   value={gender} 
-                  onChange={(e) => setGender(e.target.value)} 
-                >
-                  <option value="Prefer not to say">Prefer not to say</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
+                  readOnly 
+                  style={{ cursor: 'pointer' }}
+                />
                 <div className="dropdown-icon">
                   <ChevronDown size={18} />
                 </div>
@@ -81,11 +82,12 @@ const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEma
 
             <div className="edit-profile-field">
               <label>Date of birth</label>
-              <div className="dropdown-input-wrapper">
+              <div className="dropdown-input-wrapper" onClick={() => setShowDatePicker(true)}>
                 <input 
-                  type="date" 
+                  type="text" 
                   value={dob} 
-                  onChange={(e) => setDob(e.target.value)} 
+                  readOnly 
+                  style={{ cursor: 'pointer' }}
                 />
                 <div className="dropdown-icon">
                   <ChevronDown size={18} />
@@ -99,6 +101,21 @@ const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEma
           </button>
         </div>
       </div>
+      
+      {showGenderPicker && (
+        <GenderPickerModal 
+          selected={gender} 
+          onSelect={setGender} 
+          onClose={() => setShowGenderPicker(false)} 
+        />
+      )}
+      {showDatePicker && (
+        <DatePickerModal 
+          initialDate={dob} 
+          onSelect={setDob} 
+          onClose={() => setShowDatePicker(false)} 
+        />
+      )}
     </div>
   );
 };
