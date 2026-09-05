@@ -4,7 +4,7 @@ import './HomeLocationPopup.css';
 
 const HomeLocationPopup = ({ onClose }) => {
   return (
-    <div className="home-loc-overlay" onClick={onClose}>
+    <div className="home-loc-overlay" onClick={(e) => { e.stopPropagation(); onClose(); }}>
       <div className="home-loc-content" onClick={(e) => e.stopPropagation()}>
         <div className="home-loc-header">
           <h2 className="home-loc-title">Set home location</h2>

@@ -14,7 +14,7 @@ const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEma
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   return (
-    <div className="edit-profile-overlay fade-in" onClick={onClose}>
+    <div className="edit-profile-overlay fade-in" onClick={(e) => { e.stopPropagation(); onClose(); }}>
       <div 
         className="edit-profile-content slide-up" 
         onClick={(e) => e.stopPropagation()}
