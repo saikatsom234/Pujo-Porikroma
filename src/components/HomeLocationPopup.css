@@ -15,7 +15,6 @@
   background-color: #211c19;
   width: 100%;
   max-width: 480px;
-  height: 85vh; /* looks like a bottom sheet */
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   display: flex;
@@ -103,7 +102,7 @@
 }
 
 .home-loc-map-area {
-  flex: 1;
+  height: 200px;
   background-color: #6c707d;
   margin: 0;
   display: flex;
@@ -128,12 +127,20 @@
 
 .home-loc-save-btn {
   width: 100%;
-  background-color: #c9352b;
+  background-color: rgba(255, 255, 255, 0.15);
   color: #ffffff;
   border: none;
-  border-radius: 12px;
+  border-radius: 24px;
   padding: 16px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.home-loc-save-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
 }
