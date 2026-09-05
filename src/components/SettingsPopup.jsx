@@ -38,25 +38,25 @@ const SettingsPopup = ({ onClose }) => {
         className="settings-popup-content slide-up" 
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="settings-scroll-area">
-          {/* User Profile Section */}
-          <div className="settings-profile-section">
-            <div className="settings-avatar-wrapper">
-              <img src={avatarSrc} alt="User Avatar" className="settings-avatar" />
-            </div>
-            <div className="settings-profile-info">
-              <h2 className="settings-username">USER</h2>
-              <p className="settings-email">user@gmail.com</p>
-              <div className="settings-badge">
-                <Flame size={12} className="settings-badge-icon" />
-                <span>Pandal Explorer</span>
-              </div>
-            </div>
-            <button className="settings-edit-btn" onClick={() => setShowEditProfile(true)}>
-              <Pencil size={18} />
-            </button>
+        {/* User Profile Section */}
+        <div className="settings-profile-section">
+          <div className="settings-avatar-wrapper">
+            <img src={avatarSrc} alt="User Avatar" className="settings-avatar" />
           </div>
+          <div className="settings-profile-info">
+            <h2 className="settings-username">USER</h2>
+            <p className="settings-email">user@gmail.com</p>
+            <div className="settings-badge">
+              <Flame size={12} className="settings-badge-icon" />
+              <span>Pandal Explorer</span>
+            </div>
+          </div>
+          <button className="settings-edit-btn" onClick={() => setShowEditProfile(true)}>
+            <Pencil size={18} />
+          </button>
+        </div>
 
+        <div className="settings-scroll-area">
           {/* Journey Section */}
           <div className="settings-section">
             <h3 className="settings-section-title">Your Pujo journey</h3>
