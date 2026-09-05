@@ -8,6 +8,7 @@ import HomeLocationPopup from './HomeLocationPopup';
 import RequestPandalPopup from './RequestPandalPopup';
 import ReportPopup from './ReportPopup';
 import HelpSupportPopup from './HelpSupportPopup';
+import InviteFriendsPopup from './InviteFriendsPopup';
 import './SettingsPopup.css';
 
 const SettingsPopup = ({ onClose, onLogout }) => {
@@ -17,6 +18,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
   const [showRequestPandal, setShowRequestPandal] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showInvite, setShowInvite] = useState(false);
   const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
   const [avatarSrc] = useState(() => {
@@ -171,7 +173,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
                 </div>
               </div>
 
-              <div className="settings-list-item">
+              <div className="settings-list-item" onClick={() => setShowInvite(true)}>
                 <div className="settings-list-icon">
                   <Share2 size={20} />
                 </div>
@@ -226,6 +228,12 @@ const SettingsPopup = ({ onClose, onLogout }) => {
       {showHelp && (
         <HelpSupportPopup 
           onClose={() => setShowHelp(false)} 
+        />
+      )}
+
+      {showInvite && (
+        <InviteFriendsPopup 
+          onClose={() => setShowInvite(false)} 
         />
       )}
     </div>
