@@ -147,7 +147,8 @@
   padding-left: 4px;
 }
 
-.edit-profile-field input {
+.edit-profile-field input,
+.edit-profile-field select {
   background-color: #2a221f;
   border: 1px solid rgba(245, 230, 211, 0.05);
   border-radius: 12px;
@@ -157,19 +158,37 @@
   font-family: inherit;
   outline: none;
   transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
 }
 
-.edit-profile-field input:focus {
+.edit-profile-field input:focus,
+.edit-profile-field select:focus {
   border-color: rgba(245, 230, 211, 0.2);
 }
 
-.date-input-wrapper {
+.edit-profile-field input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dropdown-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.date-input-wrapper input {
+.dropdown-input-wrapper input,
+.dropdown-input-wrapper select {
   width: 100%;
 }
 

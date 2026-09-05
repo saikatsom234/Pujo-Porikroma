@@ -63,18 +63,27 @@ const EditProfilePopup = ({ onClose, avatarSrc, initialName = 'USER', initialEma
 
             <div className="edit-profile-field">
               <label>Gender</label>
-              <input 
-                type="text" 
-                value={gender} 
-                onChange={(e) => setGender(e.target.value)} 
-              />
+              <div className="dropdown-input-wrapper">
+                <select 
+                  value={gender} 
+                  onChange={(e) => setGender(e.target.value)} 
+                >
+                  <option value="Prefer not to say">Prefer not to say</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div className="dropdown-icon">
+                  <ChevronDown size={18} />
+                </div>
+              </div>
             </div>
 
             <div className="edit-profile-field">
               <label>Date of birth</label>
-              <div className="date-input-wrapper">
+              <div className="dropdown-input-wrapper">
                 <input 
-                  type="text" 
+                  type="date" 
                   value={dob} 
                   onChange={(e) => setDob(e.target.value)} 
                 />
