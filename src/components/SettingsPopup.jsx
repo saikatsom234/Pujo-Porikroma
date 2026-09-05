@@ -5,12 +5,14 @@ import {
 } from 'lucide-react';
 import EditProfilePopup from './EditProfilePopup';
 import HomeLocationPopup from './HomeLocationPopup';
+import RequestPandalPopup from './RequestPandalPopup';
 import './SettingsPopup.css';
 
 const SettingsPopup = ({ onClose, onLogout }) => {
   const [pushEnabled, setPushEnabled] = useState(true);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [showHomeLocation, setShowHomeLocation] = useState(false);
+  const [showRequestPandal, setShowRequestPandal] = useState(false);
   const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
   const [avatarSrc] = useState(() => {
@@ -126,7 +128,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
           <div className="settings-section">
             <h3 className="settings-section-title">Support</h3>
             <div className="settings-list-group">
-              <div className="settings-list-item">
+              <div className="settings-list-item" onClick={() => setShowRequestPandal(true)}>
                 <div className="settings-list-icon">
                   <MapPin size={20} />
                 </div>
@@ -202,6 +204,12 @@ const SettingsPopup = ({ onClose, onLogout }) => {
       {showHomeLocation && (
         <HomeLocationPopup 
           onClose={() => setShowHomeLocation(false)} 
+        />
+      )}
+
+      {showRequestPandal && (
+        <RequestPandalPopup 
+          onClose={() => setShowRequestPandal(false)} 
         />
       )}
     </div>
