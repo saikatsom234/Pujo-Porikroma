@@ -79,9 +79,9 @@
 }
 
 .report-type-btn.selected {
-  background-color: #311c19;
-  border-color: #e75845;
-  color: #e75845;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: transparent;
+  color: #ffffff;
 }
 
 .report-type-icon {
@@ -89,7 +89,7 @@
 }
 
 .report-type-btn.selected .report-type-icon {
-  color: #e75845;
+  color: #ffffff;
 }
 
 .report-field input,

@@ -94,14 +94,14 @@
 .req-pandal-current-loc-btn {
   align-self: flex-start;
   margin-top: 4px;
-  background-color: #311c19;
+  background-color: rgba(255, 255, 255, 0.15);
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #e75845;
+  color: #ffffff;
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
