@@ -6,13 +6,14 @@ export const GenderPickerModal = ({ selected, onSelect, onClose }) => {
   const options = ['Prefer not to say', 'Male', 'Female', 'Other'];
 
   return (
-    <div className="custom-picker-overlay" onClick={onClose}>
+    <div className="custom-picker-overlay" onClick={(e) => { e.stopPropagation(); onClose(); }}>
       <div className="gender-picker-modal" onClick={e => e.stopPropagation()}>
         {options.map(opt => (
           <div 
             key={opt} 
             className="gender-picker-option"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               onSelect(opt);
               onClose();
             }}
@@ -83,7 +84,7 @@ export const DatePickerModal = ({ initialDate, onSelect, onClose }) => {
   };
 
   return (
-    <div className="custom-picker-overlay" onClick={onClose}>
+    <div className="custom-picker-overlay" onClick={(e) => { e.stopPropagation(); onClose(); }}>
       <div className="date-picker-modal" onClick={e => e.stopPropagation()}>
         <div className="date-picker-header">
           <div className="date-picker-year">{currentDate.getFullYear()}</div>
@@ -92,9 +93,9 @@ export const DatePickerModal = ({ initialDate, onSelect, onClose }) => {
         
         <div className="date-picker-body">
           <div className="date-picker-month-selector">
-            <button className="date-picker-nav-btn" onClick={handlePrevMonth}><ChevronLeft size={20}/></button>
+            <button className="date-picker-nav-btn" onClick={(e) => { e.stopPropagation(); handlePrevMonth(); }}><ChevronLeft size={20}/></button>
             <span>{monthNames[month]} {year}</span>
-            <button className="date-picker-nav-btn" onClick={handleNextMonth}><ChevronRight size={20}/></button>
+            <button className="date-picker-nav-btn" onClick={(e) => { e.stopPropagation(); handleNextMonth(); }}><ChevronRight size={20}/></button>
           </div>
           
           <div className="date-picker-grid">
@@ -106,7 +107,7 @@ export const DatePickerModal = ({ initialDate, onSelect, onClose }) => {
                 <div 
                   key={i} 
                   className={`date-picker-day ${isSelected ? 'selected' : ''}`}
-                  onClick={() => setCurrentDate(new Date(year, month, day))}
+                  onClick={(e) => { e.stopPropagation(); setCurrentDate(new Date(year, month, day)); }}
                 >
                   {day}
                 </div>
@@ -116,10 +117,10 @@ export const DatePickerModal = ({ initialDate, onSelect, onClose }) => {
         </div>
 
         <div className="date-picker-footer">
-          <button className="date-picker-btn" onClick={() => { onSelect(''); onClose(); }}>CLEAR</button>
+          <button className="date-picker-btn" onClick={(e) => { e.stopPropagation(); onSelect(''); onClose(); }}>CLEAR</button>
           <div className="date-picker-actions">
-            <button className="date-picker-btn" onClick={onClose}>CANCEL</button>
-            <button className="date-picker-btn" onClick={handleSet}>SET</button>
+            <button className="date-picker-btn" onClick={(e) => { e.stopPropagation(); onClose(); }}>CANCEL</button>
+            <button className="date-picker-btn" onClick={(e) => { e.stopPropagation(); handleSet(); }}>SET</button>
           </div>
         </div>
       </div>
