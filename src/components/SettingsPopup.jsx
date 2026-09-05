@@ -3,10 +3,12 @@ import {
   X, Pencil, MapPin, Bell, Flag, HelpCircle, 
   Share2, LogOut, Navigation, Home, Flame 
 } from 'lucide-react';
+import EditProfilePopup from './EditProfilePopup';
 import './SettingsPopup.css';
 
 const SettingsPopup = ({ onClose }) => {
   const [pushEnabled, setPushEnabled] = useState(true);
+  const [showEditProfile, setShowEditProfile] = useState(false);
   const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
   const [avatarSrc] = useState(() => {
@@ -50,7 +52,7 @@ const SettingsPopup = ({ onClose }) => {
                 <span>Pandal Explorer</span>
               </div>
             </div>
-            <button className="settings-edit-btn">
+            <button className="settings-edit-btn" onClick={() => setShowEditProfile(true)}>
               <Pencil size={18} />
             </button>
           </div>
@@ -188,6 +190,12 @@ const SettingsPopup = ({ onClose }) => {
           </div>
         </div>
       </div>
+      {showEditProfile && (
+        <EditProfilePopup 
+          onClose={() => setShowEditProfile(false)} 
+          avatarSrc={avatarSrc}
+        />
+      )}
     </div>
   );
 };
