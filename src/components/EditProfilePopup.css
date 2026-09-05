@@ -85,8 +85,8 @@
 .edit-profile-scroll-area {
   flex: 1;
   overflow-y: auto;
-  padding: 24px;
-  padding-bottom: 32px;
+  padding: 16px 24px;
+  padding-bottom: 24px;
 }
 
 .edit-profile-scroll-area::-webkit-scrollbar {
@@ -101,7 +101,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .edit-profile-avatar-wrapper {
@@ -131,8 +131,8 @@
 .edit-profile-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-bottom: 32px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .edit-profile-field {
