@@ -86,14 +86,14 @@
 
 .home-loc-current-btn {
   margin: 0 24px 16px;
-  background-color: #311c19;
+  background-color: rgba(255, 255, 255, 0.15);
   border: none;
   border-radius: 12px;
   padding: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #e75845;
+  color: #ffffff;
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
