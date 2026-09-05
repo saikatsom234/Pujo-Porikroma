@@ -1,0 +1,138 @@
+.help-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.help-content {
+  background-color: #211c19;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
+  animation: slideUpHelp 0.3s ease-out forwards;
+}
+
+@keyframes slideUpHelp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.help-header {
+  padding: 24px 24px 16px;
+}
+
+.help-title {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.help-subtitle {
+  color: rgba(245, 230, 211, 0.6);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.help-body {
+  padding: 0 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.help-section-title {
+  color: rgba(245, 230, 211, 0.4);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+}
+
+.help-faqs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.help-faq-item {
+  background-color: #2c2522;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.help-faq-icon {
+  color: rgba(245, 230, 211, 0.5);
+}
+
+.help-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.help-contact-subtitle {
+  color: rgba(245, 230, 211, 0.6);
+  font-size: 13px;
+  margin: -4px 0 4px 0;
+}
+
+.help-field input,
+.help-field textarea {
+  width: 100%;
+  background-color: #2c2522;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  color: #f5e6d3;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.help-field input::placeholder,
+.help-field textarea::placeholder {
+  color: rgba(245, 230, 211, 0.4);
+}
+
+.help-footer {
+  padding: 24px;
+  background-color: #211c19;
+}
+
+.help-send-btn {
+  width: 100%;
+  background-color: #c9352b;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}

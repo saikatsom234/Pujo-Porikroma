@@ -6,6 +6,8 @@ import {
 import EditProfilePopup from './EditProfilePopup';
 import HomeLocationPopup from './HomeLocationPopup';
 import RequestPandalPopup from './RequestPandalPopup';
+import ReportPopup from './ReportPopup';
+import HelpSupportPopup from './HelpSupportPopup';
 import './SettingsPopup.css';
 
 const SettingsPopup = ({ onClose, onLogout }) => {
@@ -13,6 +15,8 @@ const SettingsPopup = ({ onClose, onLogout }) => {
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [showHomeLocation, setShowHomeLocation] = useState(false);
   const [showRequestPandal, setShowRequestPandal] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
   const [avatarSrc] = useState(() => {
@@ -141,7 +145,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
                 </div>
               </div>
 
-              <div className="settings-list-item">
+              <div className="settings-list-item" onClick={() => setShowReport(true)}>
                 <div className="settings-list-icon">
                   <Flag size={20} />
                 </div>
@@ -154,7 +158,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
                 </div>
               </div>
 
-              <div className="settings-list-item">
+              <div className="settings-list-item" onClick={() => setShowHelp(true)}>
                 <div className="settings-list-icon">
                   <HelpCircle size={20} />
                 </div>
@@ -210,6 +214,18 @@ const SettingsPopup = ({ onClose, onLogout }) => {
       {showRequestPandal && (
         <RequestPandalPopup 
           onClose={() => setShowRequestPandal(false)} 
+        />
+      )}
+
+      {showReport && (
+        <ReportPopup 
+          onClose={() => setShowReport(false)} 
+        />
+      )}
+
+      {showHelp && (
+        <HelpSupportPopup 
+          onClose={() => setShowHelp(false)} 
         />
       )}
     </div>
