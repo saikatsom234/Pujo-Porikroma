@@ -195,7 +195,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
           </button>
 
           {/* Footer */}
-          <div className="settings-footer bengali-text">
+          <div className="settings-footer">
             Pujo Porikroma V0.1 · Durga Puja 2026
           </div>
         </div>
