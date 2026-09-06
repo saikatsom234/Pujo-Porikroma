@@ -410,6 +410,7 @@ const MapPage = ({ onClose }) => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [mapCenter, setMapCenter] = useState([22.5726, 88.3639]); // Default Kolkata
   const [mapZoom, setMapZoom] = useState(12);
+  const [activeTab, setActiveTab] = useState('map'); // 'map' or 'routes'
 
   const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
   
@@ -686,10 +687,50 @@ const MapPage = ({ onClose }) => {
         </div>
       </div>
 
+      {/* Routes View Overlay */}
+      {activeTab === 'routes' && (
+        <div className="routes-view-container">
+          <div className="routes-header">
+            <div>
+              <h2 className="routes-header-title">Your route</h2>
+              <p className="routes-header-subtitle">Tonight • 0 stops planned</p>
+            </div>
+            <button className="routes-header-menu">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+              </svg>
+            </button>
+          </div>
+          
+          <div className="routes-content">
+            <div className="routes-empty-card">
+              <div className="routes-empty-icon">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="#cc5550" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 11l19-9-9 19-2-8-8-2z" />
+                </svg>
+              </div>
+              <h3 className="routes-empty-title">No stops yet</h3>
+              <p className="routes-empty-desc">
+                Tap any pandal, metro or toilet on the map and add it to plan your route.
+              </p>
+              <button className="routes-browse-btn" onClick={() => setActiveTab('map')}>
+                Browse the map
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Bottom Navigation Bar */}
       <div className="map-bottom-nav">
         <div className="flex justify-around items-center h-full bg-white border-t border-gray-100 shadow-[0_-4px_16px_rgba(0,0,0,0.05)]">
-          <button className="flex flex-col items-center justify-center w-full h-full" style={{ color: '#dc2626' }}>
+          <button 
+            className="flex flex-col items-center justify-center w-full h-full" 
+            style={{ color: activeTab === 'map' ? '#dc2626' : '#9ca3af' }}
+            onClick={() => setActiveTab('map')}
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '4px' }}>
               <path d="M 3 21 L 21 21 L 17 13 L 7 13 Z" />
               <path d="M 8.5 13 L 12 21 L 15.5 13" />
@@ -698,7 +739,11 @@ const MapPage = ({ onClose }) => {
             </svg>
             <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '500' }}>Map</span>
           </button>
-          <button className="flex flex-col items-center justify-center w-full h-full" style={{ color: '#9ca3af' }}>
+          <button 
+            className="flex flex-col items-center justify-center w-full h-full" 
+            style={{ color: activeTab === 'routes' ? '#dc2626' : '#9ca3af' }}
+            onClick={() => setActiveTab('routes')}
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginBottom: '4px' }}>
               <path d="M 7 2 C 4.24 2 2 4.24 2 7 C 2 11.5 7 16 7 16 C 7 16 12 11.5 12 7 C 12 4.24 9.76 2 7 2 Z M 7 9 C 5.9 9 5 8.1 5 7 C 5 5.9 5.9 5 7 5 C 8.1 5 9 5.9 9 7 C 9 8.1 8.1 9 7 9 Z" fill="currentColor" />
               <path d="M 17 8 C 14.24 8 12 10.24 12 13 C 12 17.5 17 22 17 22 C 17 22 22 17.5 22 13 C 22 10.24 19.76 8 17 8 Z M 17 15 C 15.9 15 15 14.1 15 13 C 15 11.9 15.9 11 17 11 C 18.1 11 19 11.9 19 13 C 19 14.1 18.1 15 17 15 Z" fill="currentColor" />
