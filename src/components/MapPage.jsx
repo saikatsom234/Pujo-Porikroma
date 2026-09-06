@@ -7,6 +7,7 @@ import './MapPage.css';
 import { batchOnePujos } from '../data/pujos-part1';
 import { batchTwoPujos } from '../data/pujos-part2';
 import { batchThreePujos } from '../data/pujos-part3';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -19,7 +20,17 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-const allPujos = [...batchOnePujos, ...batchTwoPujos, ...batchThreePujos];
+const rawPujos = [...batchOnePujos, ...batchTwoPujos, ...batchThreePujos];
+
+// Remove duplicate items based on exact lowercase name matching
+const uniquePujosMap = new Map();
+rawPujos.forEach(pujo => {
+  const cleanName = pujo.name.trim().toLowerCase();
+  if (!uniquePujosMap.has(cleanName)) {
+    uniquePujosMap.set(cleanName, pujo);
+  }
+});
+const allPujos = Array.from(uniquePujosMap.values());
 
 // Format the new data and combine with some sample metro/toilet data
 const formattedPujos = allPujos.map((p, index) => ({
@@ -138,15 +149,17 @@ const MapPage = ({ onClose }) => {
           
           <RecenterMap center={mapCenter} zoom={14} />
 
-          {filteredData.map(loc => (
-            <Marker 
-              key={loc.id} 
-              position={[loc.lat, loc.lng]} 
-              eventHandlers={{
-                click: () => handleMarkerClick(loc)
-              }}
-            />
-          ))}
+          <MarkerClusterGroup chunkedLoading>
+            {filteredData.map(loc => (
+              <Marker 
+                key={loc.id} 
+                position={[loc.lat, loc.lng]} 
+                eventHandlers={{
+                  click: () => handleMarkerClick(loc)
+                }}
+              />
+            ))}
+          </MarkerClusterGroup>
         </MapContainer>
       </div>
 
