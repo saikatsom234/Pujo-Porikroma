@@ -84,7 +84,7 @@
 .map-preview-card.active {
   transform: translateY(0);
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none; /* Let clicks pass through the transparent bottom margin */
 }
 
 /* Detailed Preview Card Styles */
