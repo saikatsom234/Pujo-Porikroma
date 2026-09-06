@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
-import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed } from 'lucide-react';
+import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import './MapPage.css';
 
@@ -362,9 +362,18 @@ const RecenterMap = ({ center, zoom }) => {
   return null;
 };
 
+const nearbyMockData = [
+  { id: 1, name: "Ekdalia Evergreen Club", dist: "250 m away", loc: "Ekdalia, Ballygunge" },
+  { id: 2, name: "Singhi Park Sarbojanin Durga Puja Committee", dist: "400 m away", loc: "Ballygunge" },
+  { id: 3, name: "Hindusthan Park Sarbojanin Durgotsav", dist: "430 m away", loc: "Dhakuria, Hindustan Park, Gariahat" },
+  { id: 4, name: "Gariahat Hindusthan Club", dist: "540 m away", loc: "Dover Terrace, Ballygunge" },
+  { id: 5, name: "Ballygunge Pratisthan Durgabari", dist: "810 m away", loc: "Ballygunge Place, Ballygunge" }
+];
+
 const MapPage = ({ onClose }) => {
   const [activeFilter, setActiveFilter] = useState('all'); // all, pandal, metro, toilet
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [isNearbyOpen, setIsNearbyOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState([22.5726, 88.3639]); // Default Kolkata
   
   const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
@@ -476,6 +485,70 @@ const MapPage = ({ onClose }) => {
             <h3 className="font-bold text-gray-800 m-0">{selectedLocation ? selectedLocation.name : 'Select a location'}</h3>
             <p className="text-gray-500 text-sm m-0 mt-1">Tap any pin to preview</p>
           </div>
+        </div>
+      </div>
+
+      {/* Nearby Floating Button */}
+      <div className={`map-nearby-btn-container ${(!selectedLocation && !isNearbyOpen) ? 'active' : ''}`}>
+        <button 
+          className="bg-white rounded-[32px] p-2 pr-5 shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center gap-3 border border-gray-100" 
+          onClick={() => setIsNearbyOpen(true)}
+        >
+          <div className="w-10 h-10 rounded-full bg-red-50 flex justify-center items-center">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
+              <path d="M12 4 L14 8 H10 Z" />
+              <path d="M6 9 h12 v3 H6 Z" />
+              <path d="M7 12 h2 v8 H7 Z" />
+              <path d="M15 12 h2 v8 H15 Z" />
+            </svg>
+          </div>
+          <div className="text-left flex flex-col justify-center">
+            <div className="font-bold text-gray-800 text-sm leading-tight">5 pandals nearby</div>
+            <div className="text-gray-500 text-xs mt-0.5">Tap any pin to preview</div>
+          </div>
+        </button>
+      </div>
+
+      {/* Nearby Overlay & Bottom Sheet */}
+      <div className={`map-nearby-overlay ${isNearbyOpen ? 'open' : ''}`} onClick={() => setIsNearbyOpen(false)} />
+      <div className={`map-nearby-sheet ${isNearbyOpen ? 'open' : ''}`}>
+        <div className="p-4 border-b border-gray-100 flex justify-between items-center cursor-pointer" onClick={() => setIsNearbyOpen(false)}>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-red-50 flex justify-center items-center">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
+                <path d="M12 4 L14 8 H10 Z" />
+                <path d="M6 9 h12 v3 H6 Z" />
+                <path d="M7 12 h2 v8 H7 Z" />
+                <path d="M15 12 h2 v8 H15 Z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-800 text-sm m-0">5 pandals nearby</h3>
+              <p className="text-gray-500 text-xs m-0">Tap a pandal to preview • + to add to route</p>
+            </div>
+          </div>
+          <ChevronUp className="text-gray-400" />
+        </div>
+        <div className="p-0 flex flex-col overflow-y-auto">
+          {nearbyMockData.map((item) => (
+            <div key={item.id} className="flex items-center gap-4 p-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+              <div className="w-10 h-10 rounded-full bg-red-50 flex justify-center items-center shrink-0">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
+                  <path d="M12 4 L14 8 H10 Z" />
+                  <path d="M6 9 h12 v3 H6 Z" />
+                  <path d="M7 12 h2 v8 H7 Z" />
+                  <path d="M15 12 h2 v8 H15 Z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-gray-800 text-sm m-0 leading-tight">{item.name}</h4>
+                <p className="text-gray-500 text-xs m-0 mt-0.5">{item.dist} • {item.loc}</p>
+              </div>
+              <button className="w-8 h-8 rounded-full border border-gray-200 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors shrink-0">
+                <Plus size={16} />
+              </button>
+            </div>
+          ))}
         </div>
       </div>
 

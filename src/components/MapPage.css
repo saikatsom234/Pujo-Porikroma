@@ -251,3 +251,58 @@
 .map-filter-pill.active-train {
   border-color: #8e44ad;
 }
+
+/* Nearby Button & Popup */
+.map-nearby-btn-container {
+  position: absolute;
+  bottom: calc(64px + env(safe-area-inset-bottom) + 16px);
+  left: 16px;
+  z-index: 1000;
+  transform: translateY(150%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+.map-nearby-btn-container.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.map-nearby-sheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  z-index: 10002;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -10px 25px rgba(0,0,0,0.15);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.map-nearby-sheet.open {
+  transform: translateY(0);
+}
+
+.map-nearby-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 10001;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.map-nearby-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
