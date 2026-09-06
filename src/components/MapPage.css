@@ -294,7 +294,7 @@
   height: 64px;
   height: calc(64px + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
-  z-index: 1000;
+  z-index: 3000; /* Increased to stay above routes overlay */
   background: white;
 }
 
