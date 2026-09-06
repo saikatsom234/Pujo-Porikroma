@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import './MapPage.css';
 import { batchOnePujos } from '../data/pujos-part1';
 import { batchTwoPujos } from '../data/pujos-part2';
+import { batchThreePujos } from '../data/pujos-part3';
 
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -18,7 +19,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-const allPujos = [...batchOnePujos, ...batchTwoPujos];
+const allPujos = [...batchOnePujos, ...batchTwoPujos, ...batchThreePujos];
 
 // Format the new data and combine with some sample metro/toilet data
 const formattedPujos = allPujos.map((p, index) => ({
