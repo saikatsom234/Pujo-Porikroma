@@ -385,10 +385,10 @@ const CustomMapControls = () => {
         </svg>
       </button>
       <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomIn(); }}>
-        <span className="text-2xl leading-none text-gray-700 font-medium pb-1">+</span>
+        <span className="text-3xl leading-none text-gray-700 font-normal pb-1">+</span>
       </button>
       <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomOut(); }}>
-        <span className="text-2xl leading-none text-gray-700 font-medium pb-1">−</span>
+        <span className="text-3xl leading-none text-gray-700 font-normal pb-1">−</span>
       </button>
     </div>
   );
