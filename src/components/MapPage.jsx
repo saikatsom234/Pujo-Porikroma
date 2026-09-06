@@ -114,19 +114,9 @@ const MapPage = ({ onClose }) => {
             url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
             maxZoom={20}
           />
+          <ZoomControl position="bottomright" />
           
           <RecenterMap center={mapCenter} zoom={14} />
-
-          {filteredData.map(loc => (
-            <Marker 
-              key={loc.id} 
-              position={[loc.lat, loc.lng]} 
-              icon={createCustomIcon(loc.type, loc.count)}
-              eventHandlers={{
-                click: () => handleMarkerClick(loc)
-              }}
-            />
-          ))}
         </MapContainer>
       </div>
 
