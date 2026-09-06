@@ -630,19 +630,11 @@ const MapPage = ({ onClose }) => {
       <div className="map-bottom-nav">
         <div className="flex justify-around items-center h-full bg-white border-t border-gray-100 shadow-[0_-4px_16px_rgba(0,0,0,0.05)]">
           <button className="flex flex-col items-center justify-center w-full h-full" style={{ color: '#dc2626' }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '4px' }}>
-              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
-              <line x1="9" y1="3" x2="9" y2="18"></line>
-              <line x1="15" y1="6" x2="15" y2="21"></line>
-            </svg>
+            <img src="/map%20lower%20icon.png" alt="Map" style={{ width: '24px', height: '24px', marginBottom: '4px', objectFit: 'contain' }} />
             <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '500' }}>Map</span>
           </button>
           <button className="flex flex-col items-center justify-center w-full h-full" style={{ color: '#9ca3af' }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '4px' }}>
-              <circle cx="6" cy="19" r="3"></circle>
-              <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path>
-              <circle cx="18" cy="5" r="3"></circle>
-            </svg>
+            <img src="/route%20lower%20icon.png" alt="Routes" style={{ width: '24px', height: '24px', marginBottom: '4px', objectFit: 'contain' }} />
             <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '500' }}>Routes</span>
           </button>
         </div>
