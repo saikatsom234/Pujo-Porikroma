@@ -566,7 +566,7 @@ const MapPage = ({ onClose }) => {
       <div className={`map-nearby-btn-container ${(!selectedLocation && !isNearbyOpen) ? 'active' : ''}`}>
         <button className="nearby-pill-btn" onClick={() => setIsNearbyOpen(true)}>
           <div className="nearby-icon-circle">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="#cc5550">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
               <path d="M12 4 L14 8 H10 Z" />
               <path d="M6 9 h12 v3 H6 Z" />
               <path d="M7 12 h2 v8 H7 Z" />
