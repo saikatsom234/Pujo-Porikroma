@@ -246,11 +246,11 @@
 .nearby-pill-btn {
   background-color: #ffffff;
   border-radius: 32px;
-  padding: 10px 24px 10px 10px; /* Increased padding */
+  padding: 10px 19px 10px 10px; /* Reduced right padding by 5px as requested */
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
   align-items: center;
-  gap: 0px; /* Reduced gap by 6px as requested */
+  gap: 6px; /* Reduced gap by 10px as requested */
   border: 1px solid #f3f4f6;
   cursor: pointer;
   white-space: nowrap;
