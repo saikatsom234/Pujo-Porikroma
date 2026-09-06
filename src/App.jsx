@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import MusicPlayer from './components/MusicPlayer';
 import MobileLoader from './components/MobileLoader';
+import MapPage from './components/MapPage';
 import './App.css';
 
 function App() {
+  const [showMapPage, setShowMapPage] = useState(false);
+
   return (
     <div className="app-container">
       <MobileLoader />
@@ -22,10 +25,13 @@ function App() {
 
       {/* Main Content */}
       <main className="main-content">
-        <Header />
+        <Header onOpenMap={() => setShowMapPage(true)} />
         <HeroSection />
         <MusicPlayer />
       </main>
+
+      {/* Map Page */}
+      {showMapPage && <MapPage onClose={() => setShowMapPage(false)} />}
     </div>
   );
 }
