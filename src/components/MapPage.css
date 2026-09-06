@@ -250,7 +250,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
   align-items: center;
-  gap: 12px; /* Reduced by 4px as requested */
+  gap: 6px; /* Reduced gap by 10px as requested */
   border: 1px solid #f3f4f6;
   cursor: pointer;
   white-space: nowrap;
