@@ -99,38 +99,10 @@
   background: white;
 }
 
-/* Fix zoom control positioning to be above the nav bar */
-.leaflet-control-zoom {
-  margin-bottom: 90px !important;
-  margin-right: 16px !important;
-  border: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-}
-
-.leaflet-control-zoom a {
-  color: #333 !important;
-  border-radius: 50% !important;
-  width: 44px !important;
-  height: 44px !important;
-  line-height: 44px !important;
-  margin-bottom: 8px !important;
-  background: white !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  font-size: 20px !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-}
-
-.leaflet-control-zoom a:last-child {
-  margin-bottom: 0 !important;
-}
-
-/* Custom Action Buttons (Compass & Locate) */
+/* Custom Action Buttons (Compass, Locate, Zoom In, Zoom Out) */
 .map-action-buttons {
   position: absolute;
-  bottom: 216px; /* Increased by 9px as requested */
+  bottom: 90px; /* Position above bottom nav */
   right: 16px;
   z-index: 1000;
   display: flex;
@@ -150,7 +122,8 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 8px; /* Matches the zoom control's 8px gap perfectly */
+  margin-bottom: 8px; /* Uniform 8px gap for ALL buttons */
+  color: #333; /* For the text inside + and - */
 }
 
 .map-action-btn:last-child {

@@ -362,6 +362,38 @@ const RecenterMap = ({ center, zoom }) => {
   return null;
 };
 
+const CustomMapControls = () => {
+  const map = useMap();
+  
+  return (
+    <div className="map-action-buttons">
+      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); /* compass logic */ }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
+          <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
+          <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
+        </svg>
+      </button>
+      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); /* locate logic */ }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5" stroke="#4285F4" strokeWidth="2"/>
+          <circle cx="12" cy="12" r="2" fill="#4285F4"/>
+          <path d="M12 2 v3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M12 22 v-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M2 12 h3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M22 12 h-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      </button>
+      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomIn(); }}>
+        <span className="text-2xl leading-none text-gray-700 font-medium pb-1">+</span>
+      </button>
+      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomOut(); }}>
+        <span className="text-2xl leading-none text-gray-700 font-medium pb-1">−</span>
+      </button>
+    </div>
+  );
+};
+
 const nearbyMockData = [
   { id: 1, name: "Ekdalia Evergreen Club", dist: "250 m away", loc: "Ekdalia, Ballygunge" },
   { id: 2, name: "Singhi Park Sarbojanin Durga Puja Committee", dist: "400 m away", loc: "Ballygunge" },
@@ -498,9 +530,10 @@ const MapPage = ({ onClose }) => {
             url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
             maxZoom={20}
           />
-          <ZoomControl position="bottomright" />
           
           <RecenterMap center={mapCenter} zoom={mapZoom} />
+
+          <CustomMapControls />
 
           <MarkerClusterGroup chunkedLoading>
             {filteredData.map(loc => (
@@ -591,27 +624,6 @@ const MapPage = ({ onClose }) => {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Right Side Action Buttons */}
-      <div className="map-action-buttons">
-        <button className="map-action-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
-            <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
-            <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
-          </svg>
-        </button>
-        <button className="map-action-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="5" stroke="#4285F4" strokeWidth="2"/>
-            <circle cx="12" cy="12" r="2" fill="#4285F4"/>
-            <path d="M12 2 v3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-            <path d="M12 22 v-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-            <path d="M2 12 h3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-            <path d="M22 12 h-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
-        </button>
       </div>
 
       {/* Bottom Navigation Bar */}
