@@ -111,10 +111,9 @@ const MapPage = ({ onClose }) => {
           style={{ width: '100%', height: '100%' }}
         >
           <TileLayer
-            attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY-SA</a>.'
-            url="https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+            url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
             maxZoom={20}
-            subdomains="abcd"
           />
           <ZoomControl position="bottomright" />
           
