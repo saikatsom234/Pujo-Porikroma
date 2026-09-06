@@ -385,10 +385,10 @@ const CustomMapControls = () => {
         </svg>
       </button>
       <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomIn(); }}>
-        <span className="text-3xl leading-none text-gray-700 font-normal pb-1">+</span>
+        <span style={{ fontSize: '28px', fontWeight: '500', paddingBottom: '4px' }} className="leading-none text-gray-700">+</span>
       </button>
       <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomOut(); }}>
-        <span className="text-3xl leading-none text-gray-700 font-normal pb-1">−</span>
+        <span style={{ fontSize: '28px', fontWeight: '500', paddingBottom: '4px' }} className="leading-none text-gray-700">−</span>
       </button>
     </div>
   );
