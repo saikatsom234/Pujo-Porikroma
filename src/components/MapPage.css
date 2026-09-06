@@ -130,7 +130,7 @@
 /* Custom Action Buttons (Compass & Locate) */
 .map-action-buttons {
   position: absolute;
-  bottom: 204px; /* Increased by 2px as requested */
+  bottom: 207px; /* Increased by 3px as requested */
   right: 16px;
   z-index: 1000;
   display: flex;
