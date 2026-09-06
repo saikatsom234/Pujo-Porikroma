@@ -630,11 +630,20 @@ const MapPage = ({ onClose }) => {
       <div className="map-bottom-nav">
         <div className="flex justify-around items-center h-full bg-white border-t border-gray-100 shadow-[0_-4px_16px_rgba(0,0,0,0.05)]">
           <button className="flex flex-col items-center justify-center w-full h-full" style={{ color: '#dc2626' }}>
-            <img src="/map%20lower%20icon.png" alt="Map" style={{ width: '24px', height: '24px', marginBottom: '4px', objectFit: 'contain' }} />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '4px' }}>
+              <path d="M 3 21 L 21 21 L 17 13 L 7 13 Z" />
+              <path d="M 8.5 13 L 12 21 L 15.5 13" />
+              <path d="M12 2 C8.5 2 5.5 4.5 5.5 8 C5.5 12.5 12 17.5 12 17.5 C12 17.5 18.5 12.5 18.5 8 C18.5 4.5 15.5 2 12 2 Z" fill="#ffffff" />
+              <circle cx="12" cy="8" r="2.5" />
+            </svg>
             <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '500' }}>Map</span>
           </button>
           <button className="flex flex-col items-center justify-center w-full h-full" style={{ color: '#9ca3af' }}>
-            <img src="/route%20lower%20icon.png" alt="Routes" style={{ width: '24px', height: '24px', marginBottom: '4px', objectFit: 'contain' }} />
+            <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginBottom: '4px' }}>
+              <path d="M 7 2 C 4.24 2 2 4.24 2 7 C 2 11.5 7 16 7 16 C 7 16 12 11.5 12 7 C 12 4.24 9.76 2 7 2 Z M 7 9 C 5.9 9 5 8.1 5 7 C 5 5.9 5.9 5 7 5 C 8.1 5 9 5.9 9 7 C 9 8.1 8.1 9 7 9 Z" fill="currentColor" />
+              <path d="M 17 8 C 14.24 8 12 10.24 12 13 C 12 17.5 17 22 17 22 C 17 22 22 17.5 22 13 C 22 10.24 19.76 8 17 8 Z M 17 15 C 15.9 15 15 14.1 15 13 C 15 11.9 15.9 11 17 11 C 18.1 11 19 11.9 19 13 C 19 14.1 18.1 15 17 15 Z" fill="currentColor" />
+              <path d="M 11.5 6 L 16.5 6 C 17.6 6 18.2 6.8 17.5 7.7 L 6.5 16.3 C 5.8 17.2 6.4 18 7.5 18 L 12.5 18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
             <span style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '500' }}>Routes</span>
           </button>
         </div>
