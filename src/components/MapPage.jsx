@@ -565,10 +565,11 @@ const MapPage = ({ onClose }) => {
       {/* Nearby Floating Button */}
       <div className={`map-nearby-btn-container ${(!selectedLocation && !isNearbyOpen) ? 'active' : ''}`}>
         <button 
-          className="bg-white rounded-[32px] p-2 pr-5 shadow-[0_4px_12px_rgba(0,0,0,0.15)] flex items-center gap-3 border border-gray-100" 
+          className="rounded-[32px] p-2 pr-5 flex items-center gap-3 border border-gray-100" 
+          style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
           onClick={() => setIsNearbyOpen(true)}
         >
-          <div className="w-10 h-10 rounded-full bg-red-50 flex justify-center items-center">
+          <div className="w-10 h-10 rounded-full flex justify-center items-center" style={{ backgroundColor: '#fef2f2' }}>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
               <path d="M12 4 L14 8 H10 Z" />
               <path d="M6 9 h12 v3 H6 Z" />
@@ -577,8 +578,8 @@ const MapPage = ({ onClose }) => {
             </svg>
           </div>
           <div className="text-left flex flex-col justify-center">
-            <div className="font-bold text-gray-800 text-sm leading-tight">5 pandals nearby</div>
-            <div className="text-gray-500 text-xs mt-0.5">Tap any pin to preview</div>
+            <div className="font-bold text-sm leading-tight" style={{ color: '#1f2937' }}>5 pandals nearby</div>
+            <div className="text-xs mt-0.5" style={{ color: '#6b7280' }}>Tap any pin to preview</div>
           </div>
         </button>
       </div>
