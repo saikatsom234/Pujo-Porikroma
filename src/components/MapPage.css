@@ -98,29 +98,3 @@
   z-index: 1000;
   background: white;
 }
-
-/* Fix zoom control positioning to be above the nav bar */
-.leaflet-control-zoom {
-  margin-bottom: 90px !important;
-  margin-right: 16px !important;
-  border: none !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-}
-
-.leaflet-control-zoom a {
-  color: #333 !important;
-  border-radius: 50% !important;
-  width: 44px !important;
-  height: 44px !important;
-  line-height: 44px !important;
-  margin-bottom: 8px !important;
-  background: white !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  font-size: 20px !important;
-}
-
-.leaflet-control-zoom a:last-child {
-  margin-bottom: 0 !important;
-}
