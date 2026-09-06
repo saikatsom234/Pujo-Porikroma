@@ -411,6 +411,7 @@ const MapPage = ({ onClose }) => {
   const [mapCenter, setMapCenter] = useState([22.5726, 88.3639]); // Default Kolkata
   const [mapZoom, setMapZoom] = useState(12);
   const [activeTab, setActiveTab] = useState('map'); // 'map' or 'routes'
+  const [isRouteMenuOpen, setIsRouteMenuOpen] = useState(false);
 
   const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
   
@@ -695,13 +696,32 @@ const MapPage = ({ onClose }) => {
               <h2 className="routes-header-title">Your route</h2>
               <p className="routes-header-subtitle">Tonight • 0 stops planned</p>
             </div>
-            <button className="routes-header-menu">
-              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="1"></circle>
-                <circle cx="12" cy="5" r="1"></circle>
-                <circle cx="12" cy="19" r="1"></circle>
-              </svg>
-            </button>
+            <div className="routes-menu-container">
+              <button 
+                className="routes-header-menu"
+                onClick={() => setIsRouteMenuOpen(!isRouteMenuOpen)}
+              >
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="1"></circle>
+                  <circle cx="12" cy="5" r="1"></circle>
+                  <circle cx="12" cy="19" r="1"></circle>
+                </svg>
+              </button>
+              
+              {isRouteMenuOpen && (
+                <div className="routes-dropdown-menu">
+                  <button 
+                    className="routes-dropdown-item"
+                    onClick={() => {
+                      // Add clear route logic here if needed in the future
+                      setIsRouteMenuOpen(false);
+                    }}
+                  >
+                    Clear route
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="routes-content">
