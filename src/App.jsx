@@ -13,11 +13,6 @@ function App() {
     <div className="app-container">
       <MobileLoader />
       
-      {/* Background Image Layer */}
-      <div className="background-image"></div>
-      
-      {/* Dark Overlay for better text legibility */}
-      <div className="background-overlay"></div>
       {/* Landscape Warning Overlay */}
       <div className="landscape-overlay">
         <p className="landscape-text">Horizontal view is under construction</p>
@@ -27,6 +22,12 @@ function App() {
       <div className="scrollable-wrapper">
         {/* Main Content (First Page) */}
         <main className="main-content">
+          {/* Background Image Layer */}
+          <div className="background-image"></div>
+          
+          {/* Dark Overlay for better text legibility */}
+          <div className="background-overlay"></div>
+
           <Header onOpenMap={() => setShowMapPage(true)} />
           <HeroSection />
           <MusicPlayer />
