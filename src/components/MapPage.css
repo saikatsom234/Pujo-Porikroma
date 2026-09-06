@@ -182,19 +182,19 @@
 .map-filter-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 10px;
+  gap: 6px;
   padding-bottom: 10px;
 }
 
 .map-filter-pill {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
+  gap: 4px;
+  padding: 5px 8px;
   background: white;
   border-radius: 999px;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
   color: #333;
   border: 1.5px solid transparent;

@@ -397,7 +397,7 @@ const MapPage = ({ onClose }) => {
             onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
             className={`map-filter-pill ${activeFilter === 'pandal' ? 'active-pandal' : ''}`}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/>
               <path d="M11 2h2v4h-2z" />
               <path d="M13 2l4 2-4 2z" />
@@ -408,7 +408,7 @@ const MapPage = ({ onClose }) => {
             onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
             className={`map-filter-pill ${activeFilter === 'toilet' ? 'active-toilet' : ''}`}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
               <path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/>
               <path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/>
             </svg>
@@ -418,7 +418,7 @@ const MapPage = ({ onClose }) => {
             onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
             className={`map-filter-pill ${activeFilter === 'metro' ? 'active-metro' : ''}`}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
             </svg>
             METRO
@@ -427,7 +427,7 @@ const MapPage = ({ onClose }) => {
             onClick={() => setActiveFilter(activeFilter === 'train' ? 'all' : 'train')}
             className={`map-filter-pill ${activeFilter === 'train' ? 'active-train' : ''}`}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
             </svg>
             TRAIN
