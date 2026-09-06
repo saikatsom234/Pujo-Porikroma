@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
-import { Search, Map as MapIcon, Route, ArrowLeft } from 'lucide-react';
+import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import './MapPage.css';
 
@@ -477,6 +477,16 @@ const MapPage = ({ onClose }) => {
             <p className="text-gray-500 text-sm m-0 mt-1">Tap any pin to preview</p>
           </div>
         </div>
+      </div>
+
+      {/* Right Side Action Buttons */}
+      <div className="map-action-buttons">
+        <button className="map-action-btn">
+          <Compass size={22} className="text-blue-600" />
+        </button>
+        <button className="map-action-btn">
+          <LocateFixed size={22} className="text-blue-600" />
+        </button>
       </div>
 
       {/* Bottom Navigation Bar */}
