@@ -482,10 +482,21 @@ const MapPage = ({ onClose }) => {
       {/* Right Side Action Buttons */}
       <div className="map-action-buttons">
         <button className="map-action-btn">
-          <Compass size={22} className="text-blue-600" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
+            <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
+            <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
+          </svg>
         </button>
         <button className="map-action-btn">
-          <LocateFixed size={22} className="text-blue-600" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="5" stroke="#4285F4" strokeWidth="2"/>
+            <circle cx="12" cy="12" r="2" fill="#4285F4"/>
+            <path d="M12 2 v3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M12 22 v-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M2 12 h3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M22 12 h-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
         </button>
       </div>
 

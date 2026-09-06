@@ -128,12 +128,12 @@
 /* Custom Action Buttons (Compass & Locate) */
 .map-action-buttons {
   position: absolute;
-  bottom: 200px; /* Positions above the zoom controls (90px bottom + ~100px height of zoom controls) */
+  bottom: 220px; /* Positions perfectly above the zoom controls */
   right: 16px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   pointer-events: none;
 }
 
@@ -144,11 +144,16 @@
   border-radius: 50%;
   background: white;
   border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 12px; /* fallback for older browsers missing flex gap */
+}
+
+.map-action-btn:last-child {
+  margin-bottom: 0;
 }
 
 /* Filter Drawer Styles */
