@@ -374,20 +374,37 @@ const MapPage = ({ onClose }) => {
   const [activeFilter, setActiveFilter] = useState('all'); // all, pandal, metro, toilet
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isNearbyOpen, setIsNearbyOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [mapCenter, setMapCenter] = useState([22.5726, 88.3639]); // Default Kolkata
-  
+  const [mapZoom, setMapZoom] = useState(12);
+
   const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
+  
+  const searchResults = searchQuery.trim() === '' 
+    ? [] 
+    : locationData.filter(loc => loc.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5);
 
   const handleMarkerClick = (loc) => {
     setSelectedLocation(loc);
     setMapCenter([loc.lat, loc.lng]);
+    setMapZoom(16);
+  };
+
+  const handleSearchSelect = (loc) => {
+    setSearchQuery(loc.name);
+    setIsSearchFocused(false);
+    setSelectedLocation(loc);
+    setActiveFilter('all');
+    setMapCenter([loc.lat, loc.lng]);
+    setMapZoom(17);
   };
 
   return (
     <div className="map-page-container">
       {/* Top Search & Filter Bar */}
       <div className="map-top-bar">
-        <div className="map-search-container">
+        <div className="map-search-container relative">
           <button onClick={onClose} className="map-back-btn">
             <ArrowLeft size={20} />
           </button>
@@ -396,8 +413,32 @@ const MapPage = ({ onClose }) => {
             <input 
               type="text" 
               placeholder="Search pandals, metro, toilets" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
             />
           </div>
+          
+          {/* Search Dropdown */}
+          {isSearchFocused && searchQuery && (
+            <div className="absolute top-full left-[56px] right-0 mt-2 bg-white rounded-2xl shadow-xl overflow-hidden z-[10001] pointer-events-auto border border-gray-100">
+              {searchResults.length > 0 ? (
+                searchResults.map(loc => (
+                  <div 
+                    key={loc.id} 
+                    className="px-4 py-3 border-b border-gray-50 last:border-0 hover:bg-gray-50 flex items-center gap-3 cursor-pointer"
+                    onMouseDown={() => handleSearchSelect(loc)}
+                  >
+                    <Search size={14} className="text-gray-400 shrink-0" />
+                    <div className="text-sm font-medium text-gray-700 truncate">{loc.name}</div>
+                  </div>
+                ))
+              ) : (
+                <div className="px-4 py-3 text-sm text-gray-500 text-center">No locations found</div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Filter Pills */}
@@ -459,7 +500,7 @@ const MapPage = ({ onClose }) => {
           />
           <ZoomControl position="bottomright" />
           
-          <RecenterMap center={mapCenter} zoom={14} />
+          <RecenterMap center={mapCenter} zoom={mapZoom} />
 
           <MarkerClusterGroup chunkedLoading>
             {filteredData.map(loc => (
