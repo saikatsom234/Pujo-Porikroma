@@ -378,55 +378,38 @@ const MapPage = ({ onClose }) => {
     <div className="map-page-container">
       {/* Top Search & Filter Bar */}
       <div className="map-top-bar">
-        {/* Search Bar */}
-        <div className="w-full mb-3">
-          <div className="w-full bg-[#FDFCF9] rounded-full px-5 py-3.5 flex items-center shadow-[0_4px_16px_rgba(0,0,0,0.08)] border border-gray-100/50">
-            <Search size={20} className="text-gray-400 mr-3" />
+        <div className="map-search-container">
+          <button onClick={onClose} className="map-back-btn">
+            <ArrowLeft size={20} />
+          </button>
+          <div className="map-search-bar">
+            <Search size={18} className="text-gray-400" />
             <input 
               type="text" 
               placeholder="Search pandals, metro, toilets" 
-              className="w-full outline-none text-[15px] font-medium text-gray-700 bg-transparent placeholder-gray-400"
             />
           </div>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex overflow-x-auto gap-2.5 pb-2 hide-scrollbar px-1">
+        <div className="map-filter-scroll hide-scrollbar">
           <button 
             onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap text-[13px] font-bold tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all ${activeFilter === 'pandal' ? 'bg-white text-gray-800 border-[1.5px] border-[#D35454]' : 'bg-white text-gray-700 border border-transparent'}`}
+            className={`map-filter-pill ${activeFilter === 'pandal' ? 'active-pandal' : ''}`}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L1 12H4V22H11V16H13V22H20V12H23L12 2Z"/>
-              <path d="M12 2L12 0L15 0L15 2H12Z" />
-            </svg>
-            PANDALS
+            ⛩️ PANDALS
           </button>
-          
           <button 
             onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap text-[13px] font-bold tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all ${activeFilter === 'toilet' ? 'bg-white text-gray-800 border-[1.5px] border-[#D35454]' : 'bg-white text-gray-700 border border-transparent'}`}
+            className={`map-filter-pill ${activeFilter === 'toilet' ? 'active-toilet' : ''}`}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 22C9 23.1 8.1 24 7 24C5.9 24 5 23.1 5 22V20H13V22C13 23.1 12.1 24 11 24C9.9 24 9 23.1 9 22ZM20 10H13V2H20C21.1 2 22 2.9 22 4V8C22 9.1 21.1 10 20 10ZM11 20H3C1.9 20 1 19.1 1 18V12H13V20ZM12 11H2V9C2 5.14 5.14 2 9 2H11V11Z"/>
-            </svg>
-            TOILETS
+            🚻 TOILETS
           </button>
-
           <button 
             onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap text-[13px] font-bold tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all ${activeFilter === 'metro' ? 'bg-white text-gray-800 border-[1.5px] border-[#D35454]' : 'bg-white text-gray-700 border border-transparent'}`}
+            className={`map-filter-pill ${activeFilter === 'metro' ? 'active-metro' : ''}`}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="4" y="3" width="16" height="16" rx="2" ry="2"></rect>
-              <path d="M4 11h16"></path>
-              <path d="M12 3v8"></path>
-              <path d="M8 19l-2 3"></path>
-              <path d="M16 19l2 3"></path>
-              <circle cx="9" cy="15" r="1" fill="currentColor"></circle>
-              <circle cx="15" cy="15" r="1" fill="currentColor"></circle>
-            </svg>
-            METRO
+            🚇 METRO
           </button>
         </div>
       </div>
