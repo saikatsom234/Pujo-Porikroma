@@ -104,7 +104,8 @@
   margin-bottom: 90px !important;
   margin-right: 16px !important;
   border: none !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 .leaflet-control-zoom a {
@@ -119,6 +120,7 @@
   justify-content: center !important;
   align-items: center !important;
   font-size: 20px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
 }
 
 .leaflet-control-zoom a:last-child {
@@ -128,12 +130,11 @@
 /* Custom Action Buttons (Compass & Locate) */
 .map-action-buttons {
   position: absolute;
-  bottom: 220px; /* Positions perfectly above the zoom controls */
+  bottom: 194px; /* 90px (zoom margin) + 96px (zoom controls height) + 8px gap = 194px */
   right: 16px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   pointer-events: none;
 }
 
@@ -149,7 +150,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 12px; /* fallback for older browsers missing flex gap */
+  margin-bottom: 8px; /* Matches the zoom control's 8px gap perfectly */
 }
 
 .map-action-btn:last-child {
