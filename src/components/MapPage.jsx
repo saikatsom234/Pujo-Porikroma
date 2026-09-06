@@ -25,8 +25,7 @@ const createCustomIcon = (type, count) => {
 
   const html = `
     <div class="custom-marker" style="background-color: ${bgColor};">
-      <span>${count > 1 ? count : ''}</span>
-      ${count <= 1 ? (type === 'pandal' ? '⛩️' : type === 'metro' ? '🚇' : '🚻') : ''}
+      <span>${type === 'pandal' ? '⛩️' : type === 'metro' ? '🚇' : '🚻'}</span>
     </div>
   `;
 
