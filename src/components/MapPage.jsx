@@ -1,43 +1,39 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
-import { Search, Map as MapIcon, Route, ArrowLeft } from 'lucide-react';
+import { Search, Map as MapIcon, Route, ArrowLeft, Filter, X } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import './MapPage.css';
 
-// Sample data for pandals, toilets, metro
-const locationData = [
-  { id: 1, type: 'pandal', name: 'Bagbazar Sarbojanin', lat: 22.6025, lng: 88.3667, count: 87 },
-  { id: 2, type: 'pandal', name: 'Sreebhumi Sporting', lat: 22.5980, lng: 88.4010, count: 135 },
-  { id: 3, type: 'pandal', name: 'Santosh Mitra Square', lat: 22.5695, lng: 88.3620, count: 72 },
-  { id: 4, type: 'pandal', name: 'Kalyani ITI More', lat: 22.9731, lng: 88.4312, count: 310 },
-  { id: 5, type: 'metro', name: 'Dum Dum Metro', lat: 22.6225, lng: 88.3912, count: 2 },
-  { id: 6, type: 'metro', name: 'Sealdah Metro', lat: 22.5683, lng: 88.3714, count: 2 },
-  { id: 7, type: 'toilet', name: 'Public Toilet', lat: 22.5710, lng: 88.3650, count: 1 },
-  { id: 8, type: 'pandal', name: 'Tala Prattoy', lat: 22.6090, lng: 88.3740, count: 57 }
-];
+import { pujosData } from '../data/pujos-data';
 
-// Helper to create custom HTML markers
-const createCustomIcon = (type, count) => {
-  let bgColor = '#c0392b'; // deep red/coral for pandals
-  if (type === 'metro') bgColor = '#2980b9'; // blue for metro
-  if (type === 'toilet') bgColor = '#16a085'; // teal for toilet
+// Helper to create custom HTML markers for individual pins
+const createCustomIcon = (category) => {
+  let bgColor = '#c0392b'; // Default red
+  if (category === 'North Kolkata') bgColor = '#d35400'; // Orange
+  if (category === 'South Kolkata') bgColor = '#8e44ad'; // Purple
+  if (category === 'Salt Lake') bgColor = '#2980b9'; // Blue
+  if (category === 'Bonedi Bari') bgColor = '#16a085'; // Teal
+  if (category === 'Iconic') bgColor = '#f39c12'; // Yellow/Gold
 
   const html = `
     <div class="custom-marker" style="background-color: ${bgColor};">
-      <span>${type === 'pandal' ? '⛩️' : type === 'metro' ? '🚇' : '🚻'}</span>
+      <span>⛩️</span>
     </div>
   `;
 
   return L.divIcon({
     className: 'custom-marker-wrapper',
     html,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
+    iconSize: [36, 36],
+    iconAnchor: [18, 18]
   });
 };
 
-// Component to handle recentering when clicking a marker
+// Component to handle recentering
 const RecenterMap = ({ center, zoom }) => {
   const map = useMap();
   React.useEffect(() => {
@@ -49,11 +45,25 @@ const RecenterMap = ({ center, zoom }) => {
 };
 
 const MapPage = ({ onClose }) => {
-  const [activeFilter, setActiveFilter] = useState('all'); // all, pandal, metro, toilet
+  const [activeFilters, setActiveFilters] = useState({
+    'Iconic': true,
+    'North Kolkata': true,
+    'South Kolkata': true,
+    'Salt Lake': true,
+    'Bonedi Bari': true
+  });
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mapCenter, setMapCenter] = useState([22.5726, 88.3639]); // Default Kolkata
   
-  const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
+  const toggleFilter = (category) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
+
+  const filteredData = pujosData.filter(loc => activeFilters[loc.category]);
 
   const handleMarkerClick = (loc) => {
     setSelectedLocation(loc);
@@ -72,33 +82,52 @@ const MapPage = ({ onClose }) => {
             <Search size={18} className="text-gray-400 mr-2" />
             <input 
               type="text" 
-              placeholder="Search pandals, metro, toilets" 
+              placeholder="Search 293 pandals..." 
               className="w-full outline-none text-sm font-medium text-gray-700 bg-transparent"
             />
           </div>
+          <button 
+            onClick={() => setIsFilterDrawerOpen(true)}
+            className="p-3 bg-white rounded-full shadow-md text-gray-800 relative"
+          >
+            <Filter size={18} />
+            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+          </button>
         </div>
+      </div>
 
-        {/* Filter Pills */}
-        <div className="flex overflow-x-auto gap-2 pb-2 hide-scrollbar">
-          <button 
-            onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full whitespace-nowrap text-sm font-semibold shadow-sm transition-colors ${activeFilter === 'pandal' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-white text-gray-600'}`}
-          >
-            ⛩️ PANDALS
-          </button>
-          <button 
-            onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full whitespace-nowrap text-sm font-semibold shadow-sm transition-colors ${activeFilter === 'metro' ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-white text-gray-600'}`}
-          >
-            🚇 METRO
-          </button>
-          <button 
-            onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full whitespace-nowrap text-sm font-semibold shadow-sm transition-colors ${activeFilter === 'toilet' ? 'bg-teal-50 text-teal-600 border border-teal-200' : 'bg-white text-gray-600'}`}
-          >
-            🚻 TOILETS
+      {/* Filter Drawer Overlay */}
+      <div className={`filter-drawer-overlay ${isFilterDrawerOpen ? 'open' : ''}`} onClick={() => setIsFilterDrawerOpen(false)}></div>
+      
+      {/* Filter Drawer */}
+      <div className={`filter-drawer ${isFilterDrawerOpen ? 'open' : ''}`}>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-lg font-bold text-gray-800 m-0">Filter Categories</h2>
+          <button onClick={() => setIsFilterDrawerOpen(false)} className="text-gray-500 p-1">
+            <X size={20} />
           </button>
         </div>
+        
+        <div className="flex flex-col gap-3">
+          {Object.keys(activeFilters).map(category => (
+            <label key={category} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl cursor-pointer active:bg-gray-100 transition-colors">
+              <span className="font-semibold text-gray-700 text-sm">{category}</span>
+              <input 
+                type="checkbox" 
+                checked={activeFilters[category]} 
+                onChange={() => toggleFilter(category)}
+                className="w-5 h-5 rounded text-red-600 focus:ring-red-500 accent-red-600"
+              />
+            </label>
+          ))}
+        </div>
+        
+        <button 
+          onClick={() => setIsFilterDrawerOpen(false)}
+          className="w-full mt-6 py-3 bg-red-600 text-white rounded-xl font-bold shadow-lg shadow-red-200 active:bg-red-700 transition-colors"
+        >
+          Apply Filters
+        </button>
       </div>
 
       {/* Map Area */}
@@ -117,19 +146,42 @@ const MapPage = ({ onClose }) => {
           <ZoomControl position="bottomright" />
           
           <RecenterMap center={mapCenter} zoom={14} />
+
+          <MarkerClusterGroup
+            chunkedLoading
+            maxClusterRadius={50}
+            showCoverageOnHover={false}
+          >
+            {filteredData.map(loc => (
+              <Marker 
+                key={loc.id} 
+                position={[loc.lat, loc.lng]} 
+                icon={createCustomIcon(loc.category)}
+                eventHandlers={{
+                  click: () => handleMarkerClick(loc)
+                }}
+              />
+            ))}
+          </MarkerClusterGroup>
         </MapContainer>
       </div>
 
       {/* Bottom Floating Preview Card */}
       <div className={`map-preview-card ${selectedLocation ? 'active' : ''}`}>
         <div className="preview-card-inner bg-white rounded-3xl p-4 shadow-xl mx-4 mb-20 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-red-100 flex justify-center items-center text-red-500 text-xl">
-            {selectedLocation?.type === 'pandal' ? '⛩️' : selectedLocation?.type === 'metro' ? '🚇' : '🚻'}
+          <div className="w-12 h-12 rounded-full bg-red-100 flex justify-center items-center text-red-500 text-xl flex-shrink-0">
+            ⛩️
           </div>
-          <div>
-            <h3 className="font-bold text-gray-800 m-0">{selectedLocation ? selectedLocation.name : 'Select a location'}</h3>
-            <p className="text-gray-500 text-sm m-0 mt-1">Tap any pin to preview</p>
+          <div className="flex-1 overflow-hidden">
+            <h3 className="font-bold text-gray-800 m-0 truncate whitespace-nowrap">{selectedLocation ? selectedLocation.name : 'Select a location'}</h3>
+            <p className="text-gray-500 text-sm m-0 mt-1 truncate whitespace-nowrap">{selectedLocation ? selectedLocation.category : 'Tap any pin to preview'}</p>
           </div>
+          <button 
+            className="p-2 text-gray-400 hover:text-gray-600"
+            onClick={(e) => { e.stopPropagation(); setSelectedLocation(null); }}
+          >
+            <X size={16} />
+          </button>
         </div>
       </div>
 
