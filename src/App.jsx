@@ -23,12 +23,20 @@ function App() {
         <p className="landscape-text">Horizontal view is under construction</p>
       </div>
 
-      {/* Main Content */}
-      <main className="main-content">
-        <Header onOpenMap={() => setShowMapPage(true)} />
-        <HeroSection />
-        <MusicPlayer />
-      </main>
+      {/* Scrollable Content Wrapper */}
+      <div className="scrollable-wrapper">
+        {/* Main Content (First Page) */}
+        <main className="main-content">
+          <Header onOpenMap={() => setShowMapPage(true)} />
+          <HeroSection />
+          <MusicPlayer />
+        </main>
+
+        {/* Second Page */}
+        <div className="second-page">
+          <img src="/2nd%20page.jpg" alt="Puja Schedule" className="w-full h-auto block" />
+        </div>
+      </div>
 
       {/* Map Page */}
       {showMapPage && <MapPage onClose={() => setShowMapPage(false)} />}
