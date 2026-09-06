@@ -87,6 +87,205 @@
   pointer-events: auto;
 }
 
+/* Detailed Preview Card Styles */
+.detailed-preview-card {
+  background: white;
+  border-radius: 28px;
+  padding: 16px;
+  margin: 0 12px 76px 12px; /* Bottom margin to clear nav bar */
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preview-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #fef2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.preview-title-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1f2937;
+  margin: 0 0 2px 0;
+  line-height: 1.2;
+}
+
+.preview-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.preview-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.preview-status-row {
+  display: flex;
+  gap: 12px;
+}
+
+.preview-status-card {
+  flex: 1;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-status-card.rain {
+  background-color: #f0f7ff;
+}
+
+.preview-status-card.crowd {
+  background-color: #fef2f2;
+}
+
+.status-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.status-card-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.status-card-desc {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.preview-update-card {
+  background-color: #fffbeb;
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.update-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.update-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.update-desc {
+  font-size: 11px;
+  color: #6b7280;
+  max-width: 180px;
+}
+
+.update-btn {
+  background-color: #d97706;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.preview-metro-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.metro-name {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.metro-gate {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-navigate {
+  flex: 2;
+  background-color: #cc5550;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.btn-route {
+  flex: 1;
+  background-color: white;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
 .map-bottom-nav {
   position: absolute;
   bottom: 0;

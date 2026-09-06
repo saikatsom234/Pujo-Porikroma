@@ -551,13 +551,76 @@ const MapPage = ({ onClose }) => {
 
       {/* Bottom Floating Preview Card */}
       <div className={`map-preview-card ${selectedLocation ? 'active' : ''}`}>
-        <div className="preview-card-inner bg-white rounded-3xl p-4 shadow-xl mx-4 mb-20 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-red-100 flex justify-center items-center text-red-500 text-xl">
-            {selectedLocation?.type === 'pandal' ? '⛩️' : selectedLocation?.type === 'metro' ? '🚇' : '🚻'}
+        <div className="detailed-preview-card">
+          <div className="preview-header">
+            <div className="preview-icon-box">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="#cc5550">
+                <path d="M12 4 L14 8 H10 Z" />
+                <path d="M6 9 h12 v3 H6 Z" />
+                <path d="M7 12 h2 v8 H7 Z" />
+                <path d="M15 12 h2 v8 H15 Z" />
+              </svg>
+            </div>
+            <div className="preview-title-block">
+              <h3 className="preview-title">{selectedLocation ? selectedLocation.name : 'Select a location'}</h3>
+              <p className="preview-subtitle">Ballygunge Place, Ballygunge</p>
+            </div>
+            <button className="preview-close-btn" onClick={() => setSelectedLocation(null)}>
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
           </div>
-          <div>
-            <h3 className="font-bold text-gray-800 m-0">{selectedLocation ? selectedLocation.name : 'Select a location'}</h3>
-            <p className="text-gray-500 text-sm m-0 mt-1">Tap any pin to preview</p>
+
+          <div className="preview-status-row">
+            <div className="preview-status-card rain">
+              <div className="status-card-header">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="#6b7280" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M16 14v6"></path><path d="M8 14v6"></path><path d="M12 16v6"></path></svg> Rain status
+              </div>
+              <div className="status-card-value">...</div>
+              <div className="status-card-desc">No recent reports</div>
+            </div>
+            <div className="preview-status-card crowd">
+              <div className="status-card-header">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="#6b7280" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Crowd level
+              </div>
+              <div className="status-card-value">...</div>
+              <div className="status-card-desc">Waiting for an update</div>
+            </div>
+          </div>
+
+          <div className="preview-update-card">
+            <div className="flex gap-3">
+              <div className="mt-1">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="#d97706">
+                  <path d="M11 17l-5-5 5-5v10z" />
+                  <path d="M18 17l-5-5 5-5v10z" />
+                </svg>
+              </div>
+              <div className="update-text-block">
+                <div className="update-title">Visited recently?</div>
+                <div className="update-desc">Help others — your update is valid for 30 minutes</div>
+              </div>
+            </div>
+            <button className="update-btn">Update now ›</button>
+          </div>
+
+          <div className="preview-metro-info">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#2563eb">
+              <path d="M12 2C8 2 4 5 4 9v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V9c0-4-4-7-8-7zm0 2c3.3 0 6 2.2 6 5H6c0-2.8 2.7-5 6-5zm-3 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm6 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+              <path d="M6 19v3h2v-3H6zm10 0v3h2v-3h-2z" />
+            </svg>
+            <span className="metro-name">Jatin Das Park</span> • exit <span className="metro-gate">Gate 3</span> • 2.4 km walk
+          </div>
+
+          <div className="preview-actions">
+            <button className="btn-navigate">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+                <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z" />
+              </svg>
+              Navigate
+            </button>
+            <button className="btn-route">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Route
+            </button>
           </div>
         </div>
       </div>
