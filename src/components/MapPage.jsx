@@ -426,6 +426,12 @@ const MapPage = ({ onClose }) => {
         navigator.geolocation.clearWatch(watchIdRef.current);
       }
       
+      // Center the map immediately on first lock without polluting the live watch loop
+      navigator.geolocation.getCurrentPosition((position) => {
+        setMapCenter([position.coords.latitude, position.coords.longitude]);
+        setMapZoom(16);
+      }, () => {}, { enableHighAccuracy: true, timeout: 5000 });
+      
       const id = navigator.geolocation.watchPosition(
         (position) => {
           const { latitude, longitude, accuracy } = position.coords;
@@ -437,8 +443,6 @@ const MapPage = ({ onClose }) => {
           }
 
           setUserLocation([latitude, longitude]);
-          setMapCenter([latitude, longitude]);
-          setMapZoom(16);
           setIsTracking(true);
         },
         (error) => {
