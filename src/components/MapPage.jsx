@@ -498,14 +498,7 @@ const LiveTracker = ({ isFollowing, position }) => {
   return null;
 };
 
-// ...
-const nearbyMockData = [
-  { id: 1, name: "Ekdalia Evergreen Club", dist: "250 m away", loc: "Ekdalia, Ballygunge" },
-  { id: 2, name: "Singhi Park Sarbojanin Durga Puja Committee", dist: "400 m away", loc: "Ballygunge" },
-  { id: 3, name: "Hindusthan Park Sarbojanin Durgotsav", dist: "430 m away", loc: "Dhakuria, Hindustan Park, Gariahat" },
-  { id: 4, name: "Gariahat Hindusthan Club", dist: "540 m away", loc: "Dover Terrace, Ballygunge" },
-  { id: 5, name: "Ballygunge Pratisthan Durgabari", dist: "810 m away", loc: "Ballygunge Place, Ballygunge" }
-];
+// Removed nearbyMockData as we calculate dynamically
 
 const MapPage = ({ onClose }) => {
   const [activeFilter, setActiveFilter] = useState('all'); // all, pandal, metro, toilet
@@ -525,6 +518,50 @@ const MapPage = ({ onClose }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const isFollowingRef = React.useRef(false);
   const watchIdRef = React.useRef(null);
+
+  const [nearbyPandals, setNearbyPandals] = useState([]);
+
+  // Calculate distance in km (Haversine formula)
+  const getDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; 
+    const dLat = (lat2 - lat1) * Math.PI / 180;  
+    const dLon = (lon2 - lon1) * Math.PI / 180; 
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2); 
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    return R * c; 
+  };
+
+  useEffect(() => {
+    const pandalsOnly = locationData.filter(loc => loc.category && loc.category !== 'Metro' && loc.category !== 'Toilet');
+    if (userLocation) {
+      const [lat, lng] = userLocation;
+      const distances = pandalsOnly.map(p => {
+        const distKm = getDistance(lat, lng, p.lat, p.lng);
+        return {
+          ...p,
+          dist: distKm < 1 ? `${Math.round(distKm * 1000)} m away` : `${distKm.toFixed(1)} km away`,
+          rawDist: distKm
+        };
+      });
+      const within1km = distances.filter(p => p.rawDist <= 1);
+      within1km.sort((a, b) => a.rawDist - b.rawDist);
+      setNearbyPandals(within1km.slice(0, 5));
+    } else {
+      // Fallback state
+      const fallback = [...pandalsOnly]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 5)
+        .map(p => ({
+          ...p,
+          dist: "Distance unknown",
+          rawDist: Infinity
+        }));
+      setNearbyPandals(fallback);
+    }
+  }, [userLocation]);
 
   const setFollowingStatus = (status) => {
     setIsFollowing(status);
@@ -857,7 +894,7 @@ const MapPage = ({ onClose }) => {
             </svg>
           </div>
           <div className="nearby-text-container">
-            <div className="nearby-title">5 pandals nearby</div>
+            <div className="nearby-title">{userLocation ? `${nearbyPandals.length} pandals nearby` : "5 pandals nearby"}</div>
             <div className="nearby-subtitle">Tap any pin to preview</div>
           </div>
         </button>
@@ -877,32 +914,36 @@ const MapPage = ({ onClose }) => {
               </svg>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 text-sm m-0">5 pandals nearby</h3>
+              <h3 className="font-bold text-gray-800 text-sm m-0">{userLocation ? `${nearbyPandals.length} pandals nearby` : "5 pandals nearby"}</h3>
               <p className="text-gray-500 text-xs m-0">Tap a pandal to preview • + to add to route</p>
             </div>
           </div>
           <ChevronUp className="text-gray-400" />
         </div>
         <div className="p-0 flex flex-col overflow-y-auto">
-          {nearbyMockData.map((item) => (
-            <div key={item.id} className="flex items-center gap-4 p-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-              <div className="w-10 h-10 rounded-full bg-red-50 flex justify-center items-center shrink-0">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
-                  <path d="M12 4 L14 8 H10 Z" />
-                  <path d="M6 9 h12 v3 H6 Z" />
-                  <path d="M7 12 h2 v8 H7 Z" />
-                  <path d="M15 12 h2 v8 H15 Z" />
-                </svg>
+          {userLocation && nearbyPandals.length === 0 ? (
+            <div className="p-4 text-gray-500 text-sm">No pandals within 1 km.</div>
+          ) : (
+            nearbyPandals.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-4 p-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
+                <div className="w-10 h-10 rounded-full bg-red-50 flex justify-center items-center shrink-0">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="#cc5550">
+                    <path d="M12 4 L14 8 H10 Z" />
+                    <path d="M6 9 h12 v3 H6 Z" />
+                    <path d="M7 12 h2 v8 H7 Z" />
+                    <path d="M15 12 h2 v8 H15 Z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-bold text-gray-800 text-sm m-0 leading-tight">{item.name}</h4>
+                  <p className="text-gray-500 text-xs m-0 mt-0.5">{item.dist} • {item.category}</p>
+                </div>
+                <button className="w-8 h-8 rounded-full border border-gray-200 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors shrink-0">
+                  <Plus size={16} />
+                </button>
               </div>
-              <div className="flex-1">
-                <h4 className="font-bold text-gray-800 text-sm m-0 leading-tight">{item.name}</h4>
-                <p className="text-gray-500 text-xs m-0 mt-0.5">{item.dist} • {item.loc}</p>
-              </div>
-              <button className="w-8 h-8 rounded-full border border-gray-200 flex justify-center items-center text-gray-600 hover:bg-gray-100 transition-colors shrink-0">
-                <Plus size={16} />
-              </button>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
 
