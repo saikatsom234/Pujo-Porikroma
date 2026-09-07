@@ -362,19 +362,19 @@ const RecenterMap = ({ center, zoom }) => {
   return null;
 };
 
-const CustomMapControls = () => {
+const CustomMapControls = ({ setShowLocationPopup }) => {
   const map = useMap();
   
   return (
     <div className="map-action-buttons">
-      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); /* compass logic */ }}>
+      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); setShowLocationPopup(true); }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
           <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
           <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
         </svg>
       </button>
-      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); /* locate logic */ }}>
+      <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); setShowLocationPopup(true); }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="5" stroke="#4285F4" strokeWidth="2"/>
           <circle cx="12" cy="12" r="2" fill="#4285F4"/>
@@ -412,6 +412,7 @@ const MapPage = ({ onClose }) => {
   const [mapZoom, setMapZoom] = useState(12);
   const [activeTab, setActiveTab] = useState('map'); // 'map' or 'routes'
   const [isRouteMenuOpen, setIsRouteMenuOpen] = useState(false);
+  const [showLocationPopup, setShowLocationPopup] = useState(false);
 
   const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
   
@@ -535,7 +536,7 @@ const MapPage = ({ onClose }) => {
           
           <RecenterMap center={mapCenter} zoom={mapZoom} />
 
-          <CustomMapControls />
+          <CustomMapControls setShowLocationPopup={setShowLocationPopup} />
 
           <MarkerClusterGroup chunkedLoading>
             {filteredData.map(loc => (
@@ -773,6 +774,36 @@ const MapPage = ({ onClose }) => {
           </button>
         </div>
       </div>
+
+      {/* Location Request Popup */}
+      {showLocationPopup && (
+        <div className="location-popup-overlay" onClick={() => setShowLocationPopup(false)}>
+          <div className="location-popup-card" onClick={e => e.stopPropagation()}>
+            <button className="location-popup-close" onClick={() => setShowLocationPopup(false)}>
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="#71717a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M13 1L1 13M1 1l12 12" />
+              </svg>
+            </button>
+            <div className="location-popup-icon-container">
+              <div className="location-popup-icon-bg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#b91c1c">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+            </div>
+            <h2 className="location-popup-title">Turn on location to find you</h2>
+            <p className="location-popup-desc">
+              Sharodiya needs your location to centre the map on where you are and show pandals near you.
+            </p>
+            <button className="location-popup-allow" onClick={() => setShowLocationPopup(false)}>
+              Allow location
+            </button>
+            <button className="location-popup-deny" onClick={() => setShowLocationPopup(false)}>
+              Not now
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
