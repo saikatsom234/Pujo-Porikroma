@@ -733,6 +733,17 @@ const MapPage = ({ onClose }) => {
     setMapZoom(16);
   };
 
+  const handleSearchSelect = (loc) => {
+    setSearchQuery('');
+    setIsSearchFocused(false);
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+    setSelectedLocation(loc);
+    setMapCenter([loc.lat, loc.lng]);
+    setMapZoom(16);
+  };
+
   const getItemTheme = (type) => {
     switch(type) {
       case 'pandal': 
