@@ -6,6 +6,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   server: {
+    allowedHosts: true,
     watch: {
       ignored: [
         path.resolve(__dirname, 'image') + '/**',
