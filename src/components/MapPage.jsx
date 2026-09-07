@@ -606,6 +606,52 @@ const MapPage = ({ onClose }) => {
     }
   };
 
+  // --- Browser History Management for Modals ---
+  React.useEffect(() => {
+    if (isNearbyOpen) {
+      window.history.pushState({ id: 'nearby' }, '');
+    } else if (window.history.state?.id === 'nearby') {
+      window.history.back();
+    }
+  }, [isNearbyOpen]);
+
+  React.useEffect(() => {
+    if (selectedLocation) {
+      window.history.pushState({ id: 'preview' }, '');
+    } else if (window.history.state?.id === 'preview') {
+      window.history.back();
+    }
+  }, [selectedLocation]);
+
+  React.useEffect(() => {
+    if (showLocationPopup) {
+      window.history.pushState({ id: 'location-popup' }, '');
+    } else if (window.history.state?.id === 'location-popup') {
+      window.history.back();
+    }
+  }, [showLocationPopup]);
+
+  React.useEffect(() => {
+    if (activeTab === 'routes') {
+      window.history.pushState({ id: 'routes' }, '');
+    } else if (window.history.state?.id === 'routes') {
+      window.history.back();
+    }
+  }, [activeTab]);
+
+  React.useEffect(() => {
+    const handlePopState = (e) => {
+      const stateId = e.state?.id;
+      if (stateId !== 'nearby' && isNearbyOpen) setIsNearbyOpen(false);
+      if (stateId !== 'preview' && selectedLocation) setSelectedLocation(null);
+      if (stateId !== 'location-popup' && showLocationPopup) setShowLocationPopup(false);
+      if (stateId !== 'routes' && activeTab === 'routes') setActiveTab('map');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isNearbyOpen, selectedLocation, showLocationPopup, activeTab]);
+  // ---------------------------------------------
+
   React.useEffect(() => {
     return () => {
       if (watchIdRef.current !== null) {

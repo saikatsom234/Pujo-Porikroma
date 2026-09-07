@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import MusicPlayer from './components/MusicPlayer';
@@ -8,6 +8,27 @@ import './App.css';
 
 function App() {
   const [showMapPage, setShowMapPage] = useState(false);
+
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (!e.state || e.state.id !== 'map') {
+        setShowMapPage(false);
+      } else if (e.state && e.state.id === 'map') {
+        setShowMapPage(true);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const openMap = () => {
+    setShowMapPage(true);
+    window.history.pushState({ modalOpen: true, id: 'map' }, '');
+  };
+
+  const closeMap = () => {
+    window.history.back();
+  };
 
   return (
     <div className="app-container">
@@ -28,7 +49,7 @@ function App() {
           {/* Dark Overlay for better text legibility */}
           <div className="background-overlay"></div>
 
-          <Header onOpenMap={() => setShowMapPage(true)} />
+          <Header onOpenMap={openMap} />
           <HeroSection />
           <MusicPlayer />
         </main>
@@ -43,7 +64,7 @@ function App() {
       </div>
 
       {/* Map Page */}
-      {showMapPage && <MapPage onClose={() => setShowMapPage(false)} />}
+      {showMapPage && <MapPage onClose={closeMap} />}
     </div>
   );
 }
