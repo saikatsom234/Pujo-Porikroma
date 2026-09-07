@@ -551,7 +551,7 @@ const MapPage = ({ onClose }) => {
       within1km.sort((a, b) => a.rawDist - b.rawDist);
       setNearbyPandals(within1km.slice(0, 5));
     } else {
-      // Fallback state
+      // Fallback state (shuffles randomly each time sheet is opened or location denied)
       const fallback = [...pandalsOnly]
         .sort(() => 0.5 - Math.random())
         .slice(0, 5)
@@ -562,7 +562,7 @@ const MapPage = ({ onClose }) => {
         }));
       setNearbyPandals(fallback);
     }
-  }, [userLocation]);
+  }, [userLocation, isNearbyOpen]);
 
   const setFollowingStatus = (status) => {
     setIsFollowing(status);
