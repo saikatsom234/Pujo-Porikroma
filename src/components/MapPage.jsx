@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
-import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus, X, Mic } from 'lucide-react';
+import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus, X, Mic, Sun, Moon } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-rotate';
 import './MapPage.css';
@@ -523,6 +523,7 @@ const MapPage = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('map'); // 'map' or 'routes'
   const [isRouteMenuOpen, setIsRouteMenuOpen] = useState(false);
   const [showLocationPopup, setShowLocationPopup] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
@@ -800,7 +801,7 @@ const MapPage = ({ onClose }) => {
   };
 
   return (
-    <div className="map-page-container">
+    <div className={`map-page-container ${isDarkMode ? 'dark-mode' : ''}`}>
       {/* Top Search & Filter Bar */}
       <div className="map-top-bar">
         <div className="map-search-container relative">
@@ -874,46 +875,68 @@ const MapPage = ({ onClose }) => {
           )}
         </div>
 
-        {/* Filter Pills */}
-        <div className="map-filter-scroll hide-scrollbar">
+        {/* Filter Pills & Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', paddingRight: '16px' }}>
+          <div className="map-filter-scroll hide-scrollbar" style={{ flex: 1 }}>
+            <button 
+              onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
+              className={`map-filter-pill ${activeFilter === 'pandal' ? 'active-pandal' : ''}`}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/>
+                <path d="M11 2h2v4h-2z" />
+                <path d="M13 2l4 2-4 2z" />
+              </svg>
+              PANDALS
+            </button>
+            <button 
+              onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
+              className={`map-filter-pill ${activeFilter === 'toilet' ? 'active-toilet' : ''}`}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/>
+                <path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/>
+              </svg>
+              TOILETS
+            </button>
+            <button 
+              onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
+              className={`map-filter-pill ${activeFilter === 'metro' ? 'active-metro' : ''}`}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
+              </svg>
+              METRO
+            </button>
+            <button 
+              onClick={() => setActiveFilter(activeFilter === 'train' ? 'all' : 'train')}
+              className={`map-filter-pill ${activeFilter === 'train' ? 'active-train' : ''}`}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
+              </svg>
+              TRAIN
+            </button>
+          </div>
+          
           <button 
-            onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
-            className={`map-filter-pill ${activeFilter === 'pandal' ? 'active-pandal' : ''}`}
+            onClick={() => setIsDarkMode(!isDarkMode)} 
+            className="shrink-0"
+            style={{
+              marginLeft: '8px',
+              padding: '8px',
+              borderRadius: '50%',
+              backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
+              color: isDarkMode ? '#f9fafb' : '#374151',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              border: isDarkMode ? '1px solid #374151' : '1px solid #e5e7eb',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s'
+            }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/>
-              <path d="M11 2h2v4h-2z" />
-              <path d="M13 2l4 2-4 2z" />
-            </svg>
-            PANDALS
-          </button>
-          <button 
-            onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
-            className={`map-filter-pill ${activeFilter === 'toilet' ? 'active-toilet' : ''}`}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/>
-              <path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/>
-            </svg>
-            TOILETS
-          </button>
-          <button 
-            onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
-            className={`map-filter-pill ${activeFilter === 'metro' ? 'active-metro' : ''}`}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
-            </svg>
-            METRO
-          </button>
-          <button 
-            onClick={() => setActiveFilter(activeFilter === 'train' ? 'all' : 'train')}
-            className={`map-filter-pill ${activeFilter === 'train' ? 'active-train' : ''}`}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
-            </svg>
-            TRAIN
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </div>
       </div>
@@ -930,8 +953,12 @@ const MapPage = ({ onClose }) => {
           style={{ width: '100%', height: '100%' }}
         >
           <TileLayer
+            key={isDarkMode ? 'dark' : 'light'}
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2zpy_1_5578b74846ef709b32860fd7"
+            url={isDarkMode 
+              ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2zpy_1_5578b74846ef709b32860fd7"
+            }
             maxZoom={20}
           />
           
