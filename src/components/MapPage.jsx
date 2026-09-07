@@ -362,27 +362,26 @@ const RecenterMap = ({ center, zoom }) => {
   return null;
 };
 
-const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
+const CustomMapControls = ({ handleLocateClick, handleCompassClick }) => {
   const map = useMap();
-  const iconColor = isFollowing ? "#4285F4" : "#6b7280";
   
   return (
     <div className="map-action-buttons">
-      <button className="map-action-btn" onClick={handleLocateClick}>
+      <button className="map-action-btn" onClick={handleCompassClick}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="9" stroke={iconColor} strokeWidth="2"/>
+          <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
           <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
-          <path d="M12 19 L14.5 12 L9.5 12 Z" fill={iconColor}/>
+          <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
         </svg>
       </button>
       <button className="map-action-btn" onClick={handleLocateClick}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="5" stroke={iconColor} strokeWidth="2"/>
-          <circle cx="12" cy="12" r="2" fill={isFollowing ? iconColor : "none"}/>
-          <path d="M12 2 v3" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
-          <path d="M12 22 v-3" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
-          <path d="M2 12 h3" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
-          <path d="M22 12 h-3" stroke={iconColor} strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="12" cy="12" r="5" stroke="#4285F4" strokeWidth="2"/>
+          <circle cx="12" cy="12" r="2" fill="#4285F4"/>
+          <path d="M12 2 v3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M12 22 v-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M2 12 h3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M22 12 h-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </button>
       <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomIn(); }}>
@@ -403,44 +402,11 @@ const nearbyMockData = [
   { id: 5, name: "Ballygunge Pratisthan Durgabari", dist: "810 m away", loc: "Ballygunge Place, Ballygunge" }
 ];
 
-const LiveMapTracker = ({ userLocation, isFollowing, setIsFollowing }) => {
-  const map = useMap();
-
-  React.useEffect(() => {
-    if (isFollowing && userLocation) {
-      map.setView(userLocation, map.getZoom(), { animate: true, duration: 0.5 });
-    }
-  }, [userLocation, isFollowing, map]);
-
-  React.useEffect(() => {
-    const handleInteraction = () => {
-      if (isFollowing) {
-        setIsFollowing(false);
-      }
-    };
-
-    map.on('dragstart', handleInteraction);
-    const container = map.getContainer();
-    container.addEventListener('wheel', handleInteraction);
-    container.addEventListener('touchstart', handleInteraction);
-    container.addEventListener('mousedown', handleInteraction);
-    
-    return () => {
-      map.off('dragstart', handleInteraction);
-      container.removeEventListener('wheel', handleInteraction);
-      container.removeEventListener('touchstart', handleInteraction);
-      container.removeEventListener('mousedown', handleInteraction);
-    };
-  }, [map, isFollowing, setIsFollowing]);
-
-  return null;
-};
-
 const MapPage = ({ onClose }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'pandals', 'toilets', 'metro', 'train'
+  const [activeFilter, setActiveFilter] = useState('all'); // all, pandal, metro, toilet
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isNearbyOpen, setIsNearbyOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [mapCenter, setMapCenter] = useState([22.5726, 88.3639]); // Default Kolkata
   const [mapZoom, setMapZoom] = useState(12);
@@ -450,8 +416,9 @@ const MapPage = ({ onClose }) => {
   
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
   const [poorAccuracy, setPoorAccuracy] = useState(false);
+  const [heading, setHeading] = useState(null);
+  const [isCompassActive, setIsCompassActive] = useState(false);
   const watchIdRef = React.useRef(null);
 
   const startTracking = () => {
@@ -498,13 +465,72 @@ const MapPage = ({ onClose }) => {
     };
   }, []);
 
+  const handleOrientation = (event) => {
+    let h = null;
+    if (event.webkitCompassHeading) {
+      h = event.webkitCompassHeading;
+    } else if (event.alpha !== null) {
+      h = 360 - event.alpha; 
+    }
+    if (h !== null) {
+      setHeading(h);
+      const cone = document.querySelector('.heading-cone');
+      if (cone) cone.style.transform = `rotate(${h}deg)`;
+    }
+  };
+
+  const activateCompass = () => {
+    setIsCompassActive(true);
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
+    if (window.DeviceOrientationAbsoluteEvent) {
+      window.addEventListener('deviceorientationabsolute', handleOrientation);
+    }
+  };
+
+  const handleCompassClick = async (e) => {
+    if (e) e.stopPropagation();
+    
+    // Request iOS 13+ device orientation permission if needed
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permissionState = await DeviceOrientationEvent.requestPermission();
+        if (permissionState === 'granted') {
+          activateCompass();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      activateCompass();
+    }
+
+    if (isTracking && userLocation) {
+      setMapCenter([...userLocation]);
+      setMapZoom(19);
+      return;
+    }
+
+    try {
+      const result = await navigator.permissions.query({ name: 'geolocation' });
+      if (result.state === 'granted') {
+        startTracking();
+        setTimeout(() => setMapZoom(19), 500); // zoom in for compass mode
+      } else {
+        setShowLocationPopup(true);
+      }
+    } catch (error) {
+      setShowLocationPopup(true);
+    }
+  };
+
   const handleLocateClick = async (e) => {
     if (e) e.stopPropagation();
     
-    setIsFollowing(true);
-    
     if (isTracking && userLocation) {
-      // LiveMapTracker will handle panning now
+      setMapCenter([...userLocation]);
+      setMapZoom(16);
       return;
     }
 
@@ -527,7 +553,6 @@ const MapPage = ({ onClose }) => {
     : locationData.filter(loc => loc.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5);
 
   const handleMarkerClick = (loc) => {
-    setIsFollowing(false);
     setSelectedLocation(loc);
     setMapCenter([loc.lat, loc.lng]);
     setMapZoom(16);
@@ -642,16 +667,18 @@ const MapPage = ({ onClose }) => {
           />
           
           <RecenterMap center={mapCenter} zoom={mapZoom} />
-          <LiveMapTracker userLocation={userLocation} isFollowing={isFollowing} setIsFollowing={setIsFollowing} />
 
-          <CustomMapControls handleLocateClick={handleLocateClick} isFollowing={isFollowing} />
+          <CustomMapControls handleLocateClick={handleLocateClick} handleCompassClick={handleCompassClick} />
 
           {userLocation && (
             <Marker 
               position={userLocation}
               icon={L.divIcon({
                 className: 'custom-user-marker',
-                html: `<div class="user-location-dot"><div class="pulse"></div></div>`,
+                html: `<div class="user-location-dot">
+                         <div class="pulse"></div>
+                         ${isCompassActive ? `<div class="heading-cone"></div>` : ''}
+                       </div>`,
                 iconSize: [24, 24],
                 iconAnchor: [12, 12]
               })}
