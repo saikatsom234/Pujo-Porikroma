@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&family=Galada&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&family=Galada&display=swap');
 
 :root {
   --primary: #fbc02d; /* warm yellow */
