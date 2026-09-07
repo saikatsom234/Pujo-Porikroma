@@ -71,7 +71,10 @@ function App() {
 
         {/* Second Page */}
         <div className="second-page">
-          <img src="/2nd%20page.jpg" alt="Puja Schedule" className="w-full h-auto block" />
+          {/* Mobile View Image */}
+          <img src="/2nd%20page.jpg" alt="Puja Schedule" className="w-full h-auto block md:hidden" />
+          {/* PC View Image */}
+          <img src="/2nd%20page%20of%20puja%20porikroma%201080p.jpg" alt="Puja Schedule" className="w-full h-auto hidden md:block" />
         </div>
       </div>
 
