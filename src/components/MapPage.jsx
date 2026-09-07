@@ -772,10 +772,11 @@ const MapPage = ({ onClose }) => {
       {/* Top Search & Filter Bar */}
       <div className="map-top-bar">
         <div className="map-search-container relative">
-          <div className="map-search-bar" style={{ display: 'flex', width: '100%', alignItems: 'center', background: 'white', borderRadius: '999px', padding: '8px 12px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-            <button onClick={onClose} className="text-gray-600 mr-2 shrink-0">
-              <ArrowLeft size={20} />
-            </button>
+          <button onClick={onClose} className="map-back-btn">
+            <ArrowLeft size={20} />
+          </button>
+          <div className="map-search-bar" style={{ display: 'flex', flex: 1, alignItems: 'center', background: 'white', borderRadius: '999px', padding: '12px 16px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+            <Search size={18} className="text-gray-400 mr-2 shrink-0" />
             <input 
               type="text" 
               placeholder="Search pandals, metro, toilets" 
@@ -795,7 +796,7 @@ const MapPage = ({ onClose }) => {
           
           {/* Search Dropdown */}
           {isSearchFocused && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl overflow-hidden z-[10001] pointer-events-auto border border-gray-100 flex flex-col max-h-[60vh] overflow-y-auto">
+            <div className="absolute top-full left-[56px] right-0 mt-2 bg-white rounded-2xl shadow-xl overflow-hidden z-[10001] pointer-events-auto border border-gray-100 flex flex-col max-h-[60vh] overflow-y-auto">
               {searchQuery.trim() === '' ? (
                 // NEARBY LIST
                 <>
