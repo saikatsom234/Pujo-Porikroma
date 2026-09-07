@@ -713,9 +713,14 @@ const MapPage = ({ onClose }) => {
 
   const searchResults = React.useMemo(() => {
     if (searchQuery.trim() === '') return [];
-    const query = searchQuery.toLowerCase();
+    const query = searchQuery.toLowerCase().trim();
     const matches = filteredData
-      .filter(loc => loc.name.toLowerCase().includes(query) || (loc.category && loc.category.toLowerCase().includes(query)))
+      .filter(loc => {
+        const nameMatch = loc.name ? loc.name.toLowerCase().includes(query) : false;
+        const catMatch = loc.category ? loc.category.toLowerCase().includes(query) : false;
+        const typeMatch = loc.type ? loc.type.toLowerCase().includes(query) : false;
+        return nameMatch || catMatch || typeMatch;
+      })
       .map(loc => ({ ...loc, rawDist: getRawDist(loc) }));
     matches.sort((a, b) => a.rawDist - b.rawDist);
     return matches.slice(0, 5);
