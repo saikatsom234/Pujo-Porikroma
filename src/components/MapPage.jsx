@@ -765,54 +765,72 @@ const MapPage = ({ onClose }) => {
           
           {/* Search Dropdown */}
           {isSearchFocused && (
-            <div className="absolute top-full left-[56px] right-0 mt-2 bg-white rounded-2xl shadow-xl overflow-hidden z-[10001] pointer-events-auto border border-gray-100 flex flex-col max-h-[60vh] overflow-y-auto">
+            <div 
+              className="absolute top-full left-[56px] right-0 mt-2 z-[10001] pointer-events-auto flex flex-col max-h-[60vh] overflow-y-auto"
+              style={{
+                backgroundColor: '#ffffff',
+                opacity: 1,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                border: '1px solid #e5e7eb',
+                borderRadius: '16px',
+                padding: '8px 0'
+              }}
+            >
               {searchQuery.trim() === '' ? (
                 // NEARBY LIST
                 <>
-                  <div className="px-4 py-3 text-xs font-bold text-gray-400 tracking-wider bg-gray-50/80">NEARBY</div>
+                  <div className="px-4 py-2 text-xs font-bold tracking-wider" style={{ backgroundColor: '#f3f4f6', color: '#4b5563' }}>NEARBY</div>
                   {nearbySearchList.length > 0 ? (
                     nearbySearchList.map(loc => (
                       <div 
                         key={loc.id} 
-                        className="px-4 py-3 border-b border-gray-50 last:border-0 hover:bg-gray-50 flex items-center gap-3 cursor-pointer"
+                        className="px-4 py-3 border-b flex items-center gap-3 cursor-pointer"
+                        style={{ borderColor: '#f3f4f6' }}
                         onMouseDown={() => handleSearchSelect(loc)}
                       >
-                        <div className="w-8 h-8 rounded-full bg-gray-100 flex justify-center items-center shrink-0">
+                        <div className="w-8 h-8 rounded-full flex justify-center items-center shrink-0" style={{ backgroundColor: '#f3f4f6' }}>
                           {loc.type === 'pandal' ? '⛩️' : loc.type === 'metro' ? '🚇' : loc.type === 'train' ? '🚆' : '🚻'}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-bold text-gray-800 truncate">{loc.name}</div>
-                          <div className="text-xs text-gray-500 mt-0.5">{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
+                          <div className="text-sm font-bold truncate" style={{ color: '#111827' }}>{loc.name}</div>
+                          <div className="text-xs mt-0.5" style={{ color: '#6b7280', fontWeight: '500' }}>{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div className="px-4 py-6 text-sm text-gray-500 text-center">No nearby locations found.</div>
+                    <div className="px-4 py-6 text-sm text-center" style={{ color: '#6b7280' }}>No nearby locations found.</div>
                   )}
                 </>
               ) : (
                 // BEST MATCHES LIST
                 <>
-                  <div className="px-4 py-3 text-xs font-bold text-gray-400 tracking-wider bg-gray-50/80">BEST MATCHES</div>
+                  <div className="px-4 py-2 text-xs font-bold tracking-wider" style={{ backgroundColor: '#f3f4f6', color: '#4b5563' }}>BEST MATCHES</div>
                   {searchResults.length > 0 ? (
                     searchResults.map(loc => (
                       <div 
                         key={loc.id} 
-                        className="px-4 py-3 border-b border-gray-50 last:border-0 hover:bg-gray-50 flex items-center gap-3 cursor-pointer"
+                        className="px-4 py-3 border-b flex items-center gap-3 cursor-pointer"
+                        style={{ borderColor: '#f3f4f6' }}
                         onMouseDown={() => handleSearchSelect(loc)}
                       >
-                        <Search size={16} className="text-gray-400 shrink-0" />
+                        <Search size={16} color="#9ca3af" className="shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-bold text-gray-800 truncate">{loc.name}</div>
-                          <div className="text-xs text-gray-500 mt-0.5">{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
+                          <div className="text-sm font-bold truncate" style={{ color: '#111827' }}>{loc.name}</div>
+                          <div className="text-xs mt-0.5" style={{ color: '#6b7280', fontWeight: '500' }}>{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
                         </div>
                       </div>
                     ))
                   ) : (
                     <div className="px-4 py-6 flex flex-col items-center justify-center">
-                      <div className="text-sm text-gray-800 font-bold mb-1">No nearby matches.</div>
-                      <div className="text-xs text-gray-500">Try searching for a different area.</div>
-                      <button className="mt-3 px-4 py-2 bg-gray-100 rounded-full text-xs font-bold text-gray-700" onMouseDown={() => setSearchQuery('')}>Clear Search</button>
+                      <div className="text-sm font-bold mb-1" style={{ color: '#111827' }}>No nearby matches.</div>
+                      <div className="text-xs" style={{ color: '#6b7280' }}>Try searching for a different area.</div>
+                      <button 
+                        className="mt-3 px-4 py-2 rounded-full text-xs font-bold" 
+                        style={{ backgroundColor: '#f3f4f6', color: '#374151' }}
+                        onMouseDown={() => setSearchQuery('')}
+                      >
+                        Clear Search
+                      </button>
                     </div>
                   )}
                 </>
