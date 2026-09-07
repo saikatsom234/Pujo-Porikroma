@@ -523,7 +523,6 @@ const MapPage = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('map'); // 'map' or 'routes'
   const [isRouteMenuOpen, setIsRouteMenuOpen] = useState(false);
   const [showLocationPopup, setShowLocationPopup] = useState(false);
-  const [isVideoLoading, setIsVideoLoading] = useState(true);
   
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
@@ -736,36 +735,6 @@ const MapPage = ({ onClose }) => {
     setMapCenter([loc.lat, loc.lng]);
     setMapZoom(17);
   };
-
-  if (isVideoLoading) {
-    return (
-      <div 
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100vw',
-          height: '100vh',
-          zIndex: 999999,
-          backgroundColor: '#000000',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <video 
-          src="/map loader screen.mp4" 
-          autoPlay 
-          muted 
-          playsInline
-          onEnded={() => setIsVideoLoading(false)}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="map-page-container">

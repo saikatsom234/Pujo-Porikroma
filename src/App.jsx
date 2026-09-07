@@ -8,11 +8,14 @@ import './App.css';
 
 function App() {
   const [showMapPage, setShowMapPage] = useState(false);
+  const [isMapLoading, setIsMapLoading] = useState(false);
+  const videoRef = React.useRef(null);
 
   useEffect(() => {
     const handlePopState = (e) => {
       if (!e.state || e.state.id !== 'map') {
         setShowMapPage(false);
+        setIsMapLoading(false);
       } else if (e.state && e.state.id === 'map') {
         setShowMapPage(true);
       }
@@ -22,6 +25,15 @@ function App() {
   }, []);
 
   const openMap = () => {
+    setIsMapLoading(true);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(e => console.error("Video play error:", e));
+    }
+  };
+
+  const handleLoaderEnded = () => {
+    setIsMapLoading(false);
     setShowMapPage(true);
     window.history.pushState({ modalOpen: true, id: 'map' }, '');
   };
@@ -61,6 +73,34 @@ function App() {
         <div className="second-page">
           <img src="/2nd%20page.jpg" alt="Puja Schedule" className="w-full h-auto block" />
         </div>
+      </div>
+
+      {/* Map Loader Overlay */}
+      <div 
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 999999,
+          backgroundColor: '#000000',
+          visibility: isMapLoading ? 'visible' : 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <video 
+          ref={videoRef}
+          src="/map loader screen.mp4" 
+          preload="auto"
+          playsInline
+          onEnded={handleLoaderEnded}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
       </div>
 
       {/* Map Page */}
