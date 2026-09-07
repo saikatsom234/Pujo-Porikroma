@@ -321,6 +321,7 @@ const formattedPujos = allPujos.map((p, index) => ({
   id: `pujo-${index}`,
   type: 'pandal',
   name: p.name,
+  category: p.category,
   lat: p.lat,
   lng: p.lng
 }));
@@ -535,7 +536,7 @@ const MapPage = ({ onClose }) => {
   };
 
   useEffect(() => {
-    const pandalsOnly = locationData.filter(loc => loc.category && loc.category !== 'Metro' && loc.category !== 'Toilet');
+    const pandalsOnly = locationData.filter(loc => loc.type === 'pandal');
     if (userLocation) {
       const [lat, lng] = userLocation;
       const distances = pandalsOnly.map(p => {
