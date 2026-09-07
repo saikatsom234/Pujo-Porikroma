@@ -377,23 +377,17 @@ const MapEvents = ({ onDrag }) => {
 const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
   const map = useMap();
 
-  const handleCompassClick = (e) => {
+  const onLocate = (e) => {
     e.stopPropagation();
     if (typeof map.setBearing === 'function') {
       try { map.setBearing(0); } catch(e){}
     }
+    handleLocateClick(e);
   };
   
   return (
     <div className="map-action-buttons">
-      <button className="map-action-btn" onClick={handleCompassClick}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
-          <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
-          <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
-        </svg>
-      </button>
-      <button className={`map-action-btn ${isFollowing ? 'following-active' : ''}`} onClick={handleLocateClick}>
+      <button className={`map-action-btn ${isFollowing ? 'following-active' : ''}`} onClick={onLocate}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="5" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2"/>
           <circle cx="12" cy="12" r="2" fill={isFollowing ? "#1a73e8" : "#4285F4"}/>
