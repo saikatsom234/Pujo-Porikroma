@@ -706,14 +706,29 @@ const MapPage = ({ onClose }) => {
 
   if (isVideoLoading) {
     return (
-      <div className="fixed inset-0 z-[99999] bg-black flex items-center justify-center">
+      <div 
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 999999,
+          backgroundColor: '#000000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
         <video 
           src="/map loader screen.mp4" 
           autoPlay 
           muted 
           playsInline
           onEnded={() => setIsVideoLoading(false)}
-          className="w-full h-full object-cover"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
     );
