@@ -416,6 +416,7 @@ const MapPage = ({ onClose }) => {
   
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
+  const [poorAccuracy, setPoorAccuracy] = useState(false);
   const watchIdRef = React.useRef(null);
 
   const startTracking = () => {
@@ -427,7 +428,14 @@ const MapPage = ({ onClose }) => {
       
       const id = navigator.geolocation.watchPosition(
         (position) => {
-          const { latitude, longitude } = position.coords;
+          const { latitude, longitude, accuracy } = position.coords;
+          
+          if (accuracy > 100) {
+            setPoorAccuracy(true);
+          } else {
+            setPoorAccuracy(false);
+          }
+
           setUserLocation([latitude, longitude]);
           setMapCenter([latitude, longitude]);
           setMapZoom(16);
@@ -437,7 +445,7 @@ const MapPage = ({ onClose }) => {
           console.error("Error getting location:", error);
           setIsTracking(false);
         },
-        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
       );
       watchIdRef.current = id;
     }
@@ -698,6 +706,21 @@ const MapPage = ({ onClose }) => {
           </div>
         </div>
       </div>
+
+      {/* Poor GPS Warning */}
+      {poorAccuracy && (
+        <button 
+          className="poor-gps-warning"
+          onClick={(e) => { e.stopPropagation(); startTracking(); }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '6px'}}>
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Poor GPS signal. Tap to force refresh.
+        </button>
+      )}
 
       {/* Nearby Floating Button */}
       <div className={`map-nearby-btn-container ${(!selectedLocation && !isNearbyOpen) ? 'active' : ''}`}>
