@@ -30,6 +30,7 @@ body {
   overflow: hidden; /* prevent scrolling for a full screen app feel */
   -webkit-user-select: none; /* Prevent accidental text selection caret on mobile */
   user-select: none;
+  touch-action: pan-x pan-y; /* Prevent pinch-to-zoom but allow scrolling */
 }
 
 /* Utilities */
