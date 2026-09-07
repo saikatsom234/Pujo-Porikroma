@@ -732,13 +732,71 @@ const MapPage = ({ onClose }) => {
     setMapZoom(16);
   };
 
-  const handleSearchSelect = (loc) => {
-    setSearchQuery(loc.name);
-    setIsSearchFocused(false);
-    setSelectedLocation(loc);
-    setActiveFilter('all');
-    setMapCenter([loc.lat, loc.lng]);
-    setMapZoom(17);
+  const getItemTheme = (type) => {
+    switch(type) {
+      case 'pandal': 
+        return { 
+          color: '#ef4444', 
+          bg: '#fee2e2', 
+          icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/><path d="M11 2h2v4h-2z" /><path d="M13 2l4 2-4 2z" /></svg> 
+        };
+      case 'toilet': 
+        return { 
+          color: '#0d9488', 
+          bg: '#ccfbf1', 
+          icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/><path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/></svg> 
+        };
+      case 'metro': 
+        return { 
+          color: '#2563eb', 
+          bg: '#dbeafe', 
+          icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/></svg> 
+        };
+      case 'train': 
+        return { 
+          color: '#9333ea', 
+          bg: '#f3e8ff', 
+          icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/></svg> 
+        };
+      default: 
+        return { 
+          color: '#6b7280', 
+          bg: '#f3f4f6', 
+          icon: <Search size={20} /> 
+        };
+    }
+  };
+
+  const renderSearchItem = (loc) => {
+    const theme = getItemTheme(loc.type);
+    const distStr = getDistString(loc.rawDist);
+    const distFormatted = distStr ? distStr.replace(' away', '') : '';
+    const categoryDisplay = loc.category ? `${loc.type.charAt(0).toUpperCase() + loc.type.slice(1)} • ${loc.category}` : loc.type;
+
+    return (
+      <div 
+        key={loc.id} 
+        className="px-5 py-3 flex items-center gap-4 cursor-pointer"
+        style={{ borderBottom: '1px solid #f9fafb' }}
+        onMouseDown={() => handleSearchSelect(loc)}
+      >
+        <div className="w-11 h-11 rounded-[12px] flex justify-center items-center shrink-0" style={{ backgroundColor: theme.bg, color: theme.color }}>
+          {theme.icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[15px] font-bold truncate" style={{ color: '#111827' }}>{loc.name}</div>
+          <div className="text-[12px] mt-0.5 truncate" style={{ color: '#6b7280', fontWeight: '500' }}>
+            {categoryDisplay}
+          </div>
+        </div>
+        {distFormatted && (
+          <div className="flex flex-col items-end justify-center shrink-0 ml-2">
+            <span className="text-[13px] font-bold leading-none" style={{ color: theme.color }}>{distFormatted}</span>
+            <span className="text-[10px] text-gray-400 font-bold leading-none mt-[3px]">away</span>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -771,66 +829,38 @@ const MapPage = ({ onClose }) => {
           {/* Search Dropdown */}
           {isSearchFocused && (
             <div 
-              className="absolute top-full left-[56px] right-0 mt-2 z-[10001] pointer-events-auto flex flex-col max-h-[60vh] overflow-y-auto"
+              className="absolute top-full left-0 right-0 mt-2 z-[10001] pointer-events-auto flex flex-col overflow-y-auto hide-scrollbar"
               style={{
                 backgroundColor: '#ffffff',
                 opacity: 1,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                border: '1px solid #e5e7eb',
-                borderRadius: '16px',
-                padding: '8px 0'
+                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                borderRadius: '24px',
+                padding: '16px 0',
+                maxHeight: '65vh'
               }}
             >
               {searchQuery.trim() === '' ? (
                 // NEARBY LIST
                 <>
-                  <div className="px-4 py-2 text-xs font-bold tracking-wider" style={{ backgroundColor: '#f3f4f6', color: '#4b5563' }}>NEARBY</div>
+                  <div className="px-5 py-2 text-[11px] font-bold tracking-wider text-gray-400">NEARBY</div>
                   {nearbySearchList.length > 0 ? (
-                    nearbySearchList.map(loc => (
-                      <div 
-                        key={loc.id} 
-                        className="px-4 py-3 border-b flex items-center gap-3 cursor-pointer"
-                        style={{ borderColor: '#f3f4f6' }}
-                        onMouseDown={() => handleSearchSelect(loc)}
-                      >
-                        <div className="w-8 h-8 rounded-full flex justify-center items-center shrink-0" style={{ backgroundColor: '#f3f4f6' }}>
-                          {loc.type === 'pandal' ? '⛩️' : loc.type === 'metro' ? '🚇' : loc.type === 'train' ? '🚆' : '🚻'}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-sm font-bold truncate" style={{ color: '#111827' }}>{loc.name}</div>
-                          <div className="text-xs mt-0.5" style={{ color: '#6b7280', fontWeight: '500' }}>{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
-                        </div>
-                      </div>
-                    ))
+                    nearbySearchList.map(loc => renderSearchItem(loc))
                   ) : (
-                    <div className="px-4 py-6 text-sm text-center" style={{ color: '#6b7280' }}>No nearby locations found.</div>
+                    <div className="px-5 py-6 text-sm text-center" style={{ color: '#6b7280' }}>No nearby locations found.</div>
                   )}
                 </>
               ) : (
                 // BEST MATCHES LIST
                 <>
-                  <div className="px-4 py-2 text-xs font-bold tracking-wider" style={{ backgroundColor: '#f3f4f6', color: '#4b5563' }}>BEST MATCHES</div>
+                  <div className="px-5 py-2 text-[11px] font-bold tracking-wider text-gray-400">BEST MATCHES</div>
                   {searchResults.length > 0 ? (
-                    searchResults.map(loc => (
-                      <div 
-                        key={loc.id} 
-                        className="px-4 py-3 border-b flex items-center gap-3 cursor-pointer"
-                        style={{ borderColor: '#f3f4f6' }}
-                        onMouseDown={() => handleSearchSelect(loc)}
-                      >
-                        <Search size={16} color="#9ca3af" className="shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <div className="text-sm font-bold truncate" style={{ color: '#111827' }}>{loc.name}</div>
-                          <div className="text-xs mt-0.5" style={{ color: '#6b7280', fontWeight: '500' }}>{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
-                        </div>
-                      </div>
-                    ))
+                    searchResults.map(loc => renderSearchItem(loc))
                   ) : (
-                    <div className="px-4 py-6 flex flex-col items-center justify-center">
+                    <div className="px-5 py-6 flex flex-col items-center justify-center">
                       <div className="text-sm font-bold mb-1" style={{ color: '#111827' }}>No nearby matches.</div>
                       <div className="text-xs" style={{ color: '#6b7280' }}>Try searching for a different area.</div>
                       <button 
-                        className="mt-3 px-4 py-2 rounded-full text-xs font-bold" 
+                        className="mt-4 px-5 py-2.5 rounded-full text-xs font-bold" 
                         style={{ backgroundColor: '#f3f4f6', color: '#374151' }}
                         onMouseDown={() => setSearchQuery('')}
                       >
