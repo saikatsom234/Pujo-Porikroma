@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
-import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus } from 'lucide-react';
+import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus, X, Mic } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-rotate';
 import './MapPage.css';
@@ -330,7 +330,9 @@ const locationData = [
   ...formattedPujos,
   { id: 'm1', type: 'metro', name: 'Dum Dum Metro', lat: 22.6225, lng: 88.3912 },
   { id: 'm2', type: 'metro', name: 'Sealdah Metro', lat: 22.5683, lng: 88.3714 },
-  { id: 't1', type: 'toilet', name: 'Public Toilet', lat: 22.5710, lng: 88.3650 }
+  { id: 't1', type: 'toilet', name: 'Public Toilet', lat: 22.5710, lng: 88.3650 },
+  { id: 'tr1', type: 'train', name: 'Howrah Junction', lat: 22.5839, lng: 88.3426 },
+  { id: 'tr2', type: 'train', name: 'Bidhannagar Road Station', lat: 22.5938, lng: 88.3934 }
 ];
 
 // Helper to create custom HTML markers
@@ -338,10 +340,19 @@ const createCustomIcon = (type, count) => {
   let bgColor = '#c0392b'; // deep red/coral for pandals
   if (type === 'metro') bgColor = '#2980b9'; // blue for metro
   if (type === 'toilet') bgColor = '#16a085'; // teal for toilet
+  if (type === 'train') bgColor = '#8e44ad'; // purple for train
+
+  const getEmoji = (t) => {
+    if (t === 'pandal') return '⛩️';
+    if (t === 'metro') return '🚇';
+    if (t === 'toilet') return '🚻';
+    if (t === 'train') return '🚆';
+    return '📍';
+  };
 
   const html = `
     <div class="custom-marker" style="background-color: ${bgColor};">
-      <span>${type === 'pandal' ? '⛩️' : type === 'metro' ? '🚇' : '🚻'}</span>
+      <span>${getEmoji(type)}</span>
     </div>
   `;
 
@@ -685,9 +696,31 @@ const MapPage = ({ onClose }) => {
 
   const filteredData = locationData.filter(loc => activeFilter === 'all' || loc.type === activeFilter);
   
-  const searchResults = searchQuery.trim() === '' 
-    ? [] 
-    : locationData.filter(loc => loc.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5);
+  const getRawDist = (loc) => {
+    if (!userLocation) return Infinity;
+    return getDistance(userLocation[0], userLocation[1], loc.lat, loc.lng);
+  };
+
+  const getDistString = (rawDist) => {
+    if (rawDist === Infinity) return '';
+    return rawDist < 1 ? `${Math.round(rawDist * 1000)} m away` : `${rawDist.toFixed(1)} km away`;
+  };
+
+  const nearbySearchList = React.useMemo(() => {
+    const list = [...filteredData].map(loc => ({ ...loc, rawDist: getRawDist(loc) }));
+    list.sort((a, b) => a.rawDist - b.rawDist);
+    return list.slice(0, 5);
+  }, [userLocation, filteredData]);
+
+  const searchResults = React.useMemo(() => {
+    if (searchQuery.trim() === '') return [];
+    const query = searchQuery.toLowerCase();
+    const matches = filteredData
+      .filter(loc => loc.name.toLowerCase().includes(query) || (loc.category && loc.category.toLowerCase().includes(query)))
+      .map(loc => ({ ...loc, rawDist: getRawDist(loc) }));
+    matches.sort((a, b) => a.rawDist - b.rawDist);
+    return matches.slice(0, 5);
+  }, [searchQuery, userLocation, filteredData]);
 
   const handleMarkerClick = (loc) => {
     setSelectedLocation(loc);
@@ -739,11 +772,10 @@ const MapPage = ({ onClose }) => {
       {/* Top Search & Filter Bar */}
       <div className="map-top-bar">
         <div className="map-search-container relative">
-          <button onClick={onClose} className="map-back-btn">
-            <ArrowLeft size={20} />
-          </button>
-          <div className="map-search-bar">
-            <Search size={18} className="text-gray-400" />
+          <div className="map-search-bar" style={{ display: 'flex', width: '100%', alignItems: 'center', background: 'white', borderRadius: '999px', padding: '8px 12px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+            <button onClick={onClose} className="text-gray-600 mr-2 shrink-0">
+              <ArrowLeft size={20} />
+            </button>
             <input 
               type="text" 
               placeholder="Search pandals, metro, toilets" 
@@ -751,25 +783,69 @@ const MapPage = ({ onClose }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
+              style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: '15px', fontWeight: '500', color: '#333' }}
             />
+            <button 
+              onClick={() => searchQuery ? setSearchQuery('') : null} 
+              className="text-gray-600 ml-2 shrink-0"
+            >
+              {searchQuery ? <X size={20} /> : <Mic size={20} />}
+            </button>
           </div>
           
           {/* Search Dropdown */}
-          {isSearchFocused && searchQuery && (
-            <div className="absolute top-full left-[56px] right-0 mt-2 bg-white rounded-2xl shadow-xl overflow-hidden z-[10001] pointer-events-auto border border-gray-100">
-              {searchResults.length > 0 ? (
-                searchResults.map(loc => (
-                  <div 
-                    key={loc.id} 
-                    className="px-4 py-3 border-b border-gray-50 last:border-0 hover:bg-gray-50 flex items-center gap-3 cursor-pointer"
-                    onMouseDown={() => handleSearchSelect(loc)}
-                  >
-                    <Search size={14} className="text-gray-400 shrink-0" />
-                    <div className="text-sm font-medium text-gray-700 truncate">{loc.name}</div>
-                  </div>
-                ))
+          {isSearchFocused && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl overflow-hidden z-[10001] pointer-events-auto border border-gray-100 flex flex-col max-h-[60vh] overflow-y-auto">
+              {searchQuery.trim() === '' ? (
+                // NEARBY LIST
+                <>
+                  <div className="px-4 py-3 text-xs font-bold text-gray-400 tracking-wider bg-gray-50/80">NEARBY</div>
+                  {nearbySearchList.length > 0 ? (
+                    nearbySearchList.map(loc => (
+                      <div 
+                        key={loc.id} 
+                        className="px-4 py-3 border-b border-gray-50 last:border-0 hover:bg-gray-50 flex items-center gap-3 cursor-pointer"
+                        onMouseDown={() => handleSearchSelect(loc)}
+                      >
+                        <div className="w-8 h-8 rounded-full bg-gray-100 flex justify-center items-center shrink-0">
+                          {loc.type === 'pandal' ? '⛩️' : loc.type === 'metro' ? '🚇' : loc.type === 'train' ? '🚆' : '🚻'}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-bold text-gray-800 truncate">{loc.name}</div>
+                          <div className="text-xs text-gray-500 mt-0.5">{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-6 text-sm text-gray-500 text-center">No nearby locations found.</div>
+                  )}
+                </>
               ) : (
-                <div className="px-4 py-3 text-sm text-gray-500 text-center">No locations found</div>
+                // BEST MATCHES LIST
+                <>
+                  <div className="px-4 py-3 text-xs font-bold text-gray-400 tracking-wider bg-gray-50/80">BEST MATCHES</div>
+                  {searchResults.length > 0 ? (
+                    searchResults.map(loc => (
+                      <div 
+                        key={loc.id} 
+                        className="px-4 py-3 border-b border-gray-50 last:border-0 hover:bg-gray-50 flex items-center gap-3 cursor-pointer"
+                        onMouseDown={() => handleSearchSelect(loc)}
+                      >
+                        <Search size={16} className="text-gray-400 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-bold text-gray-800 truncate">{loc.name}</div>
+                          <div className="text-xs text-gray-500 mt-0.5">{loc.category || loc.type} • {getDistString(loc.rawDist)}</div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-6 flex flex-col items-center justify-center">
+                      <div className="text-sm text-gray-800 font-bold mb-1">No nearby matches.</div>
+                      <div className="text-xs text-gray-500">Try searching for a different area.</div>
+                      <button className="mt-3 px-4 py-2 bg-gray-100 rounded-full text-xs font-bold text-gray-700" onMouseDown={() => setSearchQuery('')}>Clear Search</button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           )}
