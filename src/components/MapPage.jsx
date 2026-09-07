@@ -376,14 +376,21 @@ const MapEvents = ({ onDrag }) => {
 
 const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
   const map = useMap();
+
+  const handleCompassClick = (e) => {
+    e.stopPropagation();
+    if (typeof map.setBearing === 'function') {
+      try { map.setBearing(0); } catch(e){}
+    }
+  };
   
   return (
     <div className="map-action-buttons">
-      <button className={`map-action-btn ${isFollowing ? 'following-active' : ''}`} onClick={handleLocateClick}>
+      <button className="map-action-btn" onClick={handleCompassClick}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="9" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2"/>
+          <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
           <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
-          <path d="M12 19 L14.5 12 L9.5 12 Z" fill={isFollowing ? "#1a73e8" : "#4285F4"}/>
+          <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
         </svg>
       </button>
       <button className={`map-action-btn ${isFollowing ? 'following-active' : ''}`} onClick={handleLocateClick}>
@@ -406,6 +413,17 @@ const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
   );
 };
 
+const LiveTracker = ({ isFollowing, position }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    if (isFollowing && position) {
+      map.panTo(position, { animate: true, duration: 0.5 });
+    }
+  }, [isFollowing, position, map]);
+  return null;
+};
+
+// ...
 const nearbyMockData = [
   { id: 1, name: "Ekdalia Evergreen Club", dist: "250 m away", loc: "Ekdalia, Ballygunge" },
   { id: 2, name: "Singhi Park Sarbojanin Durga Puja Committee", dist: "400 m away", loc: "Ballygunge" },
@@ -463,9 +481,6 @@ const MapPage = ({ onClose }) => {
           }
 
           setUserLocation([latitude, longitude]);
-          if (isFollowingRef.current) {
-            setMapCenter([latitude, longitude]);
-          }
           setIsTracking(true);
         },
         (error) => {
@@ -630,6 +645,7 @@ const MapPage = ({ onClose }) => {
           
           <RecenterMap center={mapCenter} zoom={mapZoom} />
           <MapEvents onDrag={() => setFollowingStatus(false)} />
+          <LiveTracker isFollowing={isFollowing} position={userLocation} />
 
           <CustomMapControls handleLocateClick={handleLocateClick} isFollowing={isFollowing} />
 
