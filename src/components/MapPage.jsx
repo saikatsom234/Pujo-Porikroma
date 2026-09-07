@@ -356,18 +356,21 @@ const RecenterMap = ({ center, zoom }) => {
   const map = useMap();
   React.useEffect(() => {
     if (center) {
+      if (typeof map.setBearing === 'function') {
+        try { map.setBearing(0); } catch(e){}
+      }
       map.flyTo(center, zoom, { animate: true, duration: 1 });
     }
   }, [center, zoom, map]);
   return null;
 };
 
-const CustomMapControls = ({ handleLocateClick, handleCompassClick }) => {
+const CustomMapControls = ({ handleLocateClick }) => {
   const map = useMap();
   
   return (
     <div className="map-action-buttons">
-      <button className="map-action-btn" onClick={handleCompassClick}>
+      <button className="map-action-btn" onClick={handleLocateClick}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
           <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
@@ -417,8 +420,6 @@ const MapPage = ({ onClose }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
   const [poorAccuracy, setPoorAccuracy] = useState(false);
-  const [heading, setHeading] = useState(null);
-  const [isCompassActive, setIsCompassActive] = useState(false);
   const watchIdRef = React.useRef(null);
 
   const startTracking = () => {
@@ -464,66 +465,6 @@ const MapPage = ({ onClose }) => {
       }
     };
   }, []);
-
-  const handleOrientation = (event) => {
-    let h = null;
-    if (event.webkitCompassHeading) {
-      h = event.webkitCompassHeading;
-    } else if (event.alpha !== null) {
-      h = 360 - event.alpha; 
-    }
-    if (h !== null) {
-      setHeading(h);
-      const cone = document.querySelector('.heading-cone');
-      if (cone) cone.style.transform = `rotate(${h}deg)`;
-    }
-  };
-
-  const activateCompass = () => {
-    setIsCompassActive(true);
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', handleOrientation);
-    }
-    if (window.DeviceOrientationAbsoluteEvent) {
-      window.addEventListener('deviceorientationabsolute', handleOrientation);
-    }
-  };
-
-  const handleCompassClick = async (e) => {
-    if (e) e.stopPropagation();
-    
-    // Request iOS 13+ device orientation permission if needed
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      try {
-        const permissionState = await DeviceOrientationEvent.requestPermission();
-        if (permissionState === 'granted') {
-          activateCompass();
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      activateCompass();
-    }
-
-    if (isTracking && userLocation) {
-      setMapCenter([...userLocation]);
-      setMapZoom(19);
-      return;
-    }
-
-    try {
-      const result = await navigator.permissions.query({ name: 'geolocation' });
-      if (result.state === 'granted') {
-        startTracking();
-        setTimeout(() => setMapZoom(19), 500); // zoom in for compass mode
-      } else {
-        setShowLocationPopup(true);
-      }
-    } catch (error) {
-      setShowLocationPopup(true);
-    }
-  };
 
   const handleLocateClick = async (e) => {
     if (e) e.stopPropagation();
@@ -668,17 +609,14 @@ const MapPage = ({ onClose }) => {
           
           <RecenterMap center={mapCenter} zoom={mapZoom} />
 
-          <CustomMapControls handleLocateClick={handleLocateClick} handleCompassClick={handleCompassClick} />
+          <CustomMapControls handleLocateClick={handleLocateClick} />
 
           {userLocation && (
             <Marker 
               position={userLocation}
               icon={L.divIcon({
                 className: 'custom-user-marker',
-                html: `<div class="user-location-dot">
-                         <div class="pulse"></div>
-                         ${isCompassActive ? `<div class="heading-cone"></div>` : ''}
-                       </div>`,
+                html: `<div class="user-location-dot"><div class="pulse"></div></div>`,
                 iconSize: [24, 24],
                 iconAnchor: [12, 12]
               })}
