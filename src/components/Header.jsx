@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, User, Coffee, Play, Search, Disc, Globe2 } from 'lucide-react';
+import { Settings, User, Coffee, Play, Search, Disc, Globe2, Calendar } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { toBengaliNumber, getPujoText } from '../utils/dateUtils';
 import CreatorCard from './CreatorCard';
@@ -8,7 +8,7 @@ import ChatPopup from './ChatPopup';
 import SettingsPopup from './SettingsPopup';
 import './Header.css';
 
-const Header = ({ onOpenMap }) => {
+const Header = ({ onOpenMap, onOpenSchedule }) => {
   const [onlineCount, setOnlineCount] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCreatorCard, setShowCreatorCard] = useState(false);
@@ -94,6 +94,7 @@ const Header = ({ onOpenMap }) => {
           
           <div className="desktop-actions glass-panel">
             <button className="icon-btn" onClick={() => setShowSettingsPopup(true)}><Settings size={18} /></button>
+            <button className="icon-btn" onClick={onOpenSchedule}><Calendar size={18} /></button>
             <button className="icon-btn" onClick={onOpenMap}><Globe2 size={18} /></button>
             <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
             <button className="icon-btn" onClick={() => setShowChaiPopup(true)}><Coffee size={18} /></button>
