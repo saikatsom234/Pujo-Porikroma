@@ -378,6 +378,7 @@ const MapEvents = ({ onDrag }) => {
 const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
   const map = useMap();
   const [bearing, setBearing] = useState(0);
+  const [isCompassActive, setIsCompassActive] = useState(false);
 
   React.useEffect(() => {
     const updateBearing = () => {
@@ -386,27 +387,78 @@ const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
       }
     };
     
-    // Initial check
     updateBearing();
-    
     map.on('rotate', updateBearing);
-    map.on('move', updateBearing); // some plugins fire move during rotate
+    map.on('move', updateBearing);
     return () => {
       map.off('rotate', updateBearing);
       map.off('move', updateBearing);
     };
   }, [map]);
 
-  const handleCompassClick = (e) => {
+  React.useEffect(() => {
+    let handler;
+    if (isCompassActive) {
+      handler = (e) => {
+        let heading = null;
+        if (e.webkitCompassHeading) {
+          heading = e.webkitCompassHeading;
+        } else if (e.alpha !== null) {
+          heading = 360 - e.alpha;
+        }
+        if (heading !== null && typeof map.setBearing === 'function') {
+          try { map.setBearing(heading); } catch(err){}
+        }
+      };
+      
+      if ('ondeviceorientationabsolute' in window) {
+        window.addEventListener('deviceorientationabsolute', handler);
+      } else {
+        window.addEventListener('deviceorientation', handler);
+      }
+    }
+    return () => {
+      if (handler) {
+        window.removeEventListener('deviceorientationabsolute', handler);
+        window.removeEventListener('deviceorientation', handler);
+      }
+    };
+  }, [isCompassActive, map]);
+
+  React.useEffect(() => {
+    const onDrag = () => setIsCompassActive(false);
+    map.on('dragstart', onDrag);
+    return () => map.off('dragstart', onDrag);
+  }, [map]);
+
+  const handleCompassClick = async (e) => {
     e.stopPropagation();
-    if (typeof map.setBearing === 'function') {
-      try { map.setBearing(0); } catch(e){}
+    
+    if (isCompassActive) {
+      setIsCompassActive(false);
+      if (typeof map.setBearing === 'function') {
+        try { map.setBearing(0); } catch(err){}
+      }
+      return;
+    }
+
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permissionState = await DeviceOrientationEvent.requestPermission();
+        if (permissionState === 'granted') {
+          setIsCompassActive(true);
+        }
+      } catch (err) {
+        console.error("Device orientation permission error", err);
+      }
+    } else {
+      setIsCompassActive(true);
     }
   };
   
   return (
     <div className="map-action-buttons">
-      <button className="map-action-btn" onClick={handleCompassClick}>
+      <button className={`map-action-btn ${isCompassActive ? 'following-active' : ''}`} onClick={handleCompassClick}>
         <svg 
           width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
           style={{ transform: `rotate(${-bearing}deg)`, transition: 'transform 0.1s ease-out' }}
