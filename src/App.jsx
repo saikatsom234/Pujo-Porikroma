@@ -33,6 +33,9 @@ function App() {
           <MusicPlayer />
         </main>
 
+        {/* Blur seam to blend the two pages */}
+        <div className="page-seam-blur"></div>
+
         {/* Second Page */}
         <div className="second-page">
           <img src="/2nd%20page.jpg" alt="Puja Schedule" className="w-full h-auto block" />
