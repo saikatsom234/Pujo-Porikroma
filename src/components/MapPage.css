@@ -861,91 +861,89 @@
   to { opacity: 1; }
 }
 
-
 /* Dark Mode Overrides */
 .dark-mode .map-preview-card > div,
 .dark-mode .detailed-preview-card {
-  background-color: #1f2937;
-  color: #f9fafb;
+    background-color: #1f2937;
+    color: #f9fafb;
 }
 
 .dark-mode .detailed-preview-card .text-gray-500,
 .dark-mode .detailed-preview-card .text-gray-400 {
-  color: #9ca3af !important;
+    color: #9ca3af !important;
 }
 
 .dark-mode .bottom-nav-bar {
-  background-color: #1f2937;
-  border-top-color: #374151;
+    background-color: #1f2937;
+    border-top-color: #374151;
 }
 
 .dark-mode .nav-item {
-  color: #9ca3af;
+    color: #9ca3af;
 }
 
 .dark-mode .nav-item.active {
-  color: #ef4444;
+    color: #ef4444;
 }
 
 .dark-mode .map-filter-pill {
-  background-color: #1f2937;
-  color: #f9fafb;
-  border: 1px solid #374151;
+    background-color: #1f2937;
+    color: #f9fafb;
+    border: 1px solid #374151;
 }
 
 .dark-mode .custom-map-controls button {
-  background-color: #1f2937;
-  color: #f9fafb;
-  border: 1px solid #374151;
+    background-color: #1f2937;
+    color: #f9fafb;
+    border: 1px solid #374151;
 }
 
 .dark-mode .nearby-pill-btn {
-  background-color: #1f2937;
-  color: #f9fafb;
+    background-color: #1f2937;
+    color: #f9fafb;
 }
 .dark-mode .nearby-pill-btn .nearby-subtitle {
-  color: #9ca3af;
+    color: #9ca3af;
 }
 
 .dark-mode .map-nearby-sheet {
-  background-color: #1f2937;
+    background-color: #1f2937;
 }
 
 .dark-mode .map-nearby-sheet .text-gray-800 {
-  color: #f9fafb !important;
+    color: #f9fafb !important;
 }
 
 .dark-mode .map-nearby-sheet .text-gray-500 {
-  color: #9ca3af !important;
+    color: #9ca3af !important;
 }
 
 .dark-mode .map-nearby-sheet .border-gray-100 {
-  border-color: #374151 !important;
+    border-color: #374151 !important;
 }
 
 .dark-mode .map-nearby-sheet .bg-red-50 {
-  background-color: rgba(239, 68, 68, 0.15) !important;
+    background-color: rgba(239, 68, 68, 0.15) !important;
 }
 
 .dark-mode .preview-title,
 .dark-mode .status-card-value,
 .dark-mode .update-title,
 .dark-mode .metro-name {
-  color: #f9fafb;
+    color: #f9fafb;
 }
 
 .dark-mode .preview-subtitle,
 .dark-mode .status-card-header,
 .dark-mode .status-card-desc,
 .dark-mode .update-desc {
-  color: #9ca3af;
+    color: #9ca3af;
 }
 
 .dark-mode .preview-status-card {
-  background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .dark-mode .preview-update-card {
-  background-color: rgba(217, 119, 6, 0.1);
+    background-color: rgba(217, 119, 6, 0.1);
 }
-

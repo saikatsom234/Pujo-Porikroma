@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
-import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus, X, Mic, Sun, Moon } from 'lucide-react';
+import { Search, Map as MapIcon, Route, ArrowLeft, Compass, LocateFixed, ChevronUp, Plus, X, Mic } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-rotate';
 import './MapPage.css';
@@ -523,7 +523,6 @@ const MapPage = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState('map'); // 'map' or 'routes'
   const [isRouteMenuOpen, setIsRouteMenuOpen] = useState(false);
   const [showLocationPopup, setShowLocationPopup] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
@@ -737,32 +736,32 @@ const MapPage = ({ onClose }) => {
     switch(type) {
       case 'pandal': 
         return { 
-          color: isDarkMode ? '#f87171' : '#ef4444', 
-          bg: isDarkMode ? 'rgba(239,68,68,0.15)' : '#fee2e2', 
+          color: '#ef4444', 
+          bg: '#fee2e2', 
           icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/><path d="M11 2h2v4h-2z" /><path d="M13 2l4 2-4 2z" /></svg> 
         };
       case 'toilet': 
         return { 
-          color: isDarkMode ? '#2dd4bf' : '#0d9488', 
-          bg: isDarkMode ? 'rgba(13,148,136,0.15)' : '#ccfbf1', 
+          color: '#0d9488', 
+          bg: '#ccfbf1', 
           icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/><path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/></svg> 
         };
       case 'metro': 
         return { 
-          color: isDarkMode ? '#60a5fa' : '#2563eb', 
-          bg: isDarkMode ? 'rgba(37,99,235,0.15)' : '#dbeafe', 
+          color: '#2563eb', 
+          bg: '#dbeafe', 
           icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/></svg> 
         };
       case 'train': 
         return { 
-          color: isDarkMode ? '#c084fc' : '#9333ea', 
-          bg: isDarkMode ? 'rgba(147,51,234,0.15)' : '#f3e8ff', 
+          color: '#9333ea', 
+          bg: '#f3e8ff', 
           icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/></svg> 
         };
       default: 
         return { 
-          color: isDarkMode ? '#9ca3af' : '#6b7280', 
-          bg: isDarkMode ? 'rgba(107,114,128,0.15)' : '#f3f4f6', 
+          color: '#6b7280', 
+          bg: '#f3f4f6', 
           icon: <Search size={20} /> 
         };
     }
@@ -778,15 +777,15 @@ const MapPage = ({ onClose }) => {
       <div 
         key={loc.id} 
         className="px-5 py-3 flex items-center gap-4 cursor-pointer"
-        style={{ borderBottom: isDarkMode ? '1px solid #374151' : '1px solid #f9fafb' }}
+        style={{ borderBottom: '1px solid #f9fafb' }}
         onMouseDown={() => handleSearchSelect(loc)}
       >
         <div className="w-11 h-11 rounded-[12px] flex justify-center items-center shrink-0" style={{ backgroundColor: theme.bg, color: theme.color }}>
           {theme.icon}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[15px] font-bold truncate" style={{ color: isDarkMode ? '#f9fafb' : '#111827' }}>{loc.name}</div>
-          <div className="text-[12px] mt-0.5 truncate" style={{ color: isDarkMode ? '#9ca3af' : '#6b7280', fontWeight: '500' }}>
+          <div className="text-[15px] font-bold truncate" style={{ color: '#111827' }}>{loc.name}</div>
+          <div className="text-[12px] mt-0.5 truncate" style={{ color: '#6b7280', fontWeight: '500' }}>
             {categoryDisplay}
           </div>
         </div>
@@ -801,15 +800,15 @@ const MapPage = ({ onClose }) => {
   };
 
   return (
-    <div className={`map-page-container ${isDarkMode ? 'dark-mode' : ''}`}>
+    <div className="map-page-container">
       {/* Top Search & Filter Bar */}
       <div className="map-top-bar">
         <div className="map-search-container relative">
           <button onClick={onClose} className="map-back-btn">
-            <ArrowLeft size={20} color={isDarkMode ? '#ffffff' : '#333333'} />
+            <ArrowLeft size={20} />
           </button>
-          <div className="map-search-bar" style={{ display: 'flex', flex: 1, alignItems: 'center', background: isDarkMode ? '#1f2937' : 'white', borderRadius: '999px', padding: '12px 16px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-            <Search size={18} color={isDarkMode ? '#9ca3af' : '#9ca3af'} className="mr-2 shrink-0" />
+          <div className="map-search-bar" style={{ display: 'flex', flex: 1, alignItems: 'center', background: 'white', borderRadius: '999px', padding: '12px 16px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+            <Search size={18} className="text-gray-400 mr-2 shrink-0" />
             <input 
               type="text" 
               placeholder="Search pandals, metro, toilets" 
@@ -817,12 +816,11 @@ const MapPage = ({ onClose }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
-              style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: '15px', fontWeight: '500', color: isDarkMode ? '#ffffff' : '#333' }}
+              style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: '15px', fontWeight: '500', color: '#333' }}
             />
             <button 
               onClick={() => searchQuery ? setSearchQuery('') : null} 
-              className="ml-2 shrink-0"
-              style={{ color: isDarkMode ? '#9ca3af' : '#4b5563' }}
+              className="text-gray-600 ml-2 shrink-0"
             >
               {searchQuery ? <X size={20} /> : <Mic size={20} />}
             </button>
@@ -833,12 +831,11 @@ const MapPage = ({ onClose }) => {
             <div 
               className="absolute top-full left-0 right-0 mt-2 z-[10001] pointer-events-auto flex flex-col overflow-y-auto hide-scrollbar"
               style={{
-                backgroundColor: isDarkMode ? '#1f2937' : '#ffffff',
+                backgroundColor: '#ffffff',
                 opacity: 1,
                 boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
                 borderRadius: '24px',
                 padding: '16px 0',
-                border: isDarkMode ? '1px solid #374151' : 'none',
                 maxHeight: '65vh'
               }}
             >
@@ -849,7 +846,7 @@ const MapPage = ({ onClose }) => {
                   {nearbySearchList.length > 0 ? (
                     nearbySearchList.map(loc => renderSearchItem(loc))
                   ) : (
-                    <div className="px-5 py-6 text-sm text-center" style={{ color: isDarkMode ? '#9ca3af' : '#6b7280' }}>No nearby locations found.</div>
+                    <div className="px-5 py-6 text-sm text-center" style={{ color: '#6b7280' }}>No nearby locations found.</div>
                   )}
                 </>
               ) : (
@@ -860,11 +857,11 @@ const MapPage = ({ onClose }) => {
                     searchResults.map(loc => renderSearchItem(loc))
                   ) : (
                     <div className="px-5 py-6 flex flex-col items-center justify-center">
-                      <div className="text-sm font-bold mb-1" style={{ color: isDarkMode ? '#f9fafb' : '#111827' }}>No nearby matches.</div>
-                      <div className="text-xs" style={{ color: isDarkMode ? '#9ca3af' : '#6b7280' }}>Try searching for a different area.</div>
+                      <div className="text-sm font-bold mb-1" style={{ color: '#111827' }}>No nearby matches.</div>
+                      <div className="text-xs" style={{ color: '#6b7280' }}>Try searching for a different area.</div>
                       <button 
                         className="mt-4 px-5 py-2.5 rounded-full text-xs font-bold" 
-                        style={{ backgroundColor: isDarkMode ? '#374151' : '#f3f4f6', color: isDarkMode ? '#f9fafb' : '#374151' }}
+                        style={{ backgroundColor: '#f3f4f6', color: '#374151' }}
                         onMouseDown={() => setSearchQuery('')}
                       >
                         Clear Search
@@ -877,67 +874,46 @@ const MapPage = ({ onClose }) => {
           )}
         </div>
 
-        {/* Filter Pills & Dark Mode Toggle */}
-        <div className="flex items-center justify-between mt-3 px-4 pointer-events-auto">
-          <div className="map-filter-scroll hide-scrollbar flex-1 mr-3" style={{ margin: 0, padding: '4px 0 10px 0' }}>
-            <button 
-              onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
-              className={`map-filter-pill ${activeFilter === 'pandal' ? 'active-pandal' : ''}`}
-              style={isDarkMode && activeFilter !== 'pandal' ? { backgroundColor: '#1f2937', color: '#f9fafb', border: '1px solid #374151' } : {}}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/>
-                <path d="M11 2h2v4h-2z" />
-                <path d="M13 2l4 2-4 2z" />
-              </svg>
-              PANDALS
-            </button>
-            <button 
-              onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
-              className={`map-filter-pill ${activeFilter === 'toilet' ? 'active-toilet' : ''}`}
-              style={isDarkMode && activeFilter !== 'toilet' ? { backgroundColor: '#1f2937', color: '#f9fafb', border: '1px solid #374151' } : {}}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/>
-                <path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/>
-              </svg>
-              TOILETS
-            </button>
-            <button 
-              onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
-              className={`map-filter-pill ${activeFilter === 'metro' ? 'active-metro' : ''}`}
-              style={isDarkMode && activeFilter !== 'metro' ? { backgroundColor: '#1f2937', color: '#f9fafb', border: '1px solid #374151' } : {}}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
-              </svg>
-              METRO
-            </button>
-            <button 
-              onClick={() => setActiveFilter(activeFilter === 'train' ? 'all' : 'train')}
-              className={`map-filter-pill ${activeFilter === 'train' ? 'active-train' : ''}`}
-              style={isDarkMode && activeFilter !== 'train' ? { backgroundColor: '#1f2937', color: '#f9fafb', border: '1px solid #374151' } : {}}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
-              </svg>
-              TRAIN
-            </button>
-          </div>
-          
-          {/* Dark Mode Toggle */}
+        {/* Filter Pills */}
+        <div className="map-filter-scroll hide-scrollbar">
           <button 
-            className="w-10 h-10 rounded-full flex items-center justify-center shadow-sm shrink-0 transition-colors"
-            style={{ 
-              backgroundColor: isDarkMode ? '#1f2937' : '#ffffff', 
-              color: isDarkMode ? '#f1c40f' : '#6b7280',
-              border: isDarkMode ? '1px solid #374151' : '1px solid #e5e7eb',
-              marginTop: '-6px'
-            }}
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            aria-label="Toggle Dark Mode"
+            onClick={() => setActiveFilter(activeFilter === 'pandal' ? 'all' : 'pandal')}
+            className={`map-filter-pill ${activeFilter === 'pandal' ? 'active-pandal' : ''}`}
           >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L2 12h3v10h14V12h3L12 2zm0 2.8L18 10h-3v10H9V10H6l6-5.2z"/>
+              <path d="M11 2h2v4h-2z" />
+              <path d="M13 2l4 2-4 2z" />
+            </svg>
+            PANDALS
+          </button>
+          <button 
+            onClick={() => setActiveFilter(activeFilter === 'toilet' ? 'all' : 'toilet')}
+            className={`map-filter-pill ${activeFilter === 'toilet' ? 'active-toilet' : ''}`}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 3h8v3H6zm11 6c0-1.7-1.3-3-3-3H4c-1.1 0-2 .9-2 2v6h12v-5z"/>
+              <path d="M10 17H5v5h5v-5zm7-7c0 3.3-2.7 6-6 6H7v2h4c4.4 0 8-3.6 8-8z"/>
+            </svg>
+            TOILETS
+          </button>
+          <button 
+            onClick={() => setActiveFilter(activeFilter === 'metro' ? 'all' : 'metro')}
+            className={`map-filter-pill ${activeFilter === 'metro' ? 'active-metro' : ''}`}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
+            </svg>
+            METRO
+          </button>
+          <button 
+            onClick={() => setActiveFilter(activeFilter === 'train' ? 'all' : 'train')}
+            className={`map-filter-pill ${activeFilter === 'train' ? 'active-train' : ''}`}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.4 5.6 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.9 0 3.5-1.6 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.8 0-1.5-.7-1.5-1.5S6.7 14 7.5 14s1.5.7 1.5 1.5S8.3 17 7.5 17zm9 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm1.5-6H6V7h12v4z"/>
+            </svg>
+            TRAIN
           </button>
         </div>
       </div>
@@ -955,7 +931,7 @@ const MapPage = ({ onClose }) => {
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url={isDarkMode ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"}
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2zpy_1_5578b74846ef709b32860fd7"
             maxZoom={20}
           />
           
