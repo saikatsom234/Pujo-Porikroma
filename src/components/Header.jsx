@@ -8,7 +8,7 @@ import ChatPopup from './ChatPopup';
 import SettingsPopup from './SettingsPopup';
 import './Header.css';
 
-const Header = ({ onOpenMap, onOpenSchedule }) => {
+const Header = ({ onOpenMap }) => {
   const [onlineCount, setOnlineCount] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showCreatorCard, setShowCreatorCard] = useState(false);
@@ -94,7 +94,6 @@ const Header = ({ onOpenMap, onOpenSchedule }) => {
           
           <div className="desktop-actions glass-panel">
             <button className="icon-btn" onClick={() => setShowSettingsPopup(true)}><Settings size={18} /></button>
-            <button className="icon-btn" onClick={onOpenSchedule}><Calendar size={18} /></button>
             <button className="icon-btn" onClick={onOpenMap}><Globe2 size={18} /></button>
             <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
             <button className="icon-btn" onClick={() => setShowChaiPopup(true)}><Coffee size={18} /></button>
