@@ -365,26 +365,35 @@ const RecenterMap = ({ center, zoom }) => {
   return null;
 };
 
-const CustomMapControls = ({ handleLocateClick }) => {
+const MapEvents = ({ onDrag }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    map.on('dragstart', onDrag);
+    return () => map.off('dragstart', onDrag);
+  }, [map, onDrag]);
+  return null;
+};
+
+const CustomMapControls = ({ handleLocateClick, isFollowing }) => {
   const map = useMap();
   
   return (
     <div className="map-action-buttons">
-      <button className="map-action-btn" onClick={handleLocateClick}>
+      <button className={`map-action-btn ${isFollowing ? 'following-active' : ''}`} onClick={handleLocateClick}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="9" stroke="#4285F4" strokeWidth="2"/>
+          <circle cx="12" cy="12" r="9" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2"/>
           <path d="M12 5 L14.5 12 L9.5 12 Z" fill="#EA4335"/>
-          <path d="M12 19 L14.5 12 L9.5 12 Z" fill="#4285F4"/>
+          <path d="M12 19 L14.5 12 L9.5 12 Z" fill={isFollowing ? "#1a73e8" : "#4285F4"}/>
         </svg>
       </button>
-      <button className="map-action-btn" onClick={handleLocateClick}>
+      <button className={`map-action-btn ${isFollowing ? 'following-active' : ''}`} onClick={handleLocateClick}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="5" stroke="#4285F4" strokeWidth="2"/>
-          <circle cx="12" cy="12" r="2" fill="#4285F4"/>
-          <path d="M12 2 v3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-          <path d="M12 22 v-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-          <path d="M2 12 h3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-          <path d="M22 12 h-3" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="12" cy="12" r="5" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2"/>
+          <circle cx="12" cy="12" r="2" fill={isFollowing ? "#1a73e8" : "#4285F4"}/>
+          <path d="M12 2 v3" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2" strokeLinecap="round"/>
+          <path d="M12 22 v-3" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2" strokeLinecap="round"/>
+          <path d="M2 12 h3" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2" strokeLinecap="round"/>
+          <path d="M22 12 h-3" stroke={isFollowing ? "#1a73e8" : "#4285F4"} strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </button>
       <button className="map-action-btn" onClick={(e) => { e.stopPropagation(); map.zoomIn(); }}>
@@ -420,7 +429,14 @@ const MapPage = ({ onClose }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [isTracking, setIsTracking] = useState(false);
   const [poorAccuracy, setPoorAccuracy] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const isFollowingRef = React.useRef(false);
   const watchIdRef = React.useRef(null);
+
+  const setFollowingStatus = (status) => {
+    setIsFollowing(status);
+    isFollowingRef.current = status;
+  };
 
   const startTracking = () => {
     setShowLocationPopup(false);
@@ -431,8 +447,9 @@ const MapPage = ({ onClose }) => {
       
       // Center the map immediately on first lock without polluting the live watch loop
       navigator.geolocation.getCurrentPosition((position) => {
+        setFollowingStatus(true);
         setMapCenter([position.coords.latitude, position.coords.longitude]);
-        setMapZoom(16);
+        setMapZoom(17);
       }, () => {}, { enableHighAccuracy: true, timeout: 5000 });
       
       const id = navigator.geolocation.watchPosition(
@@ -446,6 +463,9 @@ const MapPage = ({ onClose }) => {
           }
 
           setUserLocation([latitude, longitude]);
+          if (isFollowingRef.current) {
+            setMapCenter([latitude, longitude]);
+          }
           setIsTracking(true);
         },
         (error) => {
@@ -470,8 +490,9 @@ const MapPage = ({ onClose }) => {
     if (e) e.stopPropagation();
     
     if (isTracking && userLocation) {
+      setFollowingStatus(true);
       setMapCenter([...userLocation]);
-      setMapZoom(16);
+      setMapZoom(17);
       return;
     }
 
@@ -608,8 +629,9 @@ const MapPage = ({ onClose }) => {
           />
           
           <RecenterMap center={mapCenter} zoom={mapZoom} />
+          <MapEvents onDrag={() => setFollowingStatus(false)} />
 
-          <CustomMapControls handleLocateClick={handleLocateClick} />
+          <CustomMapControls handleLocateClick={handleLocateClick} isFollowing={isFollowing} />
 
           {userLocation && (
             <Marker 
