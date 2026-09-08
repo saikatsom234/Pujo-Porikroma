@@ -950,3 +950,185 @@
 .dark-mode .preview-update-card {
     background-color: rgba(217, 119, 6, 0.1);
 }
+
+/* --- Top Bar & Search Comprehensive Overrides --- */
+.dark-mode .map-search-bar {
+    background: #1e293b !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.dark-mode .map-search-bar input {
+    color: #f9fafb !important;
+}
+.dark-mode .map-search-bar input::placeholder {
+    color: #94a3b8 !important;
+}
+.dark-mode .map-back-btn {
+    background-color: #1e293b !important;
+    color: #f9fafb !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.dark-mode .map-search-bar svg {
+    color: #94a3b8 !important;
+}
+
+/* --- Search Dropdown --- */
+.dark-mode .map-search-container .absolute.top-full {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6) !important;
+}
+/* Divider lines inside dropdown */
+.dark-mode .map-search-container .absolute.top-full > div[style*="borderBottom"],
+.dark-mode .map-search-container .absolute.top-full > div > div[style*="borderBottom"] {
+    border-bottom: 1px solid #334155 !important;
+}
+.dark-mode .map-search-container .absolute.top-full > div > div[style*="borderBottom"]:hover {
+    background-color: #334155 !important;
+}
+/* Primary text in dropdown items */
+.dark-mode .map-search-container .absolute.top-full .text-\[15px\],
+.dark-mode .map-search-container .absolute.top-full .text-sm.font-bold {
+    color: #f9fafb !important;
+}
+/* Secondary text in dropdown items */
+.dark-mode .map-search-container .absolute.top-full .text-\[12px\],
+.dark-mode .map-search-container .absolute.top-full .text-xs,
+.dark-mode .map-search-container .absolute.top-full .text-sm.text-center {
+    color: #94a3b8 !important;
+}
+/* Clear search button inside matches */
+.dark-mode .map-search-container .absolute.top-full button[style*="backgroundColor: #f3f4f6"] {
+    background-color: #334155 !important;
+    color: #f9fafb !important;
+}
+
+/* --- Filter Chips active states (un-active covered by existing) --- */
+.dark-mode .map-filter-pill.active-pandal {
+    background-color: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: white !important;
+}
+.dark-mode .map-filter-pill.active-toilet {
+    background-color: #0d9488 !important;
+    border-color: #0d9488 !important;
+    color: white !important;
+}
+.dark-mode .map-filter-pill.active-metro {
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
+    color: white !important;
+}
+.dark-mode .map-filter-pill.active-train {
+    background-color: #9333ea !important;
+    border-color: #9333ea !important;
+    color: white !important;
+}
+
+/* --- Map Action Buttons (Zoom, Locate, Compass) --- */
+.dark-mode .map-action-btn {
+    background-color: #1e293b !important;
+    color: #f9fafb !important;
+    border: 1px solid #334155 !important;
+}
+.dark-mode .map-action-btn span {
+    color: #f9fafb !important;
+}
+.dark-mode .map-action-btn svg {
+    stroke: #f9fafb !important;
+}
+.dark-mode .map-action-btn.following-active {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+.dark-mode .map-action-btn.following-active svg {
+    stroke: white !important;
+}
+
+/* --- Bottom Nav Bar --- */
+.dark-mode .map-bottom-nav > div {
+    background-color: #0f172a !important; /* Really dark to match route screen */
+    border-top: 1px solid #334155 !important;
+}
+/* In dark mode, inactive icons should be a bit lighter gray than bright mode */
+.dark-mode .map-bottom-nav button[style*="color: #9ca3af"],
+.dark-mode .map-bottom-nav button[style*="color: rgb(156, 163, 175)"] {
+    color: #94a3b8 !important;
+}
+.dark-mode .map-bottom-nav button[style*="color: #dc2626"],
+.dark-mode .map-bottom-nav button[style*="color: rgb(220, 38, 38)"] {
+    color: #ef4444 !important;
+}
+
+/* --- Route Section --- */
+.dark-mode .routes-view-container {
+    background-color: #0f172a !important; 
+}
+.dark-mode .routes-header-title {
+    color: #f9fafb !important;
+}
+.dark-mode .routes-header-subtitle {
+    color: #94a3b8 !important;
+}
+.dark-mode .routes-header-menu {
+    color: #f9fafb !important;
+}
+.dark-mode .routes-dropdown-menu {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+.dark-mode .routes-dropdown-item {
+    color: #f9fafb !important;
+}
+.dark-mode .routes-dropdown-item:hover {
+    background-color: #334155 !important;
+}
+.dark-mode .routes-empty-card {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+.dark-mode .routes-empty-title {
+    color: #f9fafb !important;
+}
+.dark-mode .routes-empty-desc {
+    color: #94a3b8 !important;
+}
+
+/* --- Bottom Sheets & Preview Cards --- */
+.dark-mode .map-preview-card > div,
+.dark-mode .detailed-preview-card {
+    background-color: #1e293b !important;
+    color: #f9fafb !important;
+    border: 1px solid #334155 !important;
+}
+.dark-mode .detailed-preview-card .preview-subtitle {
+    color: #94a3b8 !important;
+}
+.dark-mode .map-nearby-sheet {
+    background-color: #1e293b !important;
+    border-top: 1px solid #334155 !important;
+}
+.dark-mode .map-nearby-sheet h3.text-gray-800 {
+    color: #f9fafb !important;
+}
+.dark-mode .map-nearby-sheet p.text-gray-500 {
+    color: #94a3b8 !important;
+}
+.dark-mode .map-nearby-sheet .hover\:bg-gray-50:hover {
+    background-color: #334155 !important;
+}
+.dark-mode .map-nearby-sheet .border-gray-100 {
+    border-color: #334155 !important;
+}
+.dark-mode .map-nearby-sheet .text-gray-600 {
+    color: #f9fafb !important;
+}
+.dark-mode .map-nearby-sheet button.border-gray-200 {
+    border-color: #475569 !important;
+}
+.dark-mode .map-nearby-sheet button.border-gray-200:hover {
+    background-color: #334155 !important;
+}
+.dark-mode .map-nearby-sheet h4.text-gray-800 {
+    color: #f9fafb !important;
+}
