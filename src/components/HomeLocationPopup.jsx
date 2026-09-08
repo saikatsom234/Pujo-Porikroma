@@ -21,7 +21,8 @@ const pandalLocations = [
   { name: 'Ahiritola Itwaribazar', lat: 22.5979, lng: 88.3639 },
   { name: 'College Square', lat: 22.5736, lng: 88.3653 },
   { name: 'Bagbazar Sarbojanin', lat: 22.6025, lng: 88.3712 },
-  { name: 'Ekdalia Evergreen', lat: 22.5181, lng: 88.3695 }
+  { name: 'Ekdalia Evergreen', lat: 22.5181, lng: 88.3695 },
+  { name: 'Dumdum', lat: 22.6224, lng: 88.4115 }
 ];
 
 const HomeLocationPopup = ({ onClose, onSetHome }) => {
@@ -39,8 +40,8 @@ const HomeLocationPopup = ({ onClose, onSetHome }) => {
         attributionControl: false
       }).setView([22.5726, 88.3639], 13); // Centered on Kolkata
 
-      // Match the app's dark theme using dark_all CartoDB tiles
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      // Free, open-source tile layer with zero API key restrictions or watermarks
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
       }).addTo(map);
 
