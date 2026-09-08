@@ -29,10 +29,13 @@ function App() {
   const openMap = () => {
     setIsMapLoading(true);
     setIsMapFadingOut(false);
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(e => console.error("Video play error:", e));
-    }
+    // Ensure the video element has mounted before trying to play it imperatively
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(e => console.error("Video play error:", e));
+      }
+    }, 50);
   };
 
   const handleLoaderEnded = () => {
@@ -105,6 +108,8 @@ function App() {
             ref={videoRef}
             src="/map_loader.mp4" 
             preload="auto"
+            autoPlay
+            muted
             playsInline
             onEnded={handleLoaderEnded}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
