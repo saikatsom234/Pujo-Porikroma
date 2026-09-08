@@ -72,12 +72,12 @@ function App() {
         {/* Second Page */}
         <div className="second-page">
           {/* Mobile View Image */}
-          <img src="/2nd page.jpg" alt="Puja Schedule Mobile" className="w-full h-auto block md:hidden" />
+          <img src="/2nd page.jpg" alt="Puja Schedule Mobile" className="w-full h-auto block lg:hidden" />
           
           {/* PC Dedicated View Image */}
-          <div className="hidden md:flex w-full min-h-screen items-center justify-center p-8 bg-[#550719]">
+          <div className="hidden lg:flex w-full min-h-screen items-center justify-center p-8 bg-[#550719]">
             <img 
-              src="/2nd page of puja porikroma 1080p.jpg" 
+              src="/puja-schedule.jpg" 
               alt="Puja Schedule Desktop" 
               className="max-w-full object-contain shadow-2xl" 
               style={{ width: '100%', height: 'auto', maxHeight: '100vh' }}
