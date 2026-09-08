@@ -1064,6 +1064,9 @@
 .dark-mode .routes-view-container {
     background-color: #0f172a !important; 
 }
+.dark-mode .routes-header {
+    background-color: #0f172a !important;
+}
 .dark-mode .routes-header-title {
     color: #f9fafb !important;
 }
