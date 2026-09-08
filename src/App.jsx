@@ -106,7 +106,7 @@ function App() {
       >
         <video 
           ref={videoRef}
-          src="/map loader screen.mp4" 
+          src="/map_loader.mp4" 
           preload="auto"
           playsInline
           onEnded={handleLoaderEnded}
