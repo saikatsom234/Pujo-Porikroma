@@ -9,7 +9,6 @@ import './App.css';
 function App() {
   const [showMapPage, setShowMapPage] = useState(false);
   const [isMapLoading, setIsMapLoading] = useState(false);
-  const [desktopView, setDesktopView] = useState('landing'); // 'landing' or 'schedule'
   const videoRef = React.useRef(null);
 
   useEffect(() => {
@@ -52,26 +51,10 @@ function App() {
         <p className="landscape-text">Horizontal view is under construction</p>
       </div>
 
-      {/* Desktop View Switcher */}
-      <div className="hidden lg:flex fixed top-6 right-6 z-[9999] bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 shadow-2xl">
-        <button 
-          className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 ${desktopView === 'landing' ? 'bg-[#ff4b4b] text-white shadow-lg' : 'text-white/70 hover:text-white'}`}
-          onClick={() => setDesktopView('landing')}
-        >
-          Home
-        </button>
-        <button 
-          className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 ${desktopView === 'schedule' ? 'bg-[#ff4b4b] text-white shadow-lg' : 'text-white/70 hover:text-white'}`}
-          onClick={() => setDesktopView('schedule')}
-        >
-          Schedule
-        </button>
-      </div>
-
       {/* Scrollable Content Wrapper */}
       <div className="scrollable-wrapper">
         {/* Main Content (First Page) */}
-        <main className={`main-content ${desktopView === 'schedule' ? 'lg:hidden' : ''}`}>
+        <main className="main-content">
           {/* Background Image Layer */}
           <div className="background-image"></div>
           
@@ -82,25 +65,6 @@ function App() {
           <HeroSection />
           <MusicPlayer />
         </main>
-
-        {/* Blur seam to blend the two pages */}
-        <div className={`page-seam-blur lg:hidden`}></div>
-
-        {/* Second Page */}
-        <div className={`second-page ${desktopView === 'landing' ? 'lg:hidden' : ''}`}>
-          {/* Mobile View Image */}
-          <img src="/2nd page.jpg" alt="Puja Schedule Mobile" className="w-full h-auto block lg:hidden" />
-          
-          {/* PC Dedicated View Image */}
-          <div className="hidden lg:flex w-full min-h-screen items-center justify-center p-8 bg-[#550719]">
-            <img 
-              src="/puja-schedule.jpg" 
-              alt="Puja Schedule Desktop" 
-              className="max-w-full object-contain shadow-2xl" 
-              style={{ width: '100%', height: 'auto', maxHeight: '100vh' }}
-            />
-          </div>
-        </div>
       </div>
 
       {/* Map Loader Overlay */}
