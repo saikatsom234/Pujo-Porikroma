@@ -18,16 +18,28 @@ const Header = ({ onOpenMap }) => {
 
   useEffect(() => {
     const handlePopState = (e) => {
+      // Sync Settings
       if (e.state?.view === 'settings' || e.state?.view === 'settings-popup') {
         setShowSettingsPopup(true);
       } else {
         setShowSettingsPopup(false);
       }
+
+      // Sync Chat
+      if (e.state?.view === 'chat-main' || e.state?.view === 'chat-popup') {
+        setShowChatPopup(true);
+      } else {
+        setShowChatPopup(false);
+      }
     };
     window.addEventListener('popstate', handlePopState);
-    // On mount, check if we are somehow already in a settings state (e.g. refresh)
+    
+    // On mount check
     if (window.history.state?.view === 'settings' || window.history.state?.view === 'settings-popup') {
       setShowSettingsPopup(true);
+    }
+    if (window.history.state?.view === 'chat-main' || window.history.state?.view === 'chat-popup') {
+      setShowChatPopup(true);
     }
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
@@ -42,6 +54,19 @@ const Header = ({ onOpenMap }) => {
       window.history.back();
     } else {
       setShowSettingsPopup(false);
+    }
+  };
+
+  const openChat = () => {
+    window.history.pushState({ view: 'chat-main' }, '');
+    setShowChatPopup(true);
+  };
+
+  const closeChat = () => {
+    if (window.history.state?.view === 'chat-main' || window.history.state?.view === 'chat-popup') {
+      window.history.back();
+    } else {
+      setShowChatPopup(false);
     }
   };
 
@@ -106,7 +131,7 @@ const Header = ({ onOpenMap }) => {
     <>
       <header className="header">
         <div className="header-left">
-          <div className="online-badge glass-panel" onClick={() => setShowChatPopup(true)} style={{ cursor: 'pointer' }}>
+          <div className="online-badge glass-panel" onClick={openChat} style={{ cursor: 'pointer' }}>
             <span className="dot"></span>
             <span className="bengali-text">{toBengaliNumber(onlineCount)} সক্রিয়</span>
           </div>
@@ -134,7 +159,7 @@ const Header = ({ onOpenMap }) => {
       {showSettingsPopup && <SettingsPopup onClose={closeSettings} />}
       {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
       {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
-      {showChatPopup && <ChatPopup onClose={() => setShowChatPopup(false)} socket={socket} />}
+      {showChatPopup && <ChatPopup onClose={closeChat} socket={socket} />}
     </>
   );
 };

@@ -23,6 +23,36 @@ const ChatPopup = ({ onClose, socket }) => {
 
   const messagesEndRef = useRef(null);
 
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (e.state?.view !== 'chat-popup') {
+        setShowCreateGroup(false);
+        setSelectedGroup(null);
+        setActiveGroupChatId(null);
+        setSelectedUserForInvite(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    
+    if (window.history.state?.view !== 'chat-popup') {
+        setShowCreateGroup(false);
+        setSelectedGroup(null);
+        setActiveGroupChatId(null);
+        setSelectedUserForInvite(null);
+    }
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const pushChatPopupState = () => {
+    window.history.pushState({ view: 'chat-popup' }, '');
+  };
+
+  const popChatPopupState = () => {
+    if (window.history.state?.view === 'chat-popup') {
+      window.history.back();
+    }
+  };
+
   // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -34,14 +64,16 @@ const ChatPopup = ({ onClose, socket }) => {
       setShowCreateGroup(false);
       setIsClosingCreateGroup(false);
       setGroupNameInput('');
+      popChatPopupState();
     }, 300);
   };
 
-  const handleCloseGroupOptions = () => {
+  const handleCloseGroupOptions = (skipPopState = false) => {
     setIsClosingGroupOptions(true);
     setTimeout(() => {
       setSelectedGroup(null);
       setIsClosingGroupOptions(false);
+      if (!skipPopState) popChatPopupState();
     }, 300);
   };
 
@@ -216,7 +248,10 @@ const ChatPopup = ({ onClose, socket }) => {
                 <button 
                   className="chat-close-btn" 
                   style={{ left: 0, right: 'auto' }} 
-                  onClick={() => setActiveGroupChatId(null)}
+                  onClick={() => {
+                    setActiveGroupChatId(null);
+                    popChatPopupState();
+                  }}
                 >
                   <ArrowLeft size={24} />
                 </button>
@@ -354,7 +389,7 @@ const ChatPopup = ({ onClose, socket }) => {
                         onClick={() => {
                           const currentGroup = groups.find(g => g.id === activeGroupChatId);
                           if (currentGroup && currentGroup.creatorId === myUserId) {
-                             setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar, mode: 'kick', groupId: currentGroup.id });
+                             pushChatPopupState(); setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar, mode: 'kick', groupId: currentGroup.id });
                           }
                         }}
                       />
@@ -393,7 +428,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       alt="User Logo" 
                       className="chat-avatar" 
                       style={{ cursor: 'pointer' }}
-                        onClick={() => setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar })}
+                        onClick={() => { pushChatPopupState(); setSelectedUserForInvite({ userId: msg.userId, username: msg.username, avatar: msg.avatar }); }}
                     />
                   )}
                   <div className="chat-bubble-wrapper">
@@ -411,7 +446,10 @@ const ChatPopup = ({ onClose, socket }) => {
               <>
                 <div className="groups-list">
                   {groups.filter(g => g.members && g.members.includes(myUserId)).map((group) => (
-                    <div key={group.id} className="group-list-item" onClick={() => setActiveGroupChatId(group.id)}>
+                    <div key={group.id} className="group-list-item" onClick={() => {
+                      pushChatPopupState();
+                      setActiveGroupChatId(group.id);
+                    }}>
                       <img src="/group-icon.jpg" alt="group icon" className="group-list-item-icon" />
                       <div className="group-list-item-details">
                         <div className="group-list-item-name">{group.name}</div>
@@ -422,7 +460,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       </div>
                       <div className="group-list-item-more" onClick={(e) => {
                         e.stopPropagation();
-                        setSelectedGroup(group);
+                        pushChatPopupState(); setSelectedGroup(group);
                       }}>
                         <MoreVertical size={16} />
                       </div>
@@ -438,7 +476,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       alert('You can only create up to 3 groups at a time.');
                       return;
                     }
-                    setShowCreateGroup(true);
+                    pushChatPopupState(); setShowCreateGroup(true);
                   }}
                 >
                   <Plus size={24} />
@@ -499,7 +537,7 @@ const ChatPopup = ({ onClose, socket }) => {
                       
                       <button className="group-options-btn" onClick={() => {
                         setActiveGroupChatId(selectedGroup.id);
-                        handleCloseGroupOptions();
+                        handleCloseGroupOptions(true);
                       }}>
                         Open group
                       </button>
@@ -601,7 +639,7 @@ const ChatPopup = ({ onClose, socket }) => {
         {selectedUserForInvite && (
           <div 
             className="user-invite-modal-overlay fade-in" 
-            onClick={() => setSelectedUserForInvite(null)}
+            onClick={() => { setSelectedUserForInvite(null); popChatPopupState(); }}
           >
             <div 
               className="user-invite-modal animation-pop-in" 
@@ -638,14 +676,13 @@ const ChatPopup = ({ onClose, socket }) => {
                           alert('Invite sent successfully!');
                         }
                       }
-                      setSelectedUserForInvite(null);
-                    }}
+                      setSelectedUserForInvite(null); popChatPopupState(); }}
                   >
                     {selectedUserForInvite.mode === 'kick' ? <Check size={18} /> : <Plus size={18} />}
                   </button>
                   <button 
                     className="user-invite-btn-close"
-                    onClick={() => setSelectedUserForInvite(null)}
+                    onClick={() => { setSelectedUserForInvite(null); popChatPopupState(); }}
                   >
                     <X size={18} />
                   </button>
@@ -660,3 +697,8 @@ const ChatPopup = ({ onClose, socket }) => {
 };
 
 export default ChatPopup;
+
+
+
+
+
