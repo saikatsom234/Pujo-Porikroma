@@ -65,6 +65,25 @@ function App() {
           <HeroSection />
           <MusicPlayer />
         </main>
+
+        {/* Blur seam to blend the two pages */}
+        <div className="page-seam-blur lg:hidden"></div>
+
+        {/* Second Page */}
+        <div className="second-page">
+          {/* Mobile View Image */}
+          <img src="/2nd page.jpg" alt="Puja Schedule Mobile" className="w-full h-auto block lg:hidden" />
+          
+          {/* PC Dedicated View Image */}
+          <div className="hidden lg:flex w-full min-h-screen items-center justify-center p-8 bg-[#550719]">
+            <img 
+              src="/puja-schedule.jpg" 
+              alt="Puja Schedule Desktop" 
+              className="max-w-full object-contain shadow-2xl" 
+              style={{ width: '100%', height: 'auto', maxHeight: '100vh' }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Map Loader Overlay */}
