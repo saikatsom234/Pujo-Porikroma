@@ -120,3 +120,29 @@
     letter-spacing: 1px;
   }
 }
+
+/* Map Loader Overlay Transition */
+.map-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  filter: blur(0px);
+  transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+}
+
+.map-loader-overlay.fade-out {
+  opacity: 0;
+  filter: blur(20px);
+  pointer-events: none;
+}
+

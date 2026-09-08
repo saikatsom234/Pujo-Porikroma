@@ -9,6 +9,7 @@ import './App.css';
 function App() {
   const [showMapPage, setShowMapPage] = useState(false);
   const [isMapLoading, setIsMapLoading] = useState(false);
+  const [isMapFadingOut, setIsMapFadingOut] = useState(false);
   const videoRef = React.useRef(null);
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function App() {
       if (!e.state || e.state.id !== 'map') {
         setShowMapPage(false);
         setIsMapLoading(false);
+        setIsMapFadingOut(false);
       } else if (e.state && e.state.id === 'map') {
         setShowMapPage(true);
       }
@@ -26,6 +28,7 @@ function App() {
 
   const openMap = () => {
     setIsMapLoading(true);
+    setIsMapFadingOut(false);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(e => console.error("Video play error:", e));
@@ -33,9 +36,18 @@ function App() {
   };
 
   const handleLoaderEnded = () => {
-    setIsMapLoading(false);
+    // Show map right away under the fading video
     setShowMapPage(true);
     window.history.pushState({ modalOpen: true, id: 'map' }, '');
+    
+    // Start fade out animation
+    setIsMapFadingOut(true);
+    
+    // Complete the process after 1 second (matches CSS transition)
+    setTimeout(() => {
+      setIsMapLoading(false);
+      setIsMapFadingOut(false);
+    }, 1000);
   };
 
   const closeModal = () => {
@@ -87,32 +99,18 @@ function App() {
       </div>
 
       {/* Map Loader Overlay */}
-      <div 
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100vw',
-          height: '100vh',
-          zIndex: 999999,
-          backgroundColor: '#000000',
-          visibility: isMapLoading ? 'visible' : 'hidden',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <video 
-          ref={videoRef}
-          src="/map_loader.mp4" 
-          preload="auto"
-          playsInline
-          onEnded={handleLoaderEnded}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      </div>
+      {isMapLoading && (
+        <div className={`map-loader-overlay ${isMapFadingOut ? 'fade-out' : ''}`}>
+          <video 
+            ref={videoRef}
+            src="/map_loader.mp4" 
+            preload="auto"
+            playsInline
+            onEnded={handleLoaderEnded}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+      )}
 
       {/* Map Page */}
       {showMapPage && <MapPage onClose={closeModal} />}
