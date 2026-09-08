@@ -40,9 +40,11 @@ const HomeLocationPopup = ({ onClose, onSetHome }) => {
         attributionControl: false
       }).setView([22.5726, 88.3639], 13); // Centered on Kolkata
 
-      // Free, open-source tile layer with zero API key restrictions or watermarks
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      // Match the app's dark theme using dark_all CartoDB tiles, authenticated to remove watermark
+      const apiKey = "cb1_2zpy_1_5578b74846ef709b32860fd7";
+      L.tileLayer(`https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${apiKey}`, {
         maxZoom: 19,
+        subdomains: 'abcd',
       }).addTo(map);
 
       mapInstanceRef.current = map;
