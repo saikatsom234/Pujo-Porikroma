@@ -67,7 +67,7 @@ function App() {
         </main>
 
         {/* Blur seam to blend the two pages */}
-        <div className="page-seam-blur"></div>
+        <div className="page-seam-blur lg:hidden"></div>
 
         {/* Second Page */}
         <div className="second-page">
