@@ -17,6 +17,35 @@ const Header = ({ onOpenMap }) => {
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
 
   useEffect(() => {
+    const handlePopState = (e) => {
+      if (e.state?.view === 'settings' || e.state?.view === 'settings-popup') {
+        setShowSettingsPopup(true);
+      } else {
+        setShowSettingsPopup(false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    // On mount, check if we are somehow already in a settings state (e.g. refresh)
+    if (window.history.state?.view === 'settings' || window.history.state?.view === 'settings-popup') {
+      setShowSettingsPopup(true);
+    }
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const openSettings = () => {
+    window.history.pushState({ id: 'map', view: 'settings' }, '');
+    setShowSettingsPopup(true);
+  };
+
+  const closeSettings = () => {
+    if (window.history.state?.view === 'settings' || window.history.state?.view === 'settings-popup') {
+      window.history.back();
+    } else {
+      setShowSettingsPopup(false);
+    }
+  };
+
+  useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -93,7 +122,7 @@ const Header = ({ onOpenMap }) => {
           </div>
           
           <div className="desktop-actions glass-panel">
-            <button className="icon-btn" onClick={() => setShowSettingsPopup(true)}><Settings size={18} /></button>
+            <button className="icon-btn" onClick={openSettings}><Settings size={18} /></button>
             <button className="icon-btn" onClick={onOpenMap}><Globe2 size={18} /></button>
             <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
             <button className="icon-btn" onClick={() => setShowChaiPopup(true)}><Coffee size={18} /></button>
@@ -102,7 +131,7 @@ const Header = ({ onOpenMap }) => {
       </header>
 
       {/* Render popups over everything when state is true */}
-      {showSettingsPopup && <SettingsPopup onClose={() => setShowSettingsPopup(false)} />}
+      {showSettingsPopup && <SettingsPopup onClose={closeSettings} />}
       {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
       {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
       {showChatPopup && <ChatPopup onClose={() => setShowChatPopup(false)} socket={socket} />}

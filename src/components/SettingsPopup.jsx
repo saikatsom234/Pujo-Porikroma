@@ -21,6 +21,43 @@ const SettingsPopup = ({ onClose, onLogout }) => {
   const [showInvite, setShowInvite] = useState(false);
   const userGender = 'male'; // Can be changed to 'female' to test the female avatars
 
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (e.state?.view !== 'settings-popup') {
+        setShowEditProfile(false);
+        setShowHomeLocation(false);
+        setShowRequestPandal(false);
+        setShowReport(false);
+        setShowHelp(false);
+        setShowInvite(false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    
+    // Check if we mounted in a state where a popup shouldn't be open
+    if (window.history.state?.view !== 'settings-popup') {
+        setShowEditProfile(false);
+        setShowHomeLocation(false);
+        setShowRequestPandal(false);
+        setShowReport(false);
+        setShowHelp(false);
+        setShowInvite(false);
+    }
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const openPopup = (setter) => {
+    window.history.pushState({ id: 'map', view: 'settings-popup' }, '');
+    setter(true);
+  };
+
+  const closePopup = (setter) => {
+    setter(false);
+    if (window.history.state?.view === 'settings-popup') {
+      window.history.back();
+    }
+  };
+
   const [avatarSrc] = useState(() => {
     const maleAvatars = [
       '/avatar-male-1.png',
@@ -61,7 +98,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
               <span>Pandal Explorer</span>
             </div>
           </div>
-          <button className="settings-edit-btn" onClick={() => setShowEditProfile(true)}>
+          <button className="settings-edit-btn" onClick={() => openPopup(setShowEditProfile)}>
             <Pencil size={18} />
           </button>
         </div>
@@ -97,7 +134,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
           <div className="settings-section">
             <h3 className="settings-section-title">Preferences</h3>
             <div className="settings-list-group">
-              <div className="settings-list-item" onClick={() => setShowHomeLocation(true)}>
+              <div className="settings-list-item" onClick={() => openPopup(setShowHomeLocation)}>
                 <div className="settings-list-icon">
                   <MapPin size={20} />
                 </div>
@@ -134,7 +171,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
           <div className="settings-section">
             <h3 className="settings-section-title">Support</h3>
             <div className="settings-list-group">
-              <div className="settings-list-item" onClick={() => setShowRequestPandal(true)}>
+              <div className="settings-list-item" onClick={() => openPopup(setShowRequestPandal)}>
                 <div className="settings-list-icon">
                   <MapPin size={20} />
                 </div>
@@ -147,7 +184,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
                 </div>
               </div>
 
-              <div className="settings-list-item" onClick={() => setShowReport(true)}>
+              <div className="settings-list-item" onClick={() => openPopup(setShowReport)}>
                 <div className="settings-list-icon">
                   <Flag size={20} />
                 </div>
@@ -160,7 +197,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
                 </div>
               </div>
 
-              <div className="settings-list-item" onClick={() => setShowHelp(true)}>
+              <div className="settings-list-item" onClick={() => openPopup(setShowHelp)}>
                 <div className="settings-list-icon">
                   <HelpCircle size={20} />
                 </div>
@@ -173,7 +210,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
                 </div>
               </div>
 
-              <div className="settings-list-item" onClick={() => setShowInvite(true)}>
+              <div className="settings-list-item" onClick={() => openPopup(setShowInvite)}>
                 <div className="settings-list-icon">
                   <Share2 size={20} />
                 </div>
@@ -202,38 +239,38 @@ const SettingsPopup = ({ onClose, onLogout }) => {
       </div>
       {showEditProfile && (
         <EditProfilePopup 
-          onClose={() => setShowEditProfile(false)} 
+          onClose={() => closePopup(setShowEditProfile)} 
           avatarSrc={avatarSrc}
         />
       )}
 
       {showHomeLocation && (
         <HomeLocationPopup 
-          onClose={() => setShowHomeLocation(false)} 
+          onClose={() => closePopup(setShowHomeLocation)} 
         />
       )}
 
       {showRequestPandal && (
         <RequestPandalPopup 
-          onClose={() => setShowRequestPandal(false)} 
+          onClose={() => closePopup(setShowRequestPandal)} 
         />
       )}
 
       {showReport && (
         <ReportPopup 
-          onClose={() => setShowReport(false)} 
+          onClose={() => closePopup(setShowReport)} 
         />
       )}
 
       {showHelp && (
         <HelpSupportPopup 
-          onClose={() => setShowHelp(false)} 
+          onClose={() => closePopup(setShowHelp)} 
         />
       )}
 
       {showInvite && (
         <InviteFriendsPopup 
-          onClose={() => setShowInvite(false)} 
+          onClose={() => closePopup(setShowInvite)} 
         />
       )}
     </div>
