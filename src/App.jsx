@@ -29,13 +29,10 @@ function App() {
   const openMap = () => {
     setIsMapLoading(true);
     setIsMapFadingOut(false);
-    // Ensure the video element has mounted before trying to play it imperatively
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(e => console.error("Video play error:", e));
-      }
-    }, 50);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(e => console.error("Video play error:", e));
+    }
   };
 
   const handleLoaderEnded = () => {
@@ -102,20 +99,20 @@ function App() {
       </div>
 
       {/* Map Loader Overlay */}
-      {isMapLoading && (
-        <div className={`map-loader-overlay ${isMapFadingOut ? 'fade-out' : ''}`}>
-          <video 
-            ref={videoRef}
-            src="/map_loader.mp4" 
-            preload="auto"
-            autoPlay
-            muted
-            playsInline
-            onEnded={handleLoaderEnded}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
-      )}
+      <div 
+        className={`map-loader-overlay ${isMapFadingOut ? 'fade-out' : ''}`}
+        style={{ display: (isMapLoading || isMapFadingOut) ? 'flex' : 'none' }}
+      >
+        <video 
+          ref={videoRef}
+          src="/map_loader.mp4" 
+          preload="auto"
+          muted
+          playsInline
+          onEnded={handleLoaderEnded}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      </div>
 
       {/* Map Page */}
       {showMapPage && <MapPage onClose={closeModal} />}
