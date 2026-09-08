@@ -1,5 +1,7 @@
 import React from 'react';
 import { Search, Crosshair } from 'lucide-react';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import './HomeLocationPopup.css';
 
 const HomeLocationPopup = ({ onClose }) => {
@@ -26,10 +28,25 @@ const HomeLocationPopup = ({ onClose }) => {
           Use my current location
         </button>
 
-        <div className="home-loc-map-area">
-          {/* Future Map Will be added */}
-          <div className="home-loc-map-placeholder">
-            Future Map<br/>Will be added
+        <div className="home-loc-map-area" style={{ position: 'relative' }}>
+          <MapContainer 
+            center={[22.5726, 88.3639]} 
+            zoom={13} 
+            style={{ width: '100%', height: '100%' }}
+            zoomControl={false}
+            attributionControl={false}
+          >
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            />
+          </MapContainer>
+          
+          {/* Static center pin */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -100%)', zIndex: 1000, pointerEvents: 'none' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="#ff4b4b" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0px 4px 4px rgba(0,0,0,0.5))' }}>
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3" fill="white"></circle>
+            </svg>
           </div>
         </div>
 
