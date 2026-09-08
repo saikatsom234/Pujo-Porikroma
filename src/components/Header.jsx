@@ -17,7 +17,7 @@ const Header = ({ onOpenMap }) => {
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
 
   useEffect(() => {
-    const handlePopState = (e) => {
+        const handlePopState = (e) => {
       // Sync Settings
       if (e.state?.view === 'settings' || e.state?.view === 'settings-popup') {
         setShowSettingsPopup(true);
@@ -31,6 +31,13 @@ const Header = ({ onOpenMap }) => {
       } else {
         setShowChatPopup(false);
       }
+
+      // Sync Creator Card
+      if (e.state?.view === 'creator-card') {
+        setShowCreatorCard(true);
+      } else {
+        setShowCreatorCard(false);
+      }
     };
     window.addEventListener('popstate', handlePopState);
     
@@ -40,6 +47,9 @@ const Header = ({ onOpenMap }) => {
     }
     if (window.history.state?.view === 'chat-main' || window.history.state?.view === 'chat-popup') {
       setShowChatPopup(true);
+    }
+    if (window.history.state?.view === 'creator-card') {
+      setShowCreatorCard(true);
     }
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
@@ -67,6 +77,19 @@ const Header = ({ onOpenMap }) => {
       window.history.back();
     } else {
       setShowChatPopup(false);
+    }
+  };
+
+  const openCreatorCard = () => {
+    window.history.pushState({ view: 'creator-card' }, '');
+    setShowCreatorCard(true);
+  };
+
+  const closeCreatorCard = () => {
+    if (window.history.state?.view === 'creator-card') {
+      window.history.back();
+    } else {
+      setShowCreatorCard(false);
     }
   };
 
@@ -149,7 +172,7 @@ const Header = ({ onOpenMap }) => {
           <div className="desktop-actions glass-panel">
             <button className="icon-btn" onClick={openSettings}><Settings size={18} /></button>
             <button className="icon-btn" onClick={onOpenMap}><Globe2 size={18} /></button>
-            <button className="icon-btn" onClick={() => setShowCreatorCard(true)}><User size={18} /></button>
+            <button className="icon-btn" onClick={openCreatorCard}><User size={18} /></button>
             <button className="icon-btn" onClick={() => setShowChaiPopup(true)}><Coffee size={18} /></button>
           </div>
         </div>
@@ -157,7 +180,7 @@ const Header = ({ onOpenMap }) => {
 
       {/* Render popups over everything when state is true */}
       {showSettingsPopup && <SettingsPopup onClose={closeSettings} />}
-      {showCreatorCard && <CreatorCard onClose={() => setShowCreatorCard(false)} />}
+      {showCreatorCard && <CreatorCard onClose={closeCreatorCard} />}
       {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
       {showChatPopup && <ChatPopup onClose={closeChat} socket={socket} />}
     </>
@@ -165,3 +188,4 @@ const Header = ({ onOpenMap }) => {
 };
 
 export default Header;
+
