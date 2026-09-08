@@ -47,7 +47,7 @@ const SettingsPopup = ({ onClose, onLogout }) => {
   }, []);
 
   const openPopup = (setter) => {
-    window.history.pushState({ id: 'map', view: 'settings-popup' }, '');
+    window.history.pushState({ view: 'settings-popup' }, '');
     setter(true);
   };
 

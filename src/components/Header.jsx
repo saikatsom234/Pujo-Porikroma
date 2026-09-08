@@ -33,7 +33,7 @@ const Header = ({ onOpenMap }) => {
   }, []);
 
   const openSettings = () => {
-    window.history.pushState({ id: 'map', view: 'settings' }, '');
+    window.history.pushState({ view: 'settings' }, '');
     setShowSettingsPopup(true);
   };
 
