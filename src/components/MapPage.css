@@ -902,6 +902,9 @@
     background-color: #1f2937;
     color: #f9fafb;
 }
+.dark-mode .nearby-title {
+    color: #f9fafb;
+}
 .dark-mode .nearby-pill-btn .nearby-subtitle {
     color: #9ca3af;
 }
