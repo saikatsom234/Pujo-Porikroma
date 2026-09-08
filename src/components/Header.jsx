@@ -38,6 +38,13 @@ const Header = ({ onOpenMap }) => {
       } else {
         setShowCreatorCard(false);
       }
+
+      // Sync Coffee Popup
+      if (e.state?.view === 'coffee-popup') {
+        setShowChaiPopup(true);
+      } else {
+        setShowChaiPopup(false);
+      }
     };
     window.addEventListener('popstate', handlePopState);
     
@@ -50,6 +57,9 @@ const Header = ({ onOpenMap }) => {
     }
     if (window.history.state?.view === 'creator-card') {
       setShowCreatorCard(true);
+    }
+    if (window.history.state?.view === 'coffee-popup') {
+      setShowChaiPopup(true);
     }
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
@@ -90,6 +100,19 @@ const Header = ({ onOpenMap }) => {
       window.history.back();
     } else {
       setShowCreatorCard(false);
+    }
+  };
+
+  const openChaiPopup = () => {
+    window.history.pushState({ view: 'coffee-popup' }, '');
+    setShowChaiPopup(true);
+  };
+
+  const closeChaiPopup = () => {
+    if (window.history.state?.view === 'coffee-popup') {
+      window.history.back();
+    } else {
+      setShowChaiPopup(false);
     }
   };
 
@@ -173,7 +196,7 @@ const Header = ({ onOpenMap }) => {
             <button className="icon-btn" onClick={openSettings}><Settings size={18} /></button>
             <button className="icon-btn" onClick={onOpenMap}><Globe2 size={18} /></button>
             <button className="icon-btn" onClick={openCreatorCard}><User size={18} /></button>
-            <button className="icon-btn" onClick={() => setShowChaiPopup(true)}><Coffee size={18} /></button>
+            <button className="icon-btn" onClick={openChaiPopup}><Coffee size={18} /></button>
           </div>
         </div>
       </header>
@@ -181,11 +204,12 @@ const Header = ({ onOpenMap }) => {
       {/* Render popups over everything when state is true */}
       {showSettingsPopup && <SettingsPopup onClose={closeSettings} />}
       {showCreatorCard && <CreatorCard onClose={closeCreatorCard} />}
-      {showChaiPopup && <ChaiPopup onClose={() => setShowChaiPopup(false)} />}
+      {showChaiPopup && <ChaiPopup onClose={closeChaiPopup} />}
       {showChatPopup && <ChatPopup onClose={closeChat} socket={socket} />}
     </>
   );
 };
 
 export default Header;
+
 
