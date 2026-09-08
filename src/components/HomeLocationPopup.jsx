@@ -1,10 +1,128 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Search, Crosshair } from 'lucide-react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './HomeLocationPopup.css';
 
-const HomeLocationPopup = ({ onClose }) => {
+// Fix for default marker icons in Leaflet when using Webpack/Vite
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+const pandalLocations = [
+  { name: 'Sree Bhumi Sporting Club', lat: 22.5958, lng: 88.3815 },
+  { name: 'Ahiritola Itwaribazar', lat: 22.5979, lng: 88.3639 },
+  { name: 'College Square', lat: 22.5736, lng: 88.3653 },
+  { name: 'Bagbazar Sarbojanin', lat: 22.6025, lng: 88.3712 },
+  { name: 'Ekdalia Evergreen', lat: 22.5181, lng: 88.3695 }
+];
+
+const HomeLocationPopup = ({ onClose, onSetHome }) => {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markerRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  useEffect(() => {
+    if (!mapInstanceRef.current && mapRef.current) {
+      // Initialize Leaflet Map inside the exact target box dimensions
+      const map = L.map(mapRef.current, {
+        zoomControl: false,
+        attributionControl: false
+      }).setView([22.5726, 88.3639], 13); // Centered on Kolkata
+
+      // Match the app's dark theme using dark_all CartoDB tiles
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+
+      mapInstanceRef.current = map;
+
+      // Allow users to click anywhere on the map to drop a pin and select location
+      map.on('click', (e) => {
+        const { lat, lng } = e.latlng;
+        updateMarker(lat, lng, 'Custom Selected Location');
+      });
+
+      // Let the map resize properly to avoid grey tiles inside modals
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 100);
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  const updateMarker = (lat, lng, title) => {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    if (markerRef.current) {
+      markerRef.current.setLatLng([lat, lng]);
+    } else {
+      markerRef.current = L.marker([lat, lng]).addTo(map);
+    }
+
+    map.setView([lat, lng], 15, { animate: true });
+    setSelectedLocation({ lat, lng, name: title });
+  };
+
+  // Handler for "Use my current location" button
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        updateMarker(lat, lng, 'My Current Location');
+      },
+      () => {
+        alert('Unable to retrieve your location. Please check permission settings.');
+      }
+    );
+  };
+
+  // Handler for Search bar ("Go" button)
+  const handleSearchGo = (e) => {
+    e.preventDefault();
+    const queryLower = searchQuery.toLowerCase().trim();
+    const found = pandalLocations.find(p => p.name.toLowerCase().includes(queryLower));
+
+    if (found) {
+      updateMarker(found.lat, found.lng, found.name);
+    } else {
+      alert('Location or pandal not found in the list. Try searching another landmark.');
+    }
+  };
+
+  // Final confirmation to set home location
+  const handleConfirmHome = () => {
+    if (!selectedLocation) {
+      alert('Please select a location via GPS, search, or by clicking on the map first.');
+      return;
+    }
+    if (onSetHome) onSetHome(selectedLocation);
+    alert(`Home location successfully set to: ${selectedLocation.name}`);
+    onClose();
+  };
+
   return (
     <div className="home-loc-overlay" onClick={(e) => { e.stopPropagation(); onClose(); }}>
       <div className="home-loc-content" onClick={(e) => e.stopPropagation()}>
@@ -13,45 +131,32 @@ const HomeLocationPopup = ({ onClose }) => {
           <p className="home-loc-subtitle">Search or drag the map to centre the pin</p>
         </div>
 
-        <div className="home-loc-search-box">
+        <form className="home-loc-search-box" onSubmit={handleSearchGo}>
           <Search size={20} className="home-loc-search-icon" />
           <input 
             type="text" 
             placeholder="Search area or landmark" 
             className="home-loc-search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="home-loc-go-btn">Go</button>
-        </div>
+          <button type="submit" className="home-loc-go-btn">Go</button>
+        </form>
 
-        <button className="home-loc-current-btn">
+        <button type="button" className="home-loc-current-btn" onClick={handleUseCurrentLocation}>
           <Crosshair size={20} />
           Use my current location
         </button>
 
-        <div className="home-loc-map-area" style={{ position: 'relative' }}>
-          <MapContainer 
-            center={[22.5726, 88.3639]} 
-            zoom={13} 
-            style={{ width: '100%', height: '100%' }}
-            zoomControl={false}
-            attributionControl={false}
-          >
-            <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            />
-          </MapContainer>
-          
-          {/* Static center pin */}
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -100%)', zIndex: 1000, pointerEvents: 'none' }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="#ff4b4b" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0px 4px 4px rgba(0,0,0,0.5))' }}>
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3" fill="white"></circle>
-            </svg>
-          </div>
+        <div 
+          ref={mapRef}
+          className="home-loc-map-area" 
+          style={{ position: 'relative' }}
+        >
         </div>
 
         <div className="home-loc-footer">
-          <button className="home-loc-save-btn" onClick={onClose}>
+          <button type="button" className="home-loc-save-btn" onClick={handleConfirmHome}>
             Set as home location
           </button>
         </div>
