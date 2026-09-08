@@ -72,9 +72,38 @@ const MusicPlayer = () => {
     setIsDhakPlaying(!isDhakPlaying);
   };
 
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (e.state?.view !== 'music-main' && e.state?.view !== 'music-search' && e.state?.view !== 'music-popup') {
+        setShowSongList(false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    if (window.history.state?.view !== 'music-main' && window.history.state?.view !== 'music-search' && window.history.state?.view !== 'music-popup') {
+      setShowSongList(false);
+    }
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const openSongList = (isFavorite) => {
+    setIsFavoriteMode(isFavorite);
+    window.history.pushState({ view: 'music-main' }, '');
+    setShowSongList(true);
+  };
+
+  const closeSongList = () => {
+    if (window.history.state?.view === 'music-search' || window.history.state?.view === 'music-popup') {
+      window.history.go(-2);
+    } else if (window.history.state?.view === 'music-main') {
+      window.history.back();
+    } else {
+      setShowSongList(false);
+    }
+  };
+
   const handleSelectSong = (song) => {
     setCurrentSong(song);
-    setShowSongList(false);
+    closeSongList();
     setIsPlaying(true);
   };
 
@@ -217,14 +246,14 @@ const MusicPlayer = () => {
       <audio ref={dhakAudioRef} src="/songs/dhak-song.webm" loop preload="auto" />
       {/* Mobile only selector */}
       <div className="mobile-category-selector show-mobile-flex" style={{ gap: '12px' }}>
-        <button className="category-btn glass-panel bengali-text" onClick={() => { setIsFavoriteMode(false); setShowSongList(true); }}>
+        <button className="category-btn glass-panel bengali-text" onClick={() => openSongList(false)}>
           <Music size={16} />
           পূজো সংগ্রহ
           <ChevronDown size={16} />
         </button>
         <button 
           className="category-btn glass-panel" 
-          onClick={() => { setIsFavoriteMode(true); setShowSongList(true); }}
+          onClick={() => openSongList(true)}
           style={{ width: '40px', height: '40px', borderRadius: '50%', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}
           title="My Favorite Playlist"
         >
@@ -321,9 +350,14 @@ const MusicPlayer = () => {
         </div>
       </div>
       
-      {showSongList && <SongListPopup onClose={() => setShowSongList(false)} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} favoriteList={favoriteSongs} isFavoriteMode={isFavoriteMode} />}
+      {showSongList && <SongListPopup onClose={closeSongList} onSelectSong={handleSelectSong} currentSong={currentSong} pandalList={activePandalSongs} mahalayaList={activeMahalayaSongs} favoriteList={favoriteSongs} isFavoriteMode={isFavoriteMode} />}
     </div>
   );
 };
 
 export default MusicPlayer;
+
+
+
+
+

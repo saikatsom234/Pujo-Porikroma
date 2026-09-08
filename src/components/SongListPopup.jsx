@@ -212,6 +212,34 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (e.state?.view === 'music-search') {
+        setIsSearchOpen(true);
+      } else {
+        setIsSearchOpen(false);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    if (window.history.state?.view === 'music-search') {
+      setIsSearchOpen(true);
+    }
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const openSearch = () => {
+    window.history.pushState({ view: 'music-search' }, '');
+    setIsSearchOpen(true);
+  };
+
+  const closeSearch = () => {
+    if (window.history.state?.view === 'music-search') {
+      window.history.back();
+    } else {
+      setIsSearchOpen(false);
+    }
+  };
+
   const filteredSongs = currentSongs.filter((song, index) => {
     const serialNumber = (index + 1).toString();
     const query = searchQuery.toLowerCase();
@@ -262,14 +290,14 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
                 />
-                <button className="search-close-btn" onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}>
+                <button className="search-close-btn" onClick={() => { closeSearch(); setSearchQuery(''); }}>
                   <X size={16} />
                 </button>
               </div>
             )}
             
             {!isSearchOpen && (
-              <button className="search-icon-btn animation-pop-in" onClick={() => setIsSearchOpen(true)}>
+              <button className="search-icon-btn animation-pop-in" onClick={openSearch}>
                 <Search size={18} />
               </button>
             )}
@@ -314,3 +342,4 @@ const SongListPopup = ({ onClose, onSelectSong, currentSong, pandalList = pandal
 };
 
 export default SongListPopup;
+
