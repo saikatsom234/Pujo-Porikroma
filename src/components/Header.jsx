@@ -6,6 +6,7 @@ import CreatorCard from './CreatorCard';
 import ChaiPopup from './ChaiPopup';
 import ChatPopup from './ChatPopup';
 import SettingsPopup from './SettingsPopup';
+import ThirdPagePopup from './ThirdPagePopup';
 import './Header.css';
 
 const Header = ({ onOpenMap }) => {
@@ -15,6 +16,7 @@ const Header = ({ onOpenMap }) => {
   const [showChaiPopup, setShowChaiPopup] = useState(false);
   const [showChatPopup, setShowChatPopup] = useState(false);
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
+  const [showThirdPage, setShowThirdPage] = useState(false);
 
   useEffect(() => {
         const handlePopState = (e) => {
@@ -45,6 +47,13 @@ const Header = ({ onOpenMap }) => {
       } else {
         setShowChaiPopup(false);
       }
+
+      // Sync Third Page
+      if (e.state?.view === 'third-page') {
+        setShowThirdPage(true);
+      } else {
+        setShowThirdPage(false);
+      }
     };
     window.addEventListener('popstate', handlePopState);
     
@@ -60,6 +69,9 @@ const Header = ({ onOpenMap }) => {
     }
     if (window.history.state?.view === 'coffee-popup') {
       setShowChaiPopup(true);
+    }
+    if (window.history.state?.view === 'third-page') {
+      setShowThirdPage(true);
     }
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
@@ -113,6 +125,19 @@ const Header = ({ onOpenMap }) => {
       window.history.back();
     } else {
       setShowChaiPopup(false);
+    }
+  };
+
+  const openThirdPage = () => {
+    window.history.pushState({ view: 'third-page' }, '');
+    setShowThirdPage(true);
+  };
+
+  const closeThirdPage = () => {
+    if (window.history.state?.view === 'third-page') {
+      window.history.back();
+    } else {
+      setShowThirdPage(false);
     }
   };
 
@@ -195,6 +220,7 @@ const Header = ({ onOpenMap }) => {
           <div className="desktop-actions glass-panel">
             <button className="icon-btn" onClick={openSettings}><Settings size={18} /></button>
             <button className="icon-btn" onClick={onOpenMap}><Globe2 size={18} /></button>
+            <button className="icon-btn" onClick={openThirdPage}><Calendar size={18} /></button>
             <button className="icon-btn" onClick={openCreatorCard}><User size={18} /></button>
             <button className="icon-btn" onClick={openChaiPopup}><Coffee size={18} /></button>
           </div>
@@ -203,6 +229,7 @@ const Header = ({ onOpenMap }) => {
 
       {/* Render popups over everything when state is true */}
       {showSettingsPopup && <SettingsPopup onClose={closeSettings} />}
+      {showThirdPage && <ThirdPagePopup onClose={closeThirdPage} />}
       {showCreatorCard && <CreatorCard onClose={closeCreatorCard} />}
       {showChaiPopup && <ChaiPopup onClose={closeChaiPopup} />}
       {showChatPopup && <ChatPopup onClose={closeChat} socket={socket} />}
@@ -211,5 +238,6 @@ const Header = ({ onOpenMap }) => {
 };
 
 export default Header;
+
 
 
